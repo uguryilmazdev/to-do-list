@@ -1,3 +1,61 @@
+:root {
+
+    /* dark mode colors */
+    --dm-header-background-color: #ff7373;
+    --dm-main-background-color: #fefcfe;
+    --dm-sidebar-background-color: #d4d2d4;
+    --dm-alternative-color: #fadb44;
+    
+    /* day mode colors */
+
+    /* default colors */
+    --header-background-color: var(--dm-header-background-color);
+    --main-background-color: var(--dm-main-background-color);
+    --sidebar-background-color: var(--dm-sidebar-background-color);
+    --alternative-color: var(--alternative-color);
+
+
+    /* font size */
+    --font-size: calc(0.625rem + 0.5vw);
+    font-size: var(--font-size); 
+
+    /* text color */
+    --dm-text-color: #fefcfe;
+    --lm-text-color: #2a3444;
+    --text-color: var(--dm-text-color);
+    color: var(--text-color);
+}
+
+*, hmtl {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 0.25fr 0.75fr;
+    grid-template-rows: 0.5fr 6fr;
+    grid-template-areas: 
+    "header header"
+    "sidebar main";
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+/* --------------- header style ----------------*/
 .header-content {
-    color: blue;
+    grid-area: header;
+    background-color: var(--header-background-color);
+}
+
+/* -------------- aside style ----------------- */
+.aside-content {
+    background-color: var(--sidebar-background-color);
+    grid-area: sidebar;
+}
+
+/* -------------main style -------------------- */
+.main-content {
+    background-color: var(--main-background-color);
+    grid-area: main;
 }
