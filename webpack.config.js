@@ -7,15 +7,13 @@ module.exports = {
     index: './src/index.js',
   },
   devtool: 'inline-source-map',
-  /* we dont need webpack dev-server due to vscode live preview extension.
   devServer: {
     static: './dist',
   },
-  */
   plugins: [
     new HtmlWebpackPlugin({
       title: 'To-do List',
-      template: './src/asset/index.html', // 
+      template: './src/index.html', // 
     }),
   ],
   output: {
@@ -39,10 +37,7 @@ module.exports = {
       },
     ],
   },
-  /* we dont need webpack dev-server due to vscode live preview extension.
-  if use it, add  "start": "webpack serve --open",  to json or check documentation
   optimization: {
     runtimeChunk: 'single',
   },
-  */
 };

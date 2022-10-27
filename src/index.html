@@ -1,41 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
 </head>
+
 <body>
     <!-- Header Section -->
     <header id="header-content" class="header-content">hello</header>
     <!-- Aside Section -->
-    <aside id="aside-content" class="aside-content">
-        <!-- Home btn-->
-        <div class="asidebar-btn-container">
-            <button type="button" class="asidebar-btn-text">Home</button>
-            <div class="asidebar-count-text">1</div>
-        </div>
-        <!-- Today btn -->
-        <div class="asidebar-btn-container">
-            <button type="button" class="asidebar-btn-text">Today</button>
-            <div class="asidebar-count-text">1</div>
-        </div>
-        <!-- Week btn -->
-        <div class="asidebar-btn-container">
-            <button type="button" class="asidebar-btn-text">Week</button>
-            <div class="asidebar-count-text">1</div>
-        </div>
-        <!-- Notes btn -->
-        <div class="asidebar-btn-container">
-            <button type="button" class="asidebar-btn-text">Notes</button>
-        </div>
-        <!-- Projects section -->
-        <div class="asidebar-projects-container">
-            <h3 class="asidebar-projects-header">Projects</h3>
-            <div class="projects"></div>
-        </div>
-    </aside>
+    <nav id="navbar-content" class="navbar-content">
+        <ul id="navbar" class="navbar">
+            <!-- Home btn-->
+            <li class="nav-item">
+                <button type="button" id="home-btn" class="nav-btn">Home</button>
+                <div class="to-do-count">1</div>
+            </li>
+            <!-- Today btn -->
+            <li class="nav-item">
+                <button type="button" id="today-btn" class="nav-btn">Today</button>
+                <div class="to-do-count">1</div>
+            </li>
+            <!-- Week btn -->
+            <li class="nav-item">
+                <button type="button" id="week-btn" class="nav-btn">Week</button>
+                <div class="to-do-count">1</div>
+            </li>
+            <!-- Notes btn -->
+            <li class="nav-item">
+                <button type="button" id="notes-btn" class="nav-btn">Notes</button>
+            </li>
+            <!-- Projects section -->
+            <ul class="nav-item-projects-container">
+                <div class="nav-item-projects-header">Projects</div>
+                <ul class="projects">
+                    <li class="projects-item">
+                        <button type="button" class="project-name nav-btn">project1</button>
+                        <div class="project-count to-do-count">1</div>
+                    </li>
+                    <li class="projects-item">
+                        <button type="button" class="project-name nav-btn">project1</button>
+                        <div class="project-count to-do-count">1</div>
+                    </li>
+                    <li class="projects-item">
+                        <button type="button" class="project-name nav-btn">project1</button>
+                        <div class="project-count to-do-count">1</div>
+                    </li>
+                    <li class="projects-item">
+                        <button type="button" class="project-name nav-btn">project1</button>
+                        <div class="project-count to-do-count">1</div>
+                    </li>
+                    <li class="projects-item">
+                        <button type="button" class="project-name nav-btn">project1</button>
+                        <div class="project-count to-do-count">1</div>
+                    </li>
+                    <li class="projects-item">
+                        <button type="button" class="project-name nav-btn">project1</button>
+                        <div class="project-count to-do-count">1</div>
+                    </li>
+                    <li class="projects-item">
+                        <button type="button" class="project-name nav-btn">project1</button>
+                        <div class="project-count to-do-count">1</div>
+                    </li>
+                </ul>
+            </ul>
+        </ul>
+    </nav>
     <main id="main-content" class="main-content"></main>
 </body>
+
 </html>
