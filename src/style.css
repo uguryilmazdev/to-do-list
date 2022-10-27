@@ -154,6 +154,12 @@ body {
     background: var(--alternative-color);
 }
 
+/* add button */
+.add-btn {
+    background-color: var(--sidebar-background-color);
+    border: none;
+}
+
 /* button hover effects */
 .nav-btn:hover, 
 .nav-btn:focus {
@@ -162,6 +168,13 @@ body {
     font-weight: 700;
 }
 
+.add-btn:hover {
+    transform: translateY(-3px);
+}
+
+.add-btn:active {
+    transform: translateY(0px);
+}
 /* -------------main style -------------------- */
 .main-content {
     background-color: var(--main-background-color);
