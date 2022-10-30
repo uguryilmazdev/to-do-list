@@ -1,5 +1,6 @@
 import './style.css';
 import plusIcon from './plus-circle.png';
+import dialogPolyfill from 'dialog-polyfill'
 
 import {setDialogAsProject, setDialogAsTask, setDialogAsNote} from './modules/dialogBox.js';
 

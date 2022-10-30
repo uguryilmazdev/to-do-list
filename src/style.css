@@ -180,3 +180,77 @@ body {
     background-color: var(--main-background-color);
     grid-area: main;
 }
+
+/* ------------ dialog box style ---------------*/
+/* container */
+.dialog {
+    /* position */
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    /* size */
+    width: 50%;
+    height: 40%;
+    /* border */
+    border-radius: 5px;
+    border: none;
+    /* display */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 4fr;
+}
+
+.dialog-header {
+    background-color: var(--header-background-color);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 2rem;
+    padding-right: 0.5rem;
+}
+
+/* form container */
+.dialog > form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 4fr 1fr;
+    background-color: red;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/* title and details container*/
+.form-text-input-area {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 3fr;
+}
+
+.dialog-title,
+.dialog-text {
+    border: none;
+    padding: 0.5rem 1rem;
+}
+
+.dialog-text {
+    resize: none;
+    overflow-y: auto;
+}
+
+.form-submit-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog-title:focus,
+.dialog-text:focus {
+    outline: none;
+}
+
+.dialog::backdrop {
+    backdrop-filter: blur(3px);
+}

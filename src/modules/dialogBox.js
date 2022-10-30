@@ -1,6 +1,6 @@
 
 function setDialogAsProject() {
-
+    
 }
 
 function setDialogAsTask() {
