@@ -5,6 +5,7 @@ module.exports = {
   mode: 'development',
   entry: {
     index: './src/index.js',
+    dialogBox: './src/modules/dialogBox.js',
   },
   devtool: 'inline-source-map',
   devServer: {

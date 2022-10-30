@@ -68,9 +68,26 @@
                 </ul>
             </ul>
         </ul>
-        <button type="button" class="add-btn"><img src="./plus-circle.png" alt="plus-sign"></button>
+        <button type="button" id="add-project" class="add-btn"><img src="./plus-circle.png" alt="plus-sign"></button>
     </nav>
     <main id="main-content" class="main-content"></main>
+    <dialog open class="dialog">
+        <div class="dialog-header">
+            <h4 class="dialog-header-text">Header</h4>
+            <button type="button" class="exit-btn"><img src="#" alt="Close dialog screen"></button>
+        </div>
+        <form method="dialog">
+            <div class="form-text-input-area">
+                <input type="text" id="dialog-title" name="dialog-title" 
+                class="dialog-title" placeholder="Title">
+                <textarea id="dialog-text" name="dialog-text" 
+                class="dialog-text" placeholder="Details"></textarea>
+            </div>
+            <div class="form-submit-area">
+                <button type="submit">Create</button>
+            </div>
+        </form>
+    </dialog>
 </body>
 
 </html>
