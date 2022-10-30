@@ -183,7 +183,7 @@ body {
 
 /* ------------ dialog box style ---------------*/
 /* container */
-.dialog {
+dialog {
     /* position */
     position: fixed;
     left: 50%;
@@ -213,7 +213,7 @@ body {
 }
 
 /* form container */
-.dialog > form {
+dialog > form {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 4fr 1fr;
