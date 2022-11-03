@@ -183,7 +183,7 @@ body {
 
 /* ------------ dialog box style ---------------*/
 /* container */
-dialog {
+.dialog {
     /* position */
     position: fixed;
     left: 50%;
@@ -201,6 +201,10 @@ dialog {
     grid-template-rows: 1fr 4fr;
 }
 
+dialog:not([open]) {
+    display: none;
+}
+
 .dialog-header {
     background-color: var(--header-background-color);
     border-top-left-radius: 5px;
@@ -213,7 +217,7 @@ dialog {
 }
 
 /* form container */
-dialog > form {
+.dialog > form {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 4fr 1fr;

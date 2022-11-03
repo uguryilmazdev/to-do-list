@@ -71,11 +71,11 @@
         <button type="button" id="add-project" class="add-btn"><img src="./plus-circle.png" alt="plus-sign"></button>
     </nav>
     <main id="main-content" class="main-content"></main>
-    <div id="dialog-container">
-        <dialog>
+    <!-- dialog screen -->
+        <dialog class="dialog">
             <div class="dialog-header">
-                <h4 class="dialog-header-text">Header</h4>
-                <button type="button" class="exit-btn"><img src="#" alt="Close dialog screen"></button>
+                <h4 class="dialog-header-text"></h4>
+                <button type="button" id="exit-btn" class="exit-btn"><img src="#" alt="Close dialog screen"></button>
             </div>
             <form method="dialog">
                 <div class="form-text-input-area">
@@ -83,11 +83,10 @@
                     <textarea id="dialog-text" name="dialog-text" class="dialog-text" placeholder="Details"></textarea>
                 </div>
                 <div class="form-submit-area">
-                    <button type="submit">Create</button>
+                    <button type="submit" id="dialog-create-btn">Create</button>
                 </div>
             </form>
         </dialog>
-    </div>
 </body>
 
 </html>
