@@ -1,5 +1,4 @@
 :root {
-/* #d4d2d4 */
     /* dark mode colors */
     --dm-header-background-color: #ff7373;
     --dm-main-background-color: #fefcfe;
@@ -16,11 +15,13 @@
     --alternative-color: var(--dm-alternative-color);
     --border-color: var(--dm-border-color);
 
-
     /* font size */
     --font-size: calc(0.625rem + 0.5vw);
     font-size: var(--font-size); 
 
+    /* colors */
+    --green: rgb(24, 241, 24);
+    --yellow: #fadb44;
     /* text color */
     --dm-text-color: #fefcfe;
     --lm-text-color: #2a3444;
@@ -214,6 +215,29 @@ dialog:not([open]) {
     justify-content: space-between;
     padding-left: 2rem;
     padding-right: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dialog-header-text {
+    color: var(--lm-text-color);
+}
+
+.dialog-btn {
+    width: 6rem;
+    height: 1.5rem;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--text-color);
+    color: var(--lm-text-color);
+}
+
+.dialog-btn:hover {
+    color: var(--header-background-color);
+}
+
+.dialog-btn:focus {
+    background-color: var(--alternative-color);
+    color: var(--header-background-color);
 }
 
 /* form container */
@@ -221,7 +245,6 @@ dialog:not([open]) {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 4fr 1fr;
-    background-color: red;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
@@ -248,8 +271,23 @@ dialog:not([open]) {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--header-background-color);
 }
 
+/* create button style */
+#dialog-create-btn {
+    color: var(--green);
+    border: 1px solid var(--green);
+}
+
+#dialog-create-btn:hover {
+    border: none;
+    background-color: var(--green);
+    color: var(--text-color);
+}
+
+/* */
 .dialog-title:focus,
 .dialog-text:focus {
     outline: none;

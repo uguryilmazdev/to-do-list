@@ -70,20 +70,26 @@
         </ul>
         <button type="button" id="add-project" class="add-btn"><img src="./plus-circle.png" alt="plus-sign"></button>
     </nav>
-    <main id="main-content" class="main-content"></main>
+    <main id="main-content" class="main-content">
+
+    </main>
     <!-- dialog screen -->
         <dialog class="dialog">
             <div class="dialog-header">
-                <h4 class="dialog-header-text"></h4>
+                <h4 class="dialog-header-text">Create a new</h4>
+                <button type="button" class="dialog-btn"
+                id="todo-btn" >To Do</button>
+                <button type="button" class="dialog-btn"
+                id="note-btn">Note</button>
+                <button type="button" class="dialog-btn"
+                id="project-btn">Project</button>
                 <button type="button" id="exit-btn" class="exit-btn"><img src="#" alt="Close dialog screen"></button>
             </div>
             <form method="dialog">
-                <div class="form-text-input-area">
-                    <input type="text" id="dialog-title" name="dialog-title" class="dialog-title" placeholder="Title">
-                    <textarea id="dialog-text" name="dialog-text" class="dialog-text" placeholder="Details"></textarea>
-                </div>
+                <div class="form-text-input-area"></div>
                 <div class="form-submit-area">
-                    <button type="submit" id="dialog-create-btn">Create</button>
+                    <button type="submit" class="dialog-btn" 
+                    id="dialog-create-btn">Create</button>
                 </div>
             </form>
         </dialog>
