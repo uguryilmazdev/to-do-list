@@ -1,6 +1,6 @@
 import './style.css';
 import plusIcon from './plus-circle.png';
-import {setDialogAsProject, setDialogAsTodo, setDialogAsNote} from './modules/dialogBox.js';
+import DialogBox from './modules/dialogBox.js';
 
 // dialog screen buttons
 const dialog = document.querySelector('dialog');
@@ -16,26 +16,29 @@ const todayBtn = document.querySelector('#today-btn');
 const weekBtn = document.querySelector('#week-btn');
 const notesBtn = document.querySelector('#notes-btn');
 
-// ---------------------------------------------------------
+// --------------------------------------------------------
 
-// dialog menu control
+// dialog object 
+const dialogBox = new DialogBox();
+
+// dialog menu control - open
 addButton.addEventListener('click', () => {
     dialog.showModal();
-    setDialogAsTodo();
+    dialogBox.setDialogAsTodo();
 });
-
+// todo
 todoButton.addEventListener('click', () => {
-    setDialogAsTodo();
+    dialogBox.setDialogAsTodo();
 });
-
+// note
 noteButton.addEventListener('click', () => {
-    setDialogAsNote();
+    dialogBox.setDialogAsNote();
 });
-
+// project
 projectButton.addEventListener('click', () => {
-    setDialogAsProject();
+    dialogBox.setDialogAsProject();
 });
-
+// close
 closeButton.addEventListener('click', () => {
     dialog.close();
 })
