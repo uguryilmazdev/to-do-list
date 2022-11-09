@@ -1,6 +1,7 @@
 import './style.css';
 import plusIcon from './plus-circle.png';
 import DialogBox from './modules/dialogBox.js';
+import MainContainer from './modules/mainContainer.js';
 
 // dialog screen buttons
 const dialog = document.querySelector('dialog');
@@ -20,6 +21,7 @@ const notesBtn = document.querySelector('#notes-btn');
 
 // dialog object 
 const dialogBox = new DialogBox();
+const mainContainer = new MainContainer();
 
 // dialog menu control - open
 addButton.addEventListener('click', () => {
@@ -45,7 +47,7 @@ closeButton.addEventListener('click', () => {
 
 // sidebar menu action
 homeBtn.addEventListener('click', () => {
-
+    mainContainer.mainContainerTemplate();
 })
 
 todayBtn.addEventListener('click', () => {

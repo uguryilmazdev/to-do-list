@@ -6,7 +6,7 @@ module.exports = {
   entry: {
     index: './src/index.js',
     dialogBox: './src/modules/dialogBox.js',
-    sidebarItemTemplate: './src/modules/sidebarItemsTemplate.js',
+    mainContainer: './src/modules/mainContainer.js',
   },
   devtool: 'inline-source-map',
   devServer: {

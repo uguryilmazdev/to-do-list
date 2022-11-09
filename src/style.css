@@ -344,3 +344,12 @@ dialog:not([open]) {
 .dialog::backdrop {
     backdrop-filter: blur(3px);
 }
+
+/* ---------------------------------------------------------------
+-----------------------------------------------------------------*/
+
+/* sidebar items template */
+.sidebar-element-container {
+    height: 100%;
+    width: 100%;
+}
