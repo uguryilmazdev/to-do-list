@@ -277,14 +277,14 @@ dialog:not([open]) {
 .form-submit-area {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     border-top: 1px solid var(--border-color);
     background-color: var(--header-background-color);
 }
 
 
 .priority-btns {
-    margin: auto 0.5rem;
+    margin-left: 1rem;
 }
 
 #low-priority {
@@ -325,6 +325,8 @@ dialog:not([open]) {
 #dialog-create-btn {
     color: var(--green);
     border: 1px solid var(--green);
+    margin-right: 1rem;
+    width: 8rem;
 }
 
 #dialog-create-btn:hover {

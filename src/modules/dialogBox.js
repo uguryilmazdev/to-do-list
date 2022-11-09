@@ -9,12 +9,16 @@ class TemplateDialogBox {
         const inputArea = document.querySelector('.form-text-input-area');
         const submitArea = document.querySelector('.form-submit-area');
 
-        // -------------------- input area -----------------------
         // check if any elements that created before within input area
         while (inputArea.lastElementChild) {
             inputArea.removeChild(inputArea.lastElementChild);
         }
+        // check if any elements that created before within submit area
+        while (submitArea.lastElementChild) {
+            submitArea.removeChild(submitArea.lastElementChild);
+        }
 
+        // -------------------- input area -----------------------
         // create title and text area.
         const dialogTitle = document.createElement('input');
         const dialogText = document.createElement('textarea');
@@ -64,7 +68,7 @@ class TemplateDialogBox {
 
         submitArea.append(createBtn);
 
-        return {inputArea, submitArea};
+        return [inputArea, submitArea];
     }
 
 }
@@ -74,22 +78,92 @@ export default class DialogBox extends TemplateDialogBox {
     // note template
     setDialogAsNote() {
 
-        super.template();
+        const [, submitArea] = super.template();
+
+        // change flex design
+        submitArea.style.justifyContent = "flex-end";
+
+        // change create button's text
+        const createBtn = document.querySelector('#dialog-create-btn');
+        createBtn.innerHTML = "CREATE NOTE";
 
     }
 
     // todo template
     setDialogAsTodo() {
 
-        super.template();
+        const [, submitArea] = super.template();
 
-  
+        // change flex design
+        submitArea.style.justifyContent = "space-between";
+
+        // change create button's text
+        const createBtn = document.querySelector('#dialog-create-btn');
+        createBtn.innerHTML = "CREATE TO DO";
+
+        // ------------------- priority buttons ------------------
+        // -------------------------------------------------------
+        // create container of priority buttons
+        const container = document.createElement('div');
+        container.classList.add('priority-buttons-container');
+
+        // create priority buttons
+        const low = document.createElement('input');
+        const medium = document.createElement('input');
+        const high = document.createElement('input');
+
+        const lowAttributes = {
+            type: 'button',
+            id: 'low-priority',
+            name: 'priority',
+            value: 'LOW',
+            class: 'priority-btns dialog-btn',
+        }
+
+        const mediumAttributes = {
+            type: 'button',
+            id: 'medium-priority',
+            name: 'priority',
+            value: 'MEDIUM',
+            class: 'priority-btns dialog-btn',
+        }
+
+        const highAttributes = {
+            type: 'button',
+            id: 'high-priority',
+            name: 'priority',
+            value: 'HIGH',
+            class: 'priority-btns dialog-btn',
+        }
+
+        Object.keys(lowAttributes).forEach((attr) => {
+            low.setAttribute(attr, lowAttributes[attr]);
+        })
+        Object.keys(mediumAttributes).forEach((attr) => {
+            medium.setAttribute(attr, mediumAttributes[attr]);
+        })
+        Object.keys(highAttributes).forEach((attr) => {
+            high.setAttribute(attr, highAttributes[attr]);
+        })
+
+        container.appendChild(low);
+        container.appendChild(medium);
+        container.appendChild(high);
+
+        submitArea.prepend(container);
     }
 
     // project template
     setDialogAsProject() {
 
-        super.template();
+        const [, submitArea] = super.template();
+
+        // change flex design
+        submitArea.style.justifyContent = "flex-end";
+
+        // change create button's text
+        const createBtn = document.querySelector('#dialog-create-btn');
+        createBtn.innerHTML = "CREATE PROJECT";
 
         // remove text area element. 
         // Projects need only title.
