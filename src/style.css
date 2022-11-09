@@ -22,6 +22,12 @@
     /* colors */
     --green: rgb(24, 241, 24);
     --yellow: #fadb44;
+
+    /* priority buttons color*/
+    --priority-low: green;
+    --priority-medium: orange;
+    --priority-high: red;
+
     /* text color */
     --dm-text-color: #fefcfe;
     --lm-text-color: #2a3444;
@@ -267,13 +273,53 @@ dialog:not([open]) {
     overflow-y: auto;
 }
 
+/* --- submit area --- */
 .form-submit-area {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     border-top: 1px solid var(--border-color);
     background-color: var(--header-background-color);
 }
+
+
+.priority-btns {
+    margin: auto 0.5rem;
+}
+
+#low-priority {
+    color: var(--priority-low);
+    border: 1px solid var(--priority-low);
+}
+
+#low-priority:hover,
+#low-priority:focus {
+    color: var(--dm-main-background-color);
+    background-color: var(--priority-low);
+}
+
+#medium-priority {
+    color: var(--priority-medium);
+    border: 1px solid var(--priority-medium);
+}
+
+#medium-priority:hover,
+#medium-priority:focus {
+    color: var(--dm-main-background-color);
+    background-color: var(--priority-medium);
+}
+
+#high-priority {
+    color: var(--priority-high);
+    border: 1px solid var(--priority-high);
+}
+
+#high-priority:hover,
+#high-priority:focus {
+    color: var(--dm-main-background-color);
+    background-color: var(--priority-high);
+}
+
 
 /* create button style */
 #dialog-create-btn {
