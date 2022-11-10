@@ -1,7 +1,8 @@
 import './style.css';
 import plusIcon from './plus-circle.png';
 import DialogBox from './modules/dialogBox.js';
-import MainContainer from './modules/mainContainer.js';
+import { NoteContainer } from './modules/mainContainer.js';
+import TodoCreator from './modules/createTask.js';
 
 // dialog screen buttons
 const dialog = document.querySelector('dialog');
@@ -10,6 +11,7 @@ const closeButton = document.querySelector('#exit-btn');
 const todoButton = document.querySelector('#todo-btn');
 const noteButton = document.querySelector('#note-btn');
 const projectButton = document.querySelector('#project-btn');
+const createForm = document.querySelector('form');
 
 // sidebar menu buttons
 const homeBtn = document.querySelector('#home-btn');
@@ -19,9 +21,7 @@ const notesBtn = document.querySelector('#notes-btn');
 
 // --------------------------------------------------------
 
-// dialog object 
 const dialogBox = new DialogBox();
-const mainContainer = new MainContainer();
 
 // dialog menu control - open
 addButton.addEventListener('click', () => {
@@ -44,6 +44,11 @@ projectButton.addEventListener('click', () => {
 closeButton.addEventListener('click', () => {
     dialog.close();
 })
+//create
+createForm.addEventListener('submit', () => {
+    const todoCreator = new TodoCreator('thisTitle','thisDetails','thispriority');
+    todoCreator.createContainer();
+})
 
 // sidebar menu action
 homeBtn.addEventListener('click', () => {
@@ -59,5 +64,6 @@ weekBtn.addEventListener('click', () => {
 })
 
 notesBtn.addEventListener('click', () => {
-    
+    const noteContainer = new NoteContainer();
+    noteContainer.createNoteContainer();
 })

@@ -7,6 +7,7 @@ module.exports = {
     index: './src/index.js',
     dialogBox: './src/modules/dialogBox.js',
     mainContainer: './src/modules/mainContainer.js',
+    createTask: './src/modules/createTask.js',
   },
   devtool: 'inline-source-map',
   devServer: {

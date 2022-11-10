@@ -353,3 +353,19 @@ dialog:not([open]) {
     height: 100%;
     width: 100%;
 }
+
+/* --------------------------------------------------------------
+---------------------------------------------------------------*/
+
+/* to do structure */
+.todo-container {
+    width: 30rem;
+    height: 5rem;
+    background-color: green;
+}
+
+.note-container-template {
+    height: 100%;
+    width: 100%;
+    background-color: green;
+}
