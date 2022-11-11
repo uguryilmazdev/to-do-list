@@ -1,31 +1,17 @@
-export default class TodoCreator {
 
-    constructor(title, details, priority) {
-        this.title = title;
-        this.details = details;
-        this.priority = priority;
+export default class NoteCreator {
 
-        // create todo card elements
-        this.container = document.createElement('div');
-        this.checkBox = document.createElement('input');
-        this.titleText = document.createElement('div');
-        this.detailsBtn = document.createElement('button');
-        this.dueTimeText = document.createElement('div');
-        this.editBtn = document.createElement('button');
-        this.deleteBtn = document.createElement('button');
+    constructor() {
+        this.noteContainer = document.createElement('div');
+        this.noteTitle = document.createElement('p');
+        this.noteDetails = document.createElement('p');
     }
 
-    createContainer() {
+    createNoteContainer() {
 
-        const main = document.querySelector('main');
-
-        this.container.classList.add('todo-container');
-
-
-           
-
-
-        
+        this.noteContainer.classList.add('noteContainer');
+        this.noteTitle.classList.add('noteTitle');
+        this.noteDetails.classList.add('noteDetails');
 
     }
 

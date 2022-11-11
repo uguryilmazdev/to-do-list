@@ -364,7 +364,7 @@ dialog:not([open]) {
     background-color: green;
 }
 
-.note-container-template {
+.main-container {
     height: 100%;
     width: 100%;
     background-color: green;

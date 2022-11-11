@@ -1,5 +1,5 @@
 
-class MainContainer {
+export default class MainContainer {
 
     mainContainerTemplate() {
 
@@ -9,22 +9,12 @@ class MainContainer {
         while (main.lastElementChild) {
             main.removeChild(main.lastElementChild);
         }
-        return main;
-    }
-}
-
-class NoteContainer extends MainContainer {
-
-    createNoteContainer() {
-
-        const main = super.mainContainerTemplate();
 
         // create container
         const container = document.createElement('div');
-        container.classList.add('note-container-template');
+        container.classList.add('main-container');
+
         main.append(container);
-        
+
     }
 }
-
-export { NoteContainer };

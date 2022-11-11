@@ -1,10 +1,10 @@
 import './style.css';
 import plusIcon from './plus-circle.png';
 import DialogBox from './modules/dialogBox.js';
-import { NoteContainer } from './modules/mainContainer.js';
-import TodoCreator from './modules/createTask.js';
+import MainContainer from './modules/mainContainer.js';
 
-// dialog screen buttons
+
+// dilog screen buttons
 const dialog = document.querySelector('dialog');
 const addButton = document.querySelector("#add-project");
 const closeButton = document.querySelector('#exit-btn');
@@ -22,6 +22,7 @@ const notesBtn = document.querySelector('#notes-btn');
 // --------------------------------------------------------
 
 const dialogBox = new DialogBox();
+const mainContainer = new MainContainer();
 
 // dialog menu control - open
 addButton.addEventListener('click', () => {
@@ -56,14 +57,13 @@ homeBtn.addEventListener('click', () => {
 })
 
 todayBtn.addEventListener('click', () => {
-    
+    mainContainer.mainContainerTemplate();
 })
 
 weekBtn.addEventListener('click', () => {
-    
+    mainContainer.mainContainerTemplate();
 })
 
 notesBtn.addEventListener('click', () => {
-    const noteContainer = new NoteContainer();
-    noteContainer.createNoteContainer();
+    mainContainer.mainContainerTemplate();
 })
