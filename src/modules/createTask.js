@@ -1,3 +1,5 @@
+const noteArray = [];
+
 export default class NoteCreator {
   constructor(title, details) {
     // create container elements
@@ -19,6 +21,26 @@ export default class NoteCreator {
     // add container to main container
     document.querySelector('.main-container').append(this.noteContainer);
 
-    // add note to array
+    noteArray.push({
+      title: this.noteTitle.innerHTML,
+      details: this.noteDetails.innerHTML,
+    });
+    console.log(noteArray);
+  }
+
+  setTitle(title) {
+    this.title = title;
+  }
+
+  getTitle() {
+    return this.title;
+  }
+
+  setDetails(details) {
+    this.details = details;
+  }
+
+  getDetails() {
+    return this.details;
   }
 }

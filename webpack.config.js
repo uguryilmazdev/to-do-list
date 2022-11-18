@@ -8,6 +8,7 @@ module.exports = {
     dialogBox: './src/modules/dialogBox.js',
     mainContainer: './src/modules/mainContainer.js',
     createTask: './src/modules/createTask.js',
+    storage: './src/modules/storage.js',
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -16,7 +17,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'To-do List',
-      template: './src/index.html', // 
+      template: './src/index.html', //
     }),
   ],
   output: {
@@ -28,7 +29,7 @@ module.exports = {
     rules: [
       {
         test: /\.html$/i,
-        loader: "html-loader",
+        loader: 'html-loader',
       },
       {
         test: /\.css$/i,
