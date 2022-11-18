@@ -1,4 +1,4 @@
-const noteArray = [];
+import Storage from './storage';
 
 export default class NoteCreator {
   constructor(title, details) {
@@ -45,6 +45,8 @@ export default class NoteCreator {
     document.querySelector('.main-container').append(this.noteContainer);
 
     // add new note object to array
+    const storage = new Storage();
+    const noteArray = storage.getNoteArray();
     noteArray.push({
       title: this.noteTitle.innerHTML,
       details: this.noteDetails.innerHTML,
@@ -67,5 +69,9 @@ export default class NoteCreator {
 
   getDetails() {
     return this.details;
+  }
+
+  getNoteArray() {
+    return noteArray;
   }
 }

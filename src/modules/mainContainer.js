@@ -1,20 +1,16 @@
-
 export default class MainContainer {
+  mainContainerTemplate() {
+    const main = document.querySelector('main');
 
-    mainContainerTemplate() {
-
-        const main = document.querySelector('main');
-
-        // check if any container within main
-        while (main.lastElementChild) {
-            main.removeChild(main.lastElementChild);
-        }
-
-        // create container
-        const container = document.createElement('div');
-        container.classList.add('main-container');
-
-        main.append(container);
-
+    // check if any container within main
+    while (main.lastElementChild) {
+      main.removeChild(main.lastElementChild);
     }
+
+    // create container
+    const container = document.createElement('div');
+    container.classList.add('main-container');
+
+    main.append(container);
+  }
 }

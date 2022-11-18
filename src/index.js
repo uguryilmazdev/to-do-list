@@ -3,6 +3,7 @@ import plusIcon from './plus-circle.png';
 import DialogBox from './modules/dialogBox.js';
 import MainContainer from './modules/mainContainer.js';
 import NoteCreator from './modules/createTask';
+import Storage from './modules/storage';
 
 // dilog screen buttons
 const dialog = document.querySelector('dialog');
@@ -23,6 +24,7 @@ const notesBtn = document.querySelector('#notes-btn');
 
 const dialogBox = new DialogBox();
 const mainContainer = new MainContainer();
+const storage = new Storage();
 
 window.addEventListener(
   'DOMContentLoaded',
@@ -30,7 +32,7 @@ window.addEventListener(
 );
 
 // ---------------------------- DIALOG -----------------------------------
-// dialog menu control - open
+// open defaul dialog menu
 addButton.addEventListener('click', () => {
   dialog.showModal();
   dialogBox.setDialogAsTodo();
@@ -56,6 +58,24 @@ createForm.addEventListener('submit', () => {
   const title = document.querySelector('#dialog-title').value;
   const details = document.querySelector('#dialog-text').value;
   const note = new NoteCreator(title, details);
+});
+
+// ----------------------------- NOTE CONTROL -------------------------
+window.addEventListener('click', (e) => {
+  if (e.target.className.includes('note-delete-btn')) {
+    // child is note card
+    const child = e.target.parentElement.parentElement.parentElement;
+    // parent is main-container
+    const parent = child.parentElement;
+
+    let index = Array.prototype.indexOf.call(parent.children, child);
+
+    storage.getNoteArray().splice(index, 1);
+
+    document
+      .querySelector('.main-container')
+      .removeChild(document.querySelector('.main-container').children[index]);
+  }
 });
 
 // ------------------------------ SIDEBAR -----------------------------
