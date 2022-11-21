@@ -1,9 +1,11 @@
-const noteArray = [];
+const noteListArray = [];
 
 export default class Storage {
-  constructor() {}
+  saveNoteList(data) {
+    localStorage.setItem('noteList', JSON.stringify(data));
+  }
 
-  getNoteArray() {
-    return noteArray;
+  getNoteListArray() {
+    return noteListArray;
   }
 }

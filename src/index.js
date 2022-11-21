@@ -70,7 +70,8 @@ window.addEventListener('click', (e) => {
 
     let index = Array.prototype.indexOf.call(parent.children, child);
 
-    storage.getNoteArray().splice(index, 1);
+    storage.getNoteListArray().splice(index, 1);
+    storage.saveNoteList(storage.getNoteListArray());
 
     document
       .querySelector('.main-container')

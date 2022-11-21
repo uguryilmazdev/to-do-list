@@ -46,13 +46,14 @@ export default class NoteCreator {
 
     // add new note object to array
     const storage = new Storage();
-    const noteArray = storage.getNoteArray();
-    noteArray.push({
+    const noteListArray = storage.getNoteListArray();
+    noteListArray.push({
       title: this.noteTitle.innerHTML,
       details: this.noteDetails.innerHTML,
     });
+    storage.saveNoteList(noteListArray);
 
-    console.log(noteArray);
+    console.log(noteListArray);
   }
 
   setTitle(title) {
