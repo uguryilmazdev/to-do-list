@@ -1,6 +1,6 @@
 import Storage from './storage';
 
-export default class NoteCreator {
+export default class Note {
   constructor(title, details) {
     // ----- create elements ------
     // main container

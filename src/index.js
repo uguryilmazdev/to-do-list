@@ -2,7 +2,7 @@ import './style.css';
 import plusIcon from './plus-circle.png';
 import DialogBox from './modules/dialogBox.js';
 import MainContainer from './modules/mainContainer.js';
-import NoteCreator from './modules/createTask';
+import Note from './modules/note';
 import Storage from './modules/storage';
 
 // dilog screen buttons
@@ -57,7 +57,7 @@ closeButton.addEventListener('click', () => {
 createForm.addEventListener('submit', () => {
   const title = document.querySelector('#dialog-title').value;
   const details = document.querySelector('#dialog-text').value;
-  const note = new NoteCreator(title, details);
+  const note = new Note(title, details);
 });
 
 // ----------------------------- NOTE CONTROL -------------------------
