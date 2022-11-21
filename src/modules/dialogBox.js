@@ -3,7 +3,7 @@
 class TemplateDialogBox {
   // Create a new dialog box element template
   // It has only title element.
-  template() {
+  static template() {
     const inputArea = document.querySelector('.form-text-input-area');
     const submitArea = document.querySelector('.form-submit-area');
 
@@ -73,7 +73,7 @@ class TemplateDialogBox {
 
 export default class DialogBox extends TemplateDialogBox {
   // note template
-  setDialogAsNote() {
+  static setDialogAsNote() {
     const [, submitArea] = super.template();
 
     // change flex design
@@ -85,7 +85,7 @@ export default class DialogBox extends TemplateDialogBox {
   }
 
   // todo template
-  setDialogAsTodo() {
+  static setDialogAsTodo() {
     const [, submitArea] = super.template();
 
     // change flex design
@@ -148,7 +148,7 @@ export default class DialogBox extends TemplateDialogBox {
   }
 
   // project template
-  setDialogAsProject() {
+  static setDialogAsProject() {
     const [, submitArea] = super.template();
 
     // change flex design

@@ -15,9 +15,6 @@ const projectButton = document.querySelector('#project-btn');
 const createForm = document.querySelector('form');
 
 // --------------------------------------------------------
-
-const dialogBox = new DialogBox();
-
 window.addEventListener(
   'DOMContentLoaded',
   MainContainer.template(),
@@ -29,19 +26,19 @@ window.addEventListener(
 // open defaul dialog menu
 addButton.addEventListener('click', () => {
   dialog.showModal();
-  dialogBox.setDialogAsTodo();
+  DialogBox.setDialogAsTodo();
 });
 // todo
 todoButton.addEventListener('click', () => {
-  dialogBox.setDialogAsTodo();
+  DialogBox.setDialogAsTodo();
 });
 // note
 noteButton.addEventListener('click', () => {
-  dialogBox.setDialogAsNote();
+  DialogBox.setDialogAsNote();
 });
 // project
 projectButton.addEventListener('click', () => {
-  dialogBox.setDialogAsProject();
+  DialogBox.setDialogAsProject();
 });
 // close
 closeButton.addEventListener('click', () => {
