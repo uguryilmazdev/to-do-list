@@ -1,7 +1,7 @@
+const main = document.querySelector('main');
+
 export default class MainContainer {
   mainContainerTemplate() {
-    const main = document.querySelector('main');
-
     // check if any container within main
     while (main.lastElementChild) {
       main.removeChild(main.lastElementChild);
@@ -13,4 +13,12 @@ export default class MainContainer {
 
     main.append(container);
   }
+
+  clearContainer() {
+    while (main.firstChild.lastElementChild) {
+      main.firstChild.removeChild(main.firstChild.lastElementChild);
+    }
+  }
 }
+
+// notes'a basınca resetlenme ve veriyi koyma
