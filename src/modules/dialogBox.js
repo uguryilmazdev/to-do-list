@@ -1,4 +1,8 @@
-// Create a dialog window as project, task or note.
+// Open a dialog window that creates new project, task or note.
+
+import Note from './note';
+import UI from './ui';
+import Storage from './storage';
 
 class TemplateDialogBox {
   // Create a new dialog box element template
@@ -161,5 +165,41 @@ export default class DialogBox extends TemplateDialogBox {
     // remove text area element.
     // Projects need only title.
     document.querySelector('.dialog-text').remove();
+  }
+
+  // button click methods
+  static dialogBoxButtonListeners() {
+    // open default dialog menu
+    document.querySelector('#add-project').addEventListener('click', () => {
+      document.querySelector('dialog').showModal();
+      this.setDialogAsTodo();
+    });
+    // todo
+    document.querySelector('#todo-btn').addEventListener('click', () => {
+      this.setDialogAsTodo();
+    });
+    // note
+    document.querySelector('#note-btn').addEventListener('click', () => {
+      this.setDialogAsNote();
+    });
+    // project
+    document.querySelector('#project-btn').addEventListener('click', () => {
+      this.setDialogAsProject();
+    });
+    // close
+    document.querySelector('#exit-btn').addEventListener('click', () => {
+      document.querySelector('dialog').close();
+    });
+    //create
+    document.querySelector('form').addEventListener('submit', () => {
+      const note = new Note(
+        document.querySelector('#dialog-title').value,
+        document.querySelector('#dialog-text').value
+      );
+
+      UI.createNoteCard(note);
+      Storage.addItemToNoteArray(note);
+      UI.sidebarButtonAction('notes-btn');
+    });
   }
 }
