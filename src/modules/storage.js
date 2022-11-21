@@ -1,11 +1,19 @@
-const noteListArray = [];
+// initialize note, todo, project arrays
+const noteArray = [];
 
 export default class Storage {
-  saveNoteList(data) {
-    localStorage.setItem('noteList', JSON.stringify(data));
+  addItemToNoteArray(title, details) {
+    noteArray.push({
+      title: title,
+      details: details,
+    });
   }
 
-  getNoteListArray() {
-    return noteListArray;
+  getNoteArray() {
+    return noteArray;
+  }
+
+  saveNoteArrayToLocal(data) {
+    localStorage.setItem('noteList', JSON.stringify(data));
   }
 }
