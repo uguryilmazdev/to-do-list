@@ -7,7 +7,10 @@ export default class Storage {
     }
   }
 
-  static addItemToNoteArray(title, details) {
+  static addItemToNoteArray(obj) {
+    const title = obj.title;
+    const details = obj.details;
+
     const noteArray = JSON.parse(localStorage.getItem('noteList'));
     noteArray.push({
       title: title,

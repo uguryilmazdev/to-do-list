@@ -49,11 +49,13 @@ closeButton.addEventListener('click', () => {
 });
 //create
 createForm.addEventListener('submit', () => {
-  const title = document.querySelector('#dialog-title').value;
-  const details = document.querySelector('#dialog-text').value;
-  const note = new Note(title, details);
-  UI.createNoteCard(title, details);
-  Storage.addItemToNoteArray(title, details);
+  const note = new Note(
+    document.querySelector('#dialog-title').value,
+    document.querySelector('#dialog-text').value
+  );
+
+  UI.createNoteCard(note);
+  Storage.addItemToNoteArray(note);
   UI.sidebarButtonAction('notes-btn');
 });
 

@@ -24,7 +24,7 @@ export default class UI {
       const noteArray = Storage.getNoteArrayFromStorage();
       // create note cards
       for (let i = 0; i < noteArray.length; i++) {
-        this.createNoteCard(noteArray[i].title, noteArray[i].details);
+        this.createNoteCard(noteArray[i]);
       }
     }
   }
@@ -37,47 +37,49 @@ export default class UI {
     });
   }
 
-  static createNoteCard(title, details) {
+  static createNoteCard(obj) {
+    const title = obj.title;
+    const details = obj.details;
     // ----- create elements ------
     // main container
-    this.noteContainer = document.createElement('div');
+    const noteContainer = document.createElement('div');
     // header elements
-    this.headerContainer = document.createElement('div');
-    this.noteTitle = document.createElement('p');
-    this.noteBtnContainer = document.createElement('div');
-    this.detailsBtn = document.createElement('button');
-    this.deleteBtn = document.createElement('button');
+    const headerContainer = document.createElement('div');
+    const noteTitle = document.createElement('p');
+    const noteBtnContainer = document.createElement('div');
+    const detailsBtn = document.createElement('button');
+    const deleteBtn = document.createElement('button');
     // body elements
-    this.noteDetails = document.createElement('p');
+    const noteDetails = document.createElement('p');
 
     // ----- add inner text  and text attributes-----
-    this.noteTitle.innerHTML = title;
-    this.noteDetails.innerHTML = details;
+    noteTitle.innerHTML = title;
+    noteDetails.innerHTML = details;
 
     // ----- append children -----
     // add header and body elements
-    this.noteContainer.appendChild(this.headerContainer);
-    this.noteContainer.appendChild(this.noteDetails);
+    noteContainer.appendChild(headerContainer);
+    noteContainer.appendChild(noteDetails);
     // add header's children
-    this.headerContainer.appendChild(this.noteTitle);
-    this.headerContainer.appendChild(this.noteBtnContainer);
+    headerContainer.appendChild(noteTitle);
+    headerContainer.appendChild(noteBtnContainer);
     // add buttons
-    this.noteBtnContainer.appendChild(this.detailsBtn);
-    this.noteBtnContainer.appendChild(this.deleteBtn);
+    noteBtnContainer.appendChild(detailsBtn);
+    noteBtnContainer.appendChild(deleteBtn);
     // button property
-    this.detailsBtn.setAttribute('type', 'button');
-    this.deleteBtn.setAttribute('type', 'button');
+    detailsBtn.setAttribute('type', 'button');
+    deleteBtn.setAttribute('type', 'button');
 
     // ----- add classes -----
-    this.noteContainer.classList.add('note-container');
-    this.headerContainer.classList.add('note-header-container');
-    this.noteTitle.classList.add('note-title');
-    this.noteBtnContainer.classList.add('note-btn-container');
-    this.detailsBtn.classList.add('note-btn', 'note-details-btn');
-    this.deleteBtn.classList.add('note-btn', 'note-delete-btn');
-    this.noteDetails.classList.add('note-details');
+    noteContainer.classList.add('note-container');
+    headerContainer.classList.add('note-header-container');
+    noteTitle.classList.add('note-title');
+    noteBtnContainer.classList.add('note-btn-container');
+    detailsBtn.classList.add('note-btn', 'note-details-btn');
+    deleteBtn.classList.add('note-btn', 'note-delete-btn');
+    noteDetails.classList.add('note-details');
 
     // ----- add container to main container -----
-    document.querySelector('.main-container').append(this.noteContainer);
+    document.querySelector('.main-container').append(noteContainer);
   }
 }
