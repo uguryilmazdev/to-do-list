@@ -38,6 +38,7 @@ export default class UI {
   }
 
   static createNoteCard(obj) {
+    // object properties
     const title = obj.title;
     const details = obj.details;
     // ----- create elements ------
@@ -81,5 +82,57 @@ export default class UI {
 
     // ----- add container to main container -----
     document.querySelector('.main-container').append(noteContainer);
+  }
+
+  static createTodo(obj) {
+    // object properties
+    const title = obj.title;
+    const details = obj.details;
+    const priority = obj.priority;
+
+    // ----- create elements -----
+    // main container
+    const todoContainer = document.createElement('div');
+    // left and right side container
+    const leftContainer = document.createElement('div');
+    const rightContainer = document.createElement('div');
+    // left container children
+    const isCheck = document.createElement('input');
+    const todoTitle = document.createElement('p');
+    // right container children
+    const detailsBtn = document.createElement('button');
+    const dateText = document.createElement('p');
+    const changeTodoBtn = document.createElement('button');
+    const deleteTodoBtn = document.createElement('button');
+
+    // ----- append children -----
+    // add left-right container
+    todoContainer.appendChild(leftContainer);
+    todoContainer.appendChild(rightContainer);
+    // add left container children
+    leftContainer.appendChild(isCheck);
+    leftContainer.appendChild(todoTitle);
+    // add right container children
+    rightContainer.appendChild(detailsBtn);
+    rightContainer.appendChild(dateText);
+    rightContainer.appendChild(changeTodoBtn);
+    rightContainer.appendChild(deleteTodoBtn);
+    // ----- add container to main container -----
+    document.querySelector('.main-container').append(todoContainer);
+
+    // ----- button properties -----
+    [detailsBtn, changeTodoBtn, deleteTodoBtn].forEach((button) => {
+      button.setAttribute('type', 'button');
+    });
+    isCheck.setAttribute('type', 'checkbox');
+
+    // ----- add classes -----
+    todoContainer.classList.add('todo-container');
+    isCheck.classList.add('isCheck');
+    todoTitle.classList.add('todo-title');
+    detailsBtn.classList.add('todo-details-btn');
+    dateText.classList.add('date-text');
+    changeTodoBtn.classList.add('note-btn', 'change-todo-btn');
+    deleteTodoBtn.classList.add('note-btn', 'delete-todo-btn');
   }
 }
