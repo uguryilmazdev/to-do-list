@@ -1,5 +1,43 @@
+import MainContainer from './mainContainer.js';
+import Storage from './storage';
+
+// sidebar menu buttons
+const sidebarButtonArray = [
+  document.querySelector('#home-btn'),
+  document.querySelector('#today-btn'),
+  document.querySelector('#week-btn'),
+  document.querySelector('#notes-btn'),
+];
+
 export default class UI {
-  createNoteCard(title, details) {
+  // sidebarButtonAction and sidebarButtonListener reset the main container
+  // with respect to clicked button
+  static sidebarButtonAction(e) {
+    MainContainer.clearContainer();
+    MainContainer.template();
+
+    // check event target id
+    if (e === 'home-btn') {
+    } else if (e === 'today-btn') {
+    } else if (e === 'week-btn') {
+    } else if (e === 'notes-btn') {
+      const noteArray = Storage.getNoteArrayFromStorage();
+      // create note cards
+      for (let i = 0; i < noteArray.length; i++) {
+        this.createNoteCard(noteArray[i].title, noteArray[i].details);
+      }
+    }
+  }
+
+  static sidebarButtonListeners() {
+    sidebarButtonArray.forEach((button) => {
+      button.addEventListener('click', (e) => {
+        this.sidebarButtonAction(e.target.id);
+      });
+    });
+  }
+
+  static createNoteCard(title, details) {
     // ----- create elements ------
     // main container
     this.noteContainer = document.createElement('div');

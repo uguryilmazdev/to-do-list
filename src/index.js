@@ -1,5 +1,4 @@
 import './style.css';
-import plusIcon from './plus-circle.png';
 import DialogBox from './modules/dialogBox.js';
 import MainContainer from './modules/mainContainer.js';
 import Note from './modules/note';
@@ -15,21 +14,15 @@ const noteButton = document.querySelector('#note-btn');
 const projectButton = document.querySelector('#project-btn');
 const createForm = document.querySelector('form');
 
-// sidebar menu buttons
-const homeBtn = document.querySelector('#home-btn');
-const todayBtn = document.querySelector('#today-btn');
-const weekBtn = document.querySelector('#week-btn');
-const notesBtn = document.querySelector('#notes-btn');
-
 // --------------------------------------------------------
 
 const dialogBox = new DialogBox();
-const mainContainer = new MainContainer();
-const storage = new Storage();
 
 window.addEventListener(
   'DOMContentLoaded',
-  mainContainer.mainContainerTemplate()
+  MainContainer.template(),
+  Storage.setInitialArrays(),
+  UI.sidebarButtonListeners()
 );
 
 // ---------------------------- DIALOG -----------------------------------
@@ -59,10 +52,9 @@ createForm.addEventListener('submit', () => {
   const title = document.querySelector('#dialog-title').value;
   const details = document.querySelector('#dialog-text').value;
   const note = new Note(title, details);
-  const ui = new UI();
-  ui.createNoteCard(title, details);
-  storage.addItemToNoteArray(title, details);
-  storage.saveNoteArrayToLocal(storage.getNoteArray());
+  UI.createNoteCard(title, details);
+  Storage.addItemToNoteArray(title, details);
+  UI.sidebarButtonAction('notes-btn');
 });
 
 // ----------------------------- NOTE CONTROL -------------------------
@@ -75,38 +67,13 @@ window.addEventListener('click', (e) => {
 
     let index = Array.prototype.indexOf.call(parent.children, child);
 
-    storage.getNoteArray().splice(index, 1);
-    storage.saveNoteArrayToLocal(storage.getNoteArray());
+    const noteArray = Storage.getNoteArrayFromStorage();
+
+    noteArray.splice(index, 1);
+    Storage.saveNoteArrayToStorage(noteArray);
 
     document
       .querySelector('.main-container')
       .removeChild(document.querySelector('.main-container').children[index]);
   }
-});
-
-// ------------------------------ SIDEBAR -----------------------------
-// sidebar menu action
-homeBtn.addEventListener('click', () => {
-  mainContainer.mainContainerTemplate();
-});
-
-todayBtn.addEventListener('click', () => {
-  mainContainer.mainContainerTemplate();
-});
-
-weekBtn.addEventListener('click', () => {
-  mainContainer.mainContainerTemplate();
-});
-
-notesBtn.addEventListener('click', () => {
-  mainContainer.clearContainer();
-  mainContainer.mainContainerTemplate();
-  const noteArray = storage.getNoteArrayFromStorage();
-  const ui = new UI();
-
-  for (let i = 0; i < noteArray.length; i++) {
-    ui.createNoteCard(noteArray[i].title, noteArray[i].details);
-  }
-
-  console.log(noteArray);
 });
