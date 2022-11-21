@@ -4,6 +4,7 @@ import DialogBox from './modules/dialogBox.js';
 import MainContainer from './modules/mainContainer.js';
 import Note from './modules/note';
 import Storage from './modules/storage';
+import UI from './modules/ui';
 
 // dilog screen buttons
 const dialog = document.querySelector('dialog');
@@ -58,6 +59,10 @@ createForm.addEventListener('submit', () => {
   const title = document.querySelector('#dialog-title').value;
   const details = document.querySelector('#dialog-text').value;
   const note = new Note(title, details);
+  const ui = new UI();
+  ui.createNoteCard(title, details);
+  storage.addItemToNoteArray(title, details);
+  storage.saveNoteArrayToLocal(storage.getNoteArray());
 });
 
 // ----------------------------- NOTE CONTROL -------------------------
@@ -70,8 +75,8 @@ window.addEventListener('click', (e) => {
 
     let index = Array.prototype.indexOf.call(parent.children, child);
 
-    storage.getNoteListArray().splice(index, 1);
-    storage.saveNoteList(storage.getNoteListArray());
+    storage.getNoteArray().splice(index, 1);
+    storage.saveNoteArrayToLocal(storage.getNoteArray());
 
     document
       .querySelector('.main-container')
@@ -94,5 +99,14 @@ weekBtn.addEventListener('click', () => {
 });
 
 notesBtn.addEventListener('click', () => {
+  mainContainer.clearContainer();
   mainContainer.mainContainerTemplate();
+  const noteArray = storage.getNoteArrayFromStorage();
+  const ui = new UI();
+
+  for (let i = 0; i < noteArray.length; i++) {
+    ui.createNoteCard(noteArray[i].title, noteArray[i].details);
+  }
+
+  console.log(noteArray);
 });

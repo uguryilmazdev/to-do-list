@@ -20,5 +20,3 @@ export default class MainContainer {
     }
   }
 }
-
-// notes'a basınca resetlenme ve veriyi koyma

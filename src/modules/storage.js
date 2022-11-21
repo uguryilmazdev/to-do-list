@@ -16,4 +16,8 @@ export default class Storage {
   saveNoteArrayToLocal(data) {
     localStorage.setItem('noteList', JSON.stringify(data));
   }
+
+  getNoteArrayFromStorage() {
+    return JSON.parse(localStorage.getItem('noteList'));
+  }
 }

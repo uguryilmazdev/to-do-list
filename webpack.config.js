@@ -9,6 +9,7 @@ module.exports = {
     mainContainer: './src/modules/mainContainer.js',
     note: './src/modules/note.js',
     storage: './src/modules/storage.js',
+    ui: './src/modules/ui.js',
   },
   devtool: 'inline-source-map',
   devServer: {
