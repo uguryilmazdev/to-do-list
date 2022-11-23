@@ -251,11 +251,6 @@ dialog:not([open]) {
   color: var(--header-background-color);
 }
 
-.dialog-btn:focus {
-  background-color: var(--alternative-color);
-  color: var(--header-background-color);
-}
-
 /* form container */
 .dialog > form {
   display: grid;
@@ -301,8 +296,7 @@ dialog:not([open]) {
   border: 1px solid var(--priority-low);
 }
 
-#low-priority:hover,
-#low-priority:focus {
+#low-priority:hover {
   color: var(--dm-main-background-color);
   background-color: var(--priority-low);
 }
@@ -312,8 +306,7 @@ dialog:not([open]) {
   border: 1px solid var(--priority-medium);
 }
 
-#medium-priority:hover,
-#medium-priority:focus {
+#medium-priority:hover {
   color: var(--dm-main-background-color);
   background-color: var(--priority-medium);
 }
@@ -323,8 +316,7 @@ dialog:not([open]) {
   border: 1px solid var(--priority-high);
 }
 
-#high-priority:hover,
-#high-priority:focus {
+#high-priority:hover {
   color: var(--dm-main-background-color);
   background-color: var(--priority-high);
 }

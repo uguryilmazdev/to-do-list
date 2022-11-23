@@ -3,6 +3,7 @@
 import Note from './note';
 import UI from './ui';
 import Storage from './storage';
+import Todo from './todo';
 
 class TemplateDialogBox {
   // Create a new dialog box element template
@@ -144,6 +145,25 @@ export default class DialogBox extends TemplateDialogBox {
       high.setAttribute(attr, highAttributes[attr]);
     });
 
+    // priority buttons click function
+    low.addEventListener('click', () => {
+      this.resetPriorityButtonStyle();
+      low.style.color = '#fefcfe';
+      low.style.backgroundColor = 'green';
+    });
+
+    medium.addEventListener('click', () => {
+      this.resetPriorityButtonStyle();
+      medium.style.color = '#fefcfe';
+      medium.style.backgroundColor = 'orange';
+    });
+
+    high.addEventListener('click', () => {
+      this.resetPriorityButtonStyle();
+      high.style.color = '#fefcfe';
+      high.style.backgroundColor = 'red';
+    });
+
     container.appendChild(low);
     container.appendChild(medium);
     container.appendChild(high);
@@ -171,10 +191,24 @@ export default class DialogBox extends TemplateDialogBox {
   static resetButtonStyle() {
     const btnArray = ['#todo-btn', '#note-btn', '#project-btn'];
 
-    // reset buttons' style
     btnArray.forEach((btn) => {
       document.querySelector(btn).style.backgroundColor = '#fefcfe';
       document.querySelector(btn).style.color = '#2a3444';
+    });
+  }
+
+  static resetPriorityButtonStyle() {
+    const btnArray = ['#low-priority', '#medium-priority', '#high-priority'];
+
+    btnArray.forEach((btn) => {
+      document.querySelector(btn).style.backgroundColor = '#fefcfe';
+      if (btn === btnArray[0]) {
+        document.querySelector(btn).style.color = 'green';
+      } else if (btn === btnArray[1]) {
+        document.querySelector(btn).style.color = 'orange';
+      } else if (btn === btnArray[2]) {
+        document.querySelector(btn).style.color = 'red';
+      }
     });
   }
 
@@ -185,41 +219,71 @@ export default class DialogBox extends TemplateDialogBox {
       document.querySelector('dialog').showModal();
       this.setDialogAsTodo();
     });
+
+    // check which event (task) clicked
+    let clickedTask = [];
+
     // todo
-    document.querySelector('#todo-btn').addEventListener('click', (e) => {
+    document.querySelector('#todo-btn').addEventListener('click', () => {
       this.setDialogAsTodo();
       this.resetButtonStyle();
       document.querySelector('#todo-btn').style.backgroundColor = '#fadb44';
       document.querySelector('#todo-btn').style.color = '#ff7373';
+      clickedTask = 'todo-btn';
     });
+
     // note
     document.querySelector('#note-btn').addEventListener('click', () => {
       this.setDialogAsNote();
       this.resetButtonStyle();
       document.querySelector('#note-btn').style.backgroundColor = '#fadb44';
       document.querySelector('#note-btn').style.color = '#ff7373';
+      clickedTask = 'note-btn';
     });
+
     // project
     document.querySelector('#project-btn').addEventListener('click', () => {
       this.setDialogAsProject();
       this.resetButtonStyle();
       document.querySelector('#project-btn').style.backgroundColor = '#fadb44';
       document.querySelector('#project-btn').style.color = '#ff7373';
+      clickedTask = 'project-btn';
     });
+
     // close
     document.querySelector('#exit-btn').addEventListener('click', () => {
       document.querySelector('dialog').close();
     });
+
     //create
     document.querySelector('form').addEventListener('submit', () => {
-      const note = new Note(
-        document.querySelector('#dialog-title').value,
-        document.querySelector('#dialog-text').value
-      );
+      // get form elements
+      const elements = document.querySelector('form').elements;
+      let obj = {};
 
-      UI.createNoteCard(note);
-      Storage.addItemToNoteArray(note);
-      UI.sidebarButtonAction('notes-btn');
+      for (let i = 0; i < elements.length; i++) {
+        let item = elements.item(i);
+        obj[item.name] = item.value;
+      }
+      console.log(obj);
+
+      if (clickedTask === 'todo-btn') {
+        // create todo obj
+        const todo = new Todo(
+          obj['dialog-title'],
+          obj['dialog-text'],
+          obj['priority']
+        );
+        console.log(obj);
+      } else if (clickedTask === 'note-btn') {
+        // create note obj
+        const note = new Note(obj['dialog-title'], obj['dialog-text']);
+
+        UI.createNoteCard(note);
+        Storage.addItemToNoteArray(note);
+        UI.sidebarButtonAction('notes-btn');
+      } else if (clickedTask === 'project-btn') {
+      }
     });
   }
 }
