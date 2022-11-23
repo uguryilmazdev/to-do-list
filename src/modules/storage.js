@@ -29,6 +29,10 @@ export default class Storage {
     localStorage.setItem('todoList', JSON.stringify(todoArray));
   }
 
+  static saveTodoArrayToStorage(data) {
+    localStorage.setItem('todoList', JSON.stringify(data));
+  }
+
   static getTodoArrayFromStorage() {
     return JSON.parse(localStorage.getItem('todoList'));
   }

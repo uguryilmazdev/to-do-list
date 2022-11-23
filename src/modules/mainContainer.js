@@ -9,7 +9,6 @@ export default class MainContainer {
 
     // create container
     const container = document.createElement('div');
-    // container.classList.add('main-container');
 
     main.append(container);
   }

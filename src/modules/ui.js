@@ -92,6 +92,10 @@ export default class UI {
     noteDetails.classList.add('note-details');
 
     // ----- add container to main container -----
+    // change main container class
+    document
+      .querySelector('main')
+      .firstChild.classList.add('main-container-note');
     document.querySelector('.main-container-note').append(noteContainer);
   }
 
@@ -135,8 +139,6 @@ export default class UI {
     rightContainer.appendChild(dateText);
     rightContainer.appendChild(changeTodoBtn);
     rightContainer.appendChild(deleteTodoBtn);
-    // ----- add container to main container -----
-    document.querySelector('.main-container-todo').append(todoContainer);
 
     // ----- button properties -----
     [detailsBtn, changeTodoBtn, deleteTodoBtn].forEach((button) => {
@@ -155,5 +157,21 @@ export default class UI {
     dateText.classList.add('date-text');
     changeTodoBtn.classList.add('note-btn', 'change-todo-btn');
     deleteTodoBtn.classList.add('note-btn', 'delete-todo-btn');
+
+    // ----- add container to main container -----
+    // change main container class
+    document
+      .querySelector('main')
+      .firstChild.classList.add('main-container-todo');
+    document.querySelector('.main-container-todo').append(todoContainer);
+
+    // todo count
+    this.setTodoCount();
+  }
+
+  static setTodoCount() {
+    const todoList = Storage.getTodoArrayFromStorage();
+    const todoCount = todoList.length;
+    document.querySelector('#home-todo-count').innerHTML = todoCount;
   }
 }
