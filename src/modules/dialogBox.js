@@ -282,6 +282,7 @@ export default class DialogBox extends TemplateDialogBox {
 
         UI.createTodo(todo);
         Storage.addItemToTodoArray(todo);
+        UI.sidebarButtonAction('home-btn');
       } else if (clickedTask === 'note-btn') {
         // create note obj
         const note = new Note(obj['dialog-title'], obj['dialog-text']);

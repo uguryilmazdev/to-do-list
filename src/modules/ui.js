@@ -18,9 +18,20 @@ export default class UI {
 
     // check event target id
     if (e === 'home-btn') {
+      document
+        .querySelector('main')
+        .firstChild.classList.add('main-container-todo');
+      const todoArray = Storage.getTodoArrayFromStorage();
+      // Create todo's
+      for (let i = 0; i < todoArray.length; i++) {
+        this.createTodo(todoArray[i]);
+      }
     } else if (e === 'today-btn') {
     } else if (e === 'week-btn') {
     } else if (e === 'notes-btn') {
+      document
+        .querySelector('main')
+        .firstChild.classList.add('main-container-note');
       const noteArray = Storage.getNoteArrayFromStorage();
       // create note cards
       for (let i = 0; i < noteArray.length; i++) {
@@ -81,7 +92,7 @@ export default class UI {
     noteDetails.classList.add('note-details');
 
     // ----- add container to main container -----
-    document.querySelector('.main-container').append(noteContainer);
+    document.querySelector('.main-container-note').append(noteContainer);
   }
 
   static createTodo(obj) {
@@ -97,6 +108,7 @@ export default class UI {
     const leftContainer = document.createElement('div');
     const rightContainer = document.createElement('div');
     // left container children
+    const labelContainer = document.createElement('label');
     const isCheck = document.createElement('input');
     const todoTitle = document.createElement('p');
     // right container children
@@ -105,20 +117,26 @@ export default class UI {
     const changeTodoBtn = document.createElement('button');
     const deleteTodoBtn = document.createElement('button');
 
+    // inner HTML
+    todoTitle.innerHTML = title;
+    detailsBtn.innerHTML = 'Details';
+    dateText.innerHTML = 'exampletext';
+
     // ----- append children -----
     // add left-right container
     todoContainer.appendChild(leftContainer);
     todoContainer.appendChild(rightContainer);
     // add left container children
-    leftContainer.appendChild(isCheck);
-    leftContainer.appendChild(todoTitle);
+    leftContainer.appendChild(labelContainer);
+    labelContainer.appendChild(isCheck);
+    labelContainer.appendChild(todoTitle);
     // add right container children
     rightContainer.appendChild(detailsBtn);
     rightContainer.appendChild(dateText);
     rightContainer.appendChild(changeTodoBtn);
     rightContainer.appendChild(deleteTodoBtn);
     // ----- add container to main container -----
-    document.querySelector('.main-container').append(todoContainer);
+    document.querySelector('.main-container-todo').append(todoContainer);
 
     // ----- button properties -----
     [detailsBtn, changeTodoBtn, deleteTodoBtn].forEach((button) => {
@@ -128,9 +146,12 @@ export default class UI {
 
     // ----- add classes -----
     todoContainer.classList.add('todo-container');
+    rightContainer.classList.add('todo-sub-container');
+    leftContainer.classList.add('todo-sub-container');
+    labelContainer.classList.add('todo-label-container');
     isCheck.classList.add('isCheck');
     todoTitle.classList.add('todo-title');
-    detailsBtn.classList.add('todo-details-btn');
+    detailsBtn.classList.add('todo-details-btn', 'dialog-btn');
     dateText.classList.add('date-text');
     changeTodoBtn.classList.add('note-btn', 'change-todo-btn');
     deleteTodoBtn.classList.add('note-btn', 'delete-todo-btn');
