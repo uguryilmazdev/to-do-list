@@ -279,6 +279,8 @@ export default class DialogBox extends TemplateDialogBox {
           obj['dialog-text'],
           document.querySelector('input[name="priority"]:checked').value
         );
+
+        Storage.addItemToTodoArray(todo);
       } else if (clickedTask === 'note-btn') {
         // create note obj
         const note = new Note(obj['dialog-title'], obj['dialog-text']);

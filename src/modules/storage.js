@@ -13,6 +13,23 @@ export default class Storage {
     }
   }
 
+  // ----- TODO -----
+  static addItemToTodoArray(obj) {
+    const title = obj.title;
+    const details = obj.details;
+    const priority = obj.priority;
+
+    const todoArray = JSON.parse(localStorage.getItem('todoList'));
+    todoArray.push({
+      title: title,
+      details: details,
+      priority: priority,
+    });
+
+    localStorage.setItem('todoList', JSON.stringify(todoArray));
+  }
+
+  // ----- NOTE -----
   static addItemToNoteArray(obj) {
     const title = obj.title;
     const details = obj.details;
