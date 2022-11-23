@@ -5,6 +5,12 @@ export default class Storage {
       const noteArray = [];
       localStorage.setItem('noteList', JSON.stringify(noteArray));
     }
+
+    // set todo list within local storage
+    if (!localStorage.todoList) {
+      const todoArray = [];
+      localStorage.setItem('todoList', JSON.stringify(todoArray));
+    }
   }
 
   static addItemToNoteArray(obj) {

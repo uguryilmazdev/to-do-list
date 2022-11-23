@@ -8,6 +8,7 @@ module.exports = {
     dialogBox: './src/modules/dialogBox.js',
     mainContainer: './src/modules/mainContainer.js',
     note: './src/modules/note.js',
+    todo: './src/modules/todo.js',
     storage: './src/modules/storage.js',
     ui: './src/modules/ui.js',
   },
