@@ -167,6 +167,17 @@ export default class DialogBox extends TemplateDialogBox {
     document.querySelector('.dialog-text').remove();
   }
 
+  // reset button style
+  static resetButtonStyle() {
+    const btnArray = ['#todo-btn', '#note-btn', '#project-btn'];
+
+    // reset buttons' style
+    btnArray.forEach((btn) => {
+      document.querySelector(btn).style.backgroundColor = '#fefcfe';
+      document.querySelector(btn).style.color = '#2a3444';
+    });
+  }
+
   // button click methods
   static dialogBoxButtonListeners() {
     // open default dialog menu
@@ -175,16 +186,25 @@ export default class DialogBox extends TemplateDialogBox {
       this.setDialogAsTodo();
     });
     // todo
-    document.querySelector('#todo-btn').addEventListener('click', () => {
+    document.querySelector('#todo-btn').addEventListener('click', (e) => {
       this.setDialogAsTodo();
+      this.resetButtonStyle();
+      document.querySelector('#todo-btn').style.backgroundColor = '#fadb44';
+      document.querySelector('#todo-btn').style.color = '#ff7373';
     });
     // note
     document.querySelector('#note-btn').addEventListener('click', () => {
       this.setDialogAsNote();
+      this.resetButtonStyle();
+      document.querySelector('#note-btn').style.backgroundColor = '#fadb44';
+      document.querySelector('#note-btn').style.color = '#ff7373';
     });
     // project
     document.querySelector('#project-btn').addEventListener('click', () => {
       this.setDialogAsProject();
+      this.resetButtonStyle();
+      document.querySelector('#project-btn').style.backgroundColor = '#fadb44';
+      document.querySelector('#project-btn').style.color = '#ff7373';
     });
     // close
     document.querySelector('#exit-btn').addEventListener('click', () => {
