@@ -29,6 +29,10 @@ export default class Storage {
     localStorage.setItem('todoList', JSON.stringify(todoArray));
   }
 
+  static getTodoArrayFromStorage() {
+    return JSON.parse(localStorage.getItem('todoList'));
+  }
+
   // ----- NOTE -----
   static addItemToNoteArray(obj) {
     const title = obj.title;

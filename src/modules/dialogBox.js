@@ -280,6 +280,7 @@ export default class DialogBox extends TemplateDialogBox {
           document.querySelector('input[name="priority"]:checked').value
         );
 
+        UI.createTodo(todo);
         Storage.addItemToTodoArray(todo);
       } else if (clickedTask === 'note-btn') {
         // create note obj
