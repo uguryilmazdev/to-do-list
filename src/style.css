@@ -287,38 +287,81 @@ dialog:not([open]) {
   background-color: var(--header-background-color);
 }
 
-.priority-btns {
+.priority-buttons-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+input[type='radio'] {
+  display: none;
+}
+
+label {
+  width: 6rem;
+  height: 1.5rem;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--text-color);
+  color: var(--lm-text-color);
   margin-left: 1rem;
 }
 
-#low-priority {
+/* LOW PRIORITY */
+label [id='low-input-priority'] ~ div {
   color: var(--priority-low);
   border: 1px solid var(--priority-low);
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-#low-priority:hover {
+label [id='low-input-priority']:checked ~ div {
   color: var(--dm-main-background-color);
   background-color: var(--priority-low);
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
 }
 
-#medium-priority {
+/* MEDIUM PRIORITY */
+label [id='medium-input-priority'] ~ div {
   color: var(--priority-medium);
   border: 1px solid var(--priority-medium);
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-#medium-priority:hover {
+label [id='medium-input-priority']:checked ~ div {
   color: var(--dm-main-background-color);
   background-color: var(--priority-medium);
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
 }
 
-#high-priority {
+/* HIGH PRIORITY */
+label [id='high-input-priority'] ~ div {
   color: var(--priority-high);
   border: 1px solid var(--priority-high);
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-#high-priority:hover {
+label [id='high-input-priority']:checked ~ div {
   color: var(--dm-main-background-color);
   background-color: var(--priority-high);
+}
+
+.priority-btns {
+  margin-left: 1rem;
 }
 
 /* create button style */

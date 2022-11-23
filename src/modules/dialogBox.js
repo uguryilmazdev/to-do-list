@@ -106,67 +106,69 @@ export default class DialogBox extends TemplateDialogBox {
     const container = document.createElement('div');
     container.classList.add('priority-buttons-container');
 
+    // create radio button container
+    const lowLabelContainer = document.createElement('label');
+    const mediumLabelContainer = document.createElement('label');
+    const highLabelContainer = document.createElement('label');
     // create priority buttons
-    const low = document.createElement('input');
-    const medium = document.createElement('input');
-    const high = document.createElement('input');
+    const lowInput = document.createElement('input');
+    const mediumInput = document.createElement('input');
+    const highInput = document.createElement('input');
+    // create text area
+    const lowText = document.createElement('div');
+    lowText.innerHTML = 'LOW';
+    const mediumText = document.createElement('div');
+    mediumText.innerHTML = 'MEDIUM';
+    const highText = document.createElement('div');
+    highText.innerHTML = 'HIGH';
 
-    const lowAttributes = {
-      type: 'button',
-      id: 'low-priority',
+    const lowAttr = {
+      type: 'radio',
+      id: 'low-input-priority',
       name: 'priority',
       value: 'LOW',
-      class: 'priority-btns dialog-btn',
     };
 
-    const mediumAttributes = {
-      type: 'button',
-      id: 'medium-priority',
+    const mediumAttr = {
+      type: 'radio',
+      id: 'medium-input-priority',
       name: 'priority',
       value: 'MEDIUM',
-      class: 'priority-btns dialog-btn',
     };
 
-    const highAttributes = {
-      type: 'button',
-      id: 'high-priority',
+    const highAttr = {
+      type: 'radio',
+      id: 'high-input-priority',
       name: 'priority',
       value: 'HIGH',
-      class: 'priority-btns dialog-btn',
     };
 
-    Object.keys(lowAttributes).forEach((attr) => {
-      low.setAttribute(attr, lowAttributes[attr]);
-    });
-    Object.keys(mediumAttributes).forEach((attr) => {
-      medium.setAttribute(attr, mediumAttributes[attr]);
-    });
-    Object.keys(highAttributes).forEach((attr) => {
-      high.setAttribute(attr, highAttributes[attr]);
+    // LOW
+    Object.keys(lowAttr).forEach((attr) => {
+      lowInput.setAttribute(attr, lowAttr[attr]);
     });
 
-    // priority buttons click function
-    low.addEventListener('click', () => {
-      this.resetPriorityButtonStyle();
-      low.style.color = '#fefcfe';
-      low.style.backgroundColor = 'green';
+    // MEDIUM
+    Object.keys(mediumAttr).forEach((attr) => {
+      mediumInput.setAttribute(attr, mediumAttr[attr]);
     });
 
-    medium.addEventListener('click', () => {
-      this.resetPriorityButtonStyle();
-      medium.style.color = '#fefcfe';
-      medium.style.backgroundColor = 'orange';
+    // HIGH
+    Object.keys(highAttr).forEach((attr) => {
+      highInput.setAttribute(attr, highAttr[attr]);
     });
 
-    high.addEventListener('click', () => {
-      this.resetPriorityButtonStyle();
-      high.style.color = '#fefcfe';
-      high.style.backgroundColor = 'red';
-    });
+    // ----- append children -----
+    lowLabelContainer.appendChild(lowInput);
+    lowLabelContainer.appendChild(lowText);
+    mediumLabelContainer.appendChild(mediumInput);
+    mediumLabelContainer.appendChild(mediumText);
+    highLabelContainer.appendChild(highInput);
+    highLabelContainer.appendChild(highText);
 
-    container.appendChild(low);
-    container.appendChild(medium);
-    container.appendChild(high);
+    container.appendChild(lowLabelContainer);
+    container.appendChild(mediumLabelContainer);
+    container.appendChild(highLabelContainer);
 
     submitArea.prepend(container);
   }
@@ -198,7 +200,11 @@ export default class DialogBox extends TemplateDialogBox {
   }
 
   static resetPriorityButtonStyle() {
-    const btnArray = ['#low-priority', '#medium-priority', '#high-priority'];
+    const btnArray = [
+      '#low-input-priority',
+      '#medium-input-priority',
+      '#high-input-priority',
+    ];
 
     btnArray.forEach((btn) => {
       document.querySelector(btn).style.backgroundColor = '#fefcfe';
@@ -265,16 +271,14 @@ export default class DialogBox extends TemplateDialogBox {
         let item = elements.item(i);
         obj[item.name] = item.value;
       }
-      console.log(obj);
 
       if (clickedTask === 'todo-btn') {
         // create todo obj
         const todo = new Todo(
           obj['dialog-title'],
           obj['dialog-text'],
-          obj['priority']
+          document.querySelector('input[name="priority"]:checked').value
         );
-        console.log(obj);
       } else if (clickedTask === 'note-btn') {
         // create note obj
         const note = new Note(obj['dialog-title'], obj['dialog-text']);
