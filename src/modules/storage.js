@@ -11,6 +11,12 @@ export default class Storage {
       const todoArray = [];
       localStorage.setItem('todoList', JSON.stringify(todoArray));
     }
+
+    // set project list within local storage
+    if (!localStorage.projectList) {
+      const projectArray = [];
+      localStorage.setItem('projectList', JSON.stringify(projectArray));
+    }
   }
 
   // ----- TODO -----
