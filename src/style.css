@@ -420,7 +420,6 @@ label [id='high-input-priority']:checked ~ div {
   grid-template-columns: 1fr;
   row-gap: 0.5rem;
   grid-auto-flow: row;
-  margin-top: -3rem;
 }
 
 /* ----------------------------------------------------
