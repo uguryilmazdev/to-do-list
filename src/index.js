@@ -11,6 +11,7 @@ window.addEventListener(
   Storage.setInitialArrays(),
   UI.sidebarButtonListeners(),
   UI.setTodoCount(),
+  UI.loadProjects(),
   DialogBox.dialogBoxButtonListeners()
 );
 

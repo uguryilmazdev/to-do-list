@@ -21,8 +21,11 @@ export default class UI {
       document
         .querySelector('main')
         .firstChild.classList.add('main-container-todo');
+
+      // get todoArray
       const todoArray = Storage.getTodoArrayFromStorage();
-      // Create todo's
+
+      // create todos
       for (let i = 0; i < todoArray.length; i++) {
         this.createTodo(todoArray[i]);
       }
@@ -36,6 +39,21 @@ export default class UI {
       // create note cards
       for (let i = 0; i < noteArray.length; i++) {
         this.createNoteCard(noteArray[i]);
+      }
+    } else if (
+      Storage.getProjectArrayFromStorage().find((element) => element === e)
+    ) {
+      document
+        .querySelector('main')
+        .firstChild.classList.add('main-container-todo');
+
+      // get project's todoArray
+      const projectArray = Storage.getProjectArrayFromStorage();
+      const index = projectArray.indexOf(e);
+
+      // create todos
+      for (let i = 0; i < todoArray.length; i++) {
+        this.createTodo(projectArray[index][i]);
       }
     }
   }
@@ -195,11 +213,19 @@ export default class UI {
     // add project name to button
     projectBtn.innerHTML = title;
     projectBtn.setAttribute('type', 'button');
+    projectBtn.setAttribute('id', title);
 
     // add children
     listedItem.appendChild(projectBtn);
     listedItem.appendChild(countText);
 
     document.querySelector('.projects').appendChild(listedItem);
+  }
+
+  static loadProjects() {
+    const projectsArray = Storage.getProjectArrayFromStorage();
+    projectsArray.forEach((project) => {
+      this.createProject(project);
+    });
   }
 }

@@ -297,7 +297,10 @@ export default class DialogBox extends TemplateDialogBox {
 
         UI.createProject(project);
         Storage.addItemToProjectArray(project);
+        UI.sidebarButtonAction(project.title); // project id
       }
     });
   }
 }
+
+// sidebarda projeler güncellensin
