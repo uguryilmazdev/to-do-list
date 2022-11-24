@@ -48,6 +48,8 @@ export default class UI {
     });
   }
 
+  // ----- NOTE -----
+
   static createNoteCard(obj) {
     // object properties
     const title = obj.title;
@@ -99,6 +101,7 @@ export default class UI {
     document.querySelector('.main-container-note').append(noteContainer);
   }
 
+  // ----- TODO -----
   static createTodo(obj) {
     // object properties
     const title = obj.title;
