@@ -64,4 +64,24 @@ export default class Storage {
   static getNoteArrayFromStorage() {
     return JSON.parse(localStorage.getItem('noteList'));
   }
+
+  // ----- PROJECT -----
+  static addItemToProjectArray(obj) {
+    const title = obj.title;
+
+    const projectArray = JSON.parse(localStorage.getItem('projectList'));
+    projectArray.push({
+      title: title,
+    });
+
+    localStorage.setItem('projectList', JSON.stringify(projectArray));
+  }
+
+  static saveProjectArrayToStorage(data) {
+    localStorage.setItem('projectList', JSON.stringify(data));
+  }
+
+  static getProjectArrayFromStorage() {
+    return JSON.parse(localStorage.getItem('projectList'));
+  }
 }
