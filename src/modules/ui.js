@@ -49,7 +49,6 @@ export default class UI {
   }
 
   // ----- NOTE -----
-
   static createNoteCard(obj) {
     // object properties
     const title = obj.title;
@@ -176,5 +175,31 @@ export default class UI {
     const todoList = Storage.getTodoArrayFromStorage();
     const todoCount = todoList.length;
     document.querySelector('#home-todo-count').innerHTML = todoCount;
+  }
+
+  // ----- PROJECT -----
+  static createProject(obj) {
+    // object property
+    const title = obj.title;
+
+    // create elements
+    const listedItem = document.createElement('li');
+    const projectBtn = document.createElement('button');
+    const countText = document.createElement('div');
+
+    // add class
+    listedItem.classList.add('projects-item');
+    projectBtn.classList.add('project-name', 'nav-btn');
+    countText.classList.add('project-count', 'to-do-count');
+
+    // add project name to button
+    projectBtn.innerHTML = title;
+    projectBtn.setAttribute('type', 'button');
+
+    // add children
+    listedItem.appendChild(projectBtn);
+    listedItem.appendChild(countText);
+
+    document.querySelector('.projects').appendChild(listedItem);
   }
 }

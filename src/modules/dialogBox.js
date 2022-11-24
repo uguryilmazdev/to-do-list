@@ -4,6 +4,7 @@ import Note from './note';
 import UI from './ui';
 import Storage from './storage';
 import Todo from './todo';
+import Project from './project';
 
 class TemplateDialogBox {
   // Create a new dialog box element template
@@ -291,6 +292,11 @@ export default class DialogBox extends TemplateDialogBox {
         Storage.addItemToNoteArray(note);
         UI.sidebarButtonAction('notes-btn');
       } else if (clickedTask === 'project-btn') {
+        // create project obj
+        const project = new Project(obj['dialog-title']);
+
+        UI.createProject(project);
+        Storage.addItemToProjectArray(project);
       }
     });
   }
