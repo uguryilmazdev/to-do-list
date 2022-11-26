@@ -1,10 +1,12 @@
 export default class Todo {
-  constructor(title, details, priority) {
+  constructor(title, details, priority, project) {
     this.title = title;
     this.details = details;
     this.priority = priority;
+    this.project = project;
   }
 
+  // title
   setTitle(title) {
     this.title = title;
   }
@@ -13,6 +15,7 @@ export default class Todo {
     return this.title;
   }
 
+  // details
   setDetails(details) {
     this.details = details;
   }
@@ -21,11 +24,17 @@ export default class Todo {
     return this.details;
   }
 
+  // priority
   setPriority(priority) {
     this.priority = priority;
   }
 
   getPriority() {
     return this.priority;
+  }
+
+  // project
+  getProject() {
+    return this.project;
   }
 }
