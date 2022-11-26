@@ -5,6 +5,7 @@ import UI from './ui';
 import Storage from './storage';
 import Todo from './todo';
 import Project from './project';
+import { selectedProject } from './ui';
 
 class TemplateDialogBox {
   // Create a new dialog box element template
@@ -278,7 +279,8 @@ export default class DialogBox extends TemplateDialogBox {
         const todo = new Todo(
           obj['dialog-title'],
           obj['dialog-text'],
-          document.querySelector('input[name="priority"]:checked').value
+          document.querySelector('input[name="priority"]:checked').value,
+          selectedProject.title
         );
 
         UI.createTodo(todo);

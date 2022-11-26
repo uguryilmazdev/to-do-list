@@ -24,12 +24,14 @@ export default class Storage {
     const title = obj.title;
     const details = obj.details;
     const priority = obj.priority;
+    const project = obj.project;
 
     const todoArray = JSON.parse(localStorage.getItem('todoList'));
     todoArray.push({
       title: title,
       details: details,
       priority: priority,
+      project: project,
     });
 
     localStorage.setItem('todoList', JSON.stringify(todoArray));

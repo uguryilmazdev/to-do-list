@@ -10,7 +10,9 @@ const sidebarButtonArray = [
 ];
 
 const projectIdArray = [];
-let selectedProject = [];
+// this points the selected project on sidebar
+let selectedProject;
+export { selectedProject };
 
 export default class UI {
   // sidebarButtonAction and sidebarButtonListener reset the main container
