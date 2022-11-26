@@ -10,6 +10,7 @@ const sidebarButtonArray = [
 ];
 
 const projectIdArray = [];
+let selectedProject = [];
 
 export default class UI {
   // sidebarButtonAction and sidebarButtonListener reset the main container
@@ -49,9 +50,12 @@ export default class UI {
         .firstChild.classList.add('main-container-todo');
 
       // get project's todoArray
-      // const projectArray = Storage.getProjectArrayFromStorage();
-      const index = projectIdArray.indexOf(e);
-      console.log(index);
+      const index = projectIdArray.indexOf(e); // index of clicked project
+      const list = Storage.getProjectArrayFromStorage(); // storage list
+      selectedProject = list[index];
+      console.log(selectedProject);
+
+      // push
 
       // // create todos
       // for (let i = 0; i < todoArray.length; i++) {
