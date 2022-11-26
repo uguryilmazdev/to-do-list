@@ -10,8 +10,10 @@ window.addEventListener(
   MainContainer.template(),
   Storage.setInitialArrays(),
   UI.sidebarButtonListeners(),
-  UI.setTodoCount(),
   UI.loadProjects(),
+  UI.sidebarProjectsListeners(),
+  UI.setTodoCount(),
+
   DialogBox.dialogBoxButtonListeners()
 );
 

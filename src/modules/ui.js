@@ -9,6 +9,8 @@ const sidebarButtonArray = [
   document.querySelector('#notes-btn'),
 ];
 
+const projectIdArray = [];
+
 export default class UI {
   // sidebarButtonAction and sidebarButtonListener reset the main container
   // with respect to clicked button
@@ -40,21 +42,21 @@ export default class UI {
       for (let i = 0; i < noteArray.length; i++) {
         this.createNoteCard(noteArray[i]);
       }
-    } else if (
-      Storage.getProjectArrayFromStorage().find((element) => element === e)
-    ) {
+    } else if (projectIdArray.find((element) => element === e)) {
+      // add todo container to main
       document
         .querySelector('main')
         .firstChild.classList.add('main-container-todo');
 
       // get project's todoArray
-      const projectArray = Storage.getProjectArrayFromStorage();
-      const index = projectArray.indexOf(e);
+      // const projectArray = Storage.getProjectArrayFromStorage();
+      const index = projectIdArray.indexOf(e);
+      console.log(index);
 
-      // create todos
-      for (let i = 0; i < todoArray.length; i++) {
-        this.createTodo(projectArray[index][i]);
-      }
+      // // create todos
+      // for (let i = 0; i < todoArray.length; i++) {
+      //   this.createTodo(projectArray[index][i]);
+      // }
     }
   }
 
@@ -62,6 +64,14 @@ export default class UI {
     sidebarButtonArray.forEach((button) => {
       button.addEventListener('click', (e) => {
         this.sidebarButtonAction(e.target.id);
+      });
+    });
+  }
+
+  static sidebarProjectsListeners() {
+    projectIdArray.forEach((project) => {
+      project.addEventListener('click', () => {
+        this.sidebarButtonAction(project);
       });
     });
   }
@@ -224,8 +234,12 @@ export default class UI {
 
   static loadProjects() {
     const projectsArray = Storage.getProjectArrayFromStorage();
+
     projectsArray.forEach((project) => {
+      // create sidebar project items
       this.createProject(project);
+      // create array of sidebar project items' id
+      projectIdArray.push(document.querySelector(`#${project.title}`));
     });
   }
 }
