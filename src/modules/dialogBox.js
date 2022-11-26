@@ -275,17 +275,30 @@ export default class DialogBox extends TemplateDialogBox {
       }
 
       if (clickedTask === 'todo-btn') {
+        // check if todo belongs any project
+        let project;
+
+        if (
+          selectedProject === 'home-btn' ||
+          selectedProject === 'today-btn' ||
+          selectedProject === 'week-btn'
+        ) {
+          project = 'home-btn';
+        } else {
+          project = selectedProject.title;
+        }
+
         // create todo obj
         const todo = new Todo(
           obj['dialog-title'],
           obj['dialog-text'],
           document.querySelector('input[name="priority"]:checked').value,
-          selectedProject.title
+          project
         );
 
         UI.createTodo(todo);
         Storage.addItemToTodoArray(todo);
-        UI.sidebarButtonAction('home-btn');
+        UI.sidebarButtonAction(project);
       } else if (clickedTask === 'note-btn') {
         // create note obj
         const note = new Note(obj['dialog-title'], obj['dialog-text']);
@@ -304,5 +317,3 @@ export default class DialogBox extends TemplateDialogBox {
     });
   }
 }
-
-// sidebarda projeler güncellensin

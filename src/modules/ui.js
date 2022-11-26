@@ -23,6 +23,9 @@ export default class UI {
 
     // check event target id
     if (e === 'home-btn') {
+      // refresh selected project
+      selectedProject = 'home-btn';
+
       document
         .querySelector('main')
         .firstChild.classList.add('main-container-todo');
@@ -35,7 +38,11 @@ export default class UI {
         this.createTodo(todoArray[i]);
       }
     } else if (e === 'today-btn') {
+      // refresh selected project
+      selectedProject = 'today-btn';
     } else if (e === 'week-btn') {
+      // refresh selected project
+      selectedProject = 'week-btn';
     } else if (e === 'notes-btn') {
       document
         .querySelector('main')
@@ -51,18 +58,20 @@ export default class UI {
         .querySelector('main')
         .firstChild.classList.add('main-container-todo');
 
-      // get project's todoArray
       const index = projectIdArray.indexOf(e); // index of clicked project
-      const list = Storage.getProjectArrayFromStorage(); // storage list
-      selectedProject = list[index];
+      const projectList = Storage.getProjectArrayFromStorage();
+      const todoList = Storage.getTodoArrayFromStorage();
+      selectedProject = projectList[index];
       console.log(selectedProject);
+      // scan todoList for selected project's todos
+      for (let i = 0; i < todoList.length; i++) {
+        const projectName = todoList[i].project;
 
-      // push
-
-      // // create todos
-      // for (let i = 0; i < todoArray.length; i++) {
-      //   this.createTodo(projectArray[index][i]);
-      // }
+        // create todo card
+        if (projectName === selectedProject.title) {
+          this.createTodo(todoList[i]);
+        }
+      }
     }
   }
 

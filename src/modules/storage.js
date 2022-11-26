@@ -1,3 +1,5 @@
+import Project from './project';
+
 export default class Storage {
   static setInitialArrays() {
     // set note list within local storage
