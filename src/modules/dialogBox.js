@@ -279,13 +279,13 @@ export default class DialogBox extends TemplateDialogBox {
         let project;
 
         if (
-          selectedProject === 'home-btn' ||
-          selectedProject === 'today-btn' ||
-          selectedProject === 'week-btn'
+          selectedProject === document.querySelector('#home-btn') ||
+          selectedProject === document.querySelector('#today-btn') ||
+          selectedProject === document.querySelector('#week-btn')
         ) {
           project = 'home-btn';
         } else {
-          project = selectedProject.title;
+          project = selectedProject.id;
         }
 
         // create todo obj
@@ -298,21 +298,21 @@ export default class DialogBox extends TemplateDialogBox {
 
         UI.createTodo(todo);
         Storage.addItemToTodoArray(todo);
-        UI.sidebarButtonAction(project);
+        UI.sidebarButtonAction(selectedProject);
       } else if (clickedTask === 'note-btn') {
         // create note obj
         const note = new Note(obj['dialog-title'], obj['dialog-text']);
 
         UI.createNoteCard(note);
         Storage.addItemToNoteArray(note);
-        UI.sidebarButtonAction('notes-btn');
+        UI.sidebarButtonAction(document.querySelector('#notes-btn'));
       } else if (clickedTask === 'project-btn') {
         // create project obj
         const project = new Project(obj['dialog-title']);
 
         UI.createProject(project);
         Storage.addItemToProjectArray(project);
-        UI.sidebarButtonAction(project.title); // project id
+        UI.sidebarButtonAction(document.querySelector(`#${project.title}`)); // project id
       }
     });
   }
