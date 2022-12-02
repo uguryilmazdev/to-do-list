@@ -69,7 +69,6 @@ export default class UI {
       const projectList = Storage.getProjectArrayFromStorage();
       const todoList = Storage.getTodoArrayFromStorage();
       selectedProject = e;
-      console.log(selectedProject);
 
       // scan todoList for selected project's todos
       for (let i = 0; i < todoList.length; i++) {
@@ -157,6 +156,7 @@ export default class UI {
     const title = obj.title;
     const details = obj.details;
     const priority = obj.priority;
+    const project = obj.project;
 
     // ----- create elements -----
     // main container
@@ -224,8 +224,25 @@ export default class UI {
 
   static setTodoCount() {
     const todoList = Storage.getTodoArrayFromStorage();
+    const projectList = Storage.getProjectArrayFromStorage();
     const todoCount = todoList.length;
+
+    // home covers all todos.
     document.querySelector('#home-todo-count').innerHTML = todoCount;
+
+    // set project todo number
+    projectList.forEach((project) => {
+      const title = project.title;
+      let projectTodoNumber = 0;
+
+      for (let i = 0; i < todoCount; i++) {
+        if (todoList[i].project === title) {
+          projectTodoNumber++;
+        }
+      }
+      document.querySelector(`#${title}`).nextSibling.innerHTML =
+        projectTodoNumber;
+    });
   }
 
   // ----- PROJECT -----
