@@ -309,12 +309,20 @@ export default class DialogBox extends TemplateDialogBox {
         Storage.addItemToNoteArray(note);
         UI.sidebarButtonAction(document.querySelector('#notes-btn'));
       } else if (clickedTask === 'project-btn') {
-        // create project obj
-        const project = new Project(obj['dialog-title']);
-
-        UI.createProject(project);
-        Storage.addItemToProjectArray(project);
-        UI.sidebarButtonAction(document.querySelector(`#${project.title}`)); // project id
+        const projectList = Storage.getProjectArrayFromStorage();
+        // check if project name has already exist
+        if (
+          projectList.find((element) => element.title === obj['dialog-title'])
+        ) {
+          console.log('error');
+        } else {
+          // create project obj
+          console.log(obj['dialog-title']);
+          const project = new Project(obj['dialog-title']);
+          UI.createProject(project);
+          Storage.addItemToProjectArray(project);
+          UI.sidebarButtonAction(document.querySelector(`#${project.title}`)); // project id
+        }
       }
     });
   }
