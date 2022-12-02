@@ -36,6 +36,7 @@ class TemplateDialogBox {
       class: 'dialog-title',
       placeholder: 'Title',
       maxLength: '35',
+      autocomplete: 'off',
     };
 
     const textAttributes = {
@@ -43,6 +44,7 @@ class TemplateDialogBox {
       name: 'dialog-text',
       class: 'dialog-text',
       placeholder: 'Details',
+      autocomplete: 'off',
     };
 
     // set attributes
@@ -285,7 +287,7 @@ export default class DialogBox extends TemplateDialogBox {
         ) {
           project = 'home-btn';
         } else {
-          project = selectedProject.id;
+          project = selectedProject.title;
         }
 
         // create todo obj
