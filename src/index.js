@@ -9,11 +9,7 @@ window.addEventListener(
   'DOMContentLoaded',
   MainContainer.template(),
   Storage.setInitialArrays(),
-  UI.sidebarButtonListeners(),
-  UI.loadProjects(),
-  UI.sidebarProjectsListeners(),
-  UI.setTodoCount(),
-
+  UI.loadUI(),
   DialogBox.dialogBoxButtonListeners()
 );
 

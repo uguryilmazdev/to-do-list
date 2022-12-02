@@ -15,6 +15,13 @@ let selectedProject;
 export { selectedProject };
 
 export default class UI {
+  static loadUI() {
+    this.sidebarButtonListeners();
+    this.loadProjects();
+    this.sidebarProjectsListeners();
+    this.setTodoCount();
+  }
+
   // sidebarButtonAction and sidebarButtonListener reset the main container
   // with respect to clicked button
   static sidebarButtonAction(e) {
@@ -22,7 +29,7 @@ export default class UI {
     MainContainer.template();
 
     // check event target id
-    if (e === 'home-btn') {
+    if (e === document.querySelector('#home-btn')) {
       // refresh selected project
       selectedProject = 'home-btn';
 
@@ -37,13 +44,13 @@ export default class UI {
       for (let i = 0; i < todoArray.length; i++) {
         this.createTodo(todoArray[i]);
       }
-    } else if (e === 'today-btn') {
+    } else if (e === document.querySelector('#today-btn')) {
       // refresh selected project
       selectedProject = 'today-btn';
-    } else if (e === 'week-btn') {
+    } else if (e === document.querySelector('#week-btn')) {
       // refresh selected project
       selectedProject = 'week-btn';
-    } else if (e === 'notes-btn') {
+    } else if (e === document.querySelector('#notes-btn')) {
       document
         .querySelector('main')
         .firstChild.classList.add('main-container-note');
@@ -77,8 +84,8 @@ export default class UI {
 
   static sidebarButtonListeners() {
     sidebarButtonArray.forEach((button) => {
-      button.addEventListener('click', (e) => {
-        this.sidebarButtonAction(e.target.id);
+      button.addEventListener('click', () => {
+        this.sidebarButtonAction(button);
       });
     });
   }
