@@ -21,20 +21,19 @@ export default class Storage {
 
   // ----- TODO -----
   static addItemToTodoArray(obj) {
-    const title = obj.title;
-    const details = obj.details;
-    const priority = obj.priority;
-    const project = obj.project;
+    const item = [
+      {
+        title: obj.title,
+        details: obj.details,
+        priority: obj.priority,
+        project: obj.project,
+      },
+    ];
 
     const todoArray = JSON.parse(localStorage.getItem('todoList'));
-    todoArray.push({
-      title: title,
-      details: details,
-      priority: priority,
-      project: project,
-    });
+    const updatedArray = todoArray.concat(item);
 
-    localStorage.setItem('todoList', JSON.stringify(todoArray));
+    localStorage.setItem('todoList', JSON.stringify(updatedArray));
   }
 
   static saveTodoArrayToStorage(data) {
@@ -47,16 +46,17 @@ export default class Storage {
 
   // ----- NOTE -----
   static addItemToNoteArray(obj) {
-    const title = obj.title;
-    const details = obj.details;
+    const item = [
+      {
+        title: obj.title,
+        details: obj.details,
+      },
+    ];
 
     const noteArray = JSON.parse(localStorage.getItem('noteList'));
-    noteArray.push({
-      title: title,
-      details: details,
-    });
+    const updatedArray = noteArray.concat(item);
 
-    localStorage.setItem('noteList', JSON.stringify(noteArray));
+    localStorage.setItem('noteList', JSON.stringify(updatedArray));
   }
 
   static saveNoteArrayToStorage(data) {
@@ -69,16 +69,17 @@ export default class Storage {
 
   // ----- PROJECT -----
   static addItemToProjectArray(obj) {
-    const title = obj.title;
-    const key = obj.key;
+    const item = [
+      {
+        title: obj.title,
+        key: obj.key,
+      },
+    ];
 
     const projectArray = JSON.parse(localStorage.getItem('projectList'));
-    projectArray.push({
-      title: title,
-      key: key,
-    });
+    const updatedArray = projectArray.concat(item);
 
-    localStorage.setItem('projectList', JSON.stringify(projectArray));
+    localStorage.setItem('projectList', JSON.stringify(updatedArray));
   }
 
   static saveProjectArrayToStorage(data) {
