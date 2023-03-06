@@ -1,5 +1,5 @@
 import MainContainer from './mainContainer.js';
-import Storage from './storage';
+import Storage from './Storage';
 
 // sidebar menu buttons
 const sidebarButtonArray = [

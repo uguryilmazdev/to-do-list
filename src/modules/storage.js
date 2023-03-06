@@ -1,5 +1,5 @@
 export default class Storage {
-  static setInitialArrays() {
+  static initializeLocalStorage() {
     // set note list within local storage
     if (!localStorage.noteList) {
       const noteArray = [];

@@ -1,10 +1,10 @@
 import DialogBoxTemplate from './DialogBoxTemplate';
-import Note from './note';
-import UI from './ui';
-import Storage from './storage';
-import Todo from './todo';
-import Project from './project';
-import { selectedProject } from './ui';
+import Note from './Note';
+import UI from './UI';
+import Storage from './Storage';
+import Todo from './Todo';
+import Project from './Project';
+import { selectedProject } from './UI';
 
 export default class DialogBox extends DialogBoxTemplate {
   static initialize() {

@@ -2,15 +2,19 @@ import uniqid from 'uniqid';
 
 export default class Project {
   constructor(title) {
-    this.title = title;
-    this.key = uniqid();
+    this._title = title;
+    this._key = uniqid('project-');
   }
 
-  setTitle(title) {
-    this.title = title;
+  set title(title) {
+    this._title = title;
   }
 
-  getTitle() {
-    return this.title;
+  get title() {
+    return this._title;
+  }
+
+  get key() {
+    return this._key;
   }
 }

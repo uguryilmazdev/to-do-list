@@ -1,14 +1,14 @@
 import './style.css';
 import MainContainer from './modules/mainContainer.js';
-import Storage from './modules/storage';
-import UI from './modules/ui';
-import DialogBox from './modules/dialogBox';
+import Storage from './modules/Storage';
+import UI from './modules/UI';
+import DialogBox from './modules/DialogBox';
 
 // --------------------------------------------------------
 window.addEventListener(
   'DOMContentLoaded',
   MainContainer.template(),
-  Storage.setInitialArrays(),
+  Storage.initializeLocalStorage(),
   UI.loadUI(),
   DialogBox.initialize()
 );

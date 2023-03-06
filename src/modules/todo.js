@@ -1,40 +1,48 @@
+import uniqid from 'uniqid';
+
 export default class Todo {
   constructor(title, details, priority, project) {
-    this.title = title;
-    this.details = details;
-    this.priority = priority;
-    this.project = project;
+    this._title = title;
+    this._details = details;
+    this._priority = priority;
+    this._project = project;
+    this._key = uniqid('todo-');
   }
 
   // title
-  setTitle(title) {
-    this.title = title;
+  set title(title) {
+    this._title = title;
   }
 
-  getTitle() {
-    return this.title;
+  get title() {
+    return this._title;
   }
 
   // details
-  setDetails(details) {
-    this.details = details;
+  set details(details) {
+    this._details = details;
   }
 
-  getDetails() {
-    return this.details;
+  get details() {
+    return this._details;
   }
 
   // priority
-  setPriority(priority) {
-    this.priority = priority;
+  set priority(priority) {
+    this._priority = priority;
   }
 
-  getPriority() {
-    return this.priority;
+  get priority() {
+    return this._priority;
   }
 
   // project
-  getProject() {
-    return this.project;
+  get project() {
+    return this._project;
+  }
+
+  // key
+  get key() {
+    return this._key;
   }
 }

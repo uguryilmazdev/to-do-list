@@ -1,22 +1,29 @@
+import uniqid from 'uniqid';
+
 export default class Note {
   constructor(title, details) {
-    this.title = title;
-    this.details = details;
+    this._title = title;
+    this._details = details;
+    this._key = uniqid('note-');
   }
 
-  setTitle(title) {
-    this.title = title;
+  set title(title) {
+    this._title = title;
   }
 
-  getTitle() {
-    return this.title;
+  get title() {
+    return this._title;
   }
 
-  setDetails(details) {
-    this.details = details;
+  set details(details) {
+    this._details = details;
   }
 
-  getDetails() {
-    return this.details;
+  get details() {
+    return this._details;
+  }
+
+  get key() {
+    return this._key;
   }
 }
