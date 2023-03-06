@@ -69,6 +69,7 @@ export default class UI {
       const projectList = Storage.getProjectArrayFromStorage();
       const todoList = Storage.getTodoArrayFromStorage();
       selectedProject = e;
+      console.log(selectedProject);
 
       // scan todoList for selected project's todos
       for (let i = 0; i < todoList.length; i++) {
@@ -95,6 +96,7 @@ export default class UI {
       project.addEventListener('click', () => {
         this.sidebarButtonAction(project);
       });
+      console.log(projectIdArray);
     });
   }
 
@@ -233,6 +235,7 @@ export default class UI {
     // set project todo number
     projectList.forEach((project) => {
       const title = project.title;
+      const key = project.key;
       let projectTodoNumber = 0;
 
       for (let i = 0; i < todoCount; i++) {
@@ -240,7 +243,7 @@ export default class UI {
           projectTodoNumber++;
         }
       }
-      document.querySelector(`#${title}`).nextSibling.innerHTML =
+      document.querySelector(`#${key}`).nextSibling.innerHTML =
         projectTodoNumber;
     });
   }
@@ -249,6 +252,7 @@ export default class UI {
   static createProject(obj) {
     // object property
     const title = obj.title;
+    const key = obj.key;
 
     // create elements
     const listedItem = document.createElement('li');
@@ -263,7 +267,7 @@ export default class UI {
     // add project name to button
     projectBtn.innerHTML = title;
     projectBtn.setAttribute('type', 'button');
-    projectBtn.setAttribute('id', title);
+    projectBtn.setAttribute('id', key);
 
     // add children
     listedItem.appendChild(projectBtn);
@@ -279,7 +283,7 @@ export default class UI {
       // create sidebar project items
       this.createProject(project);
       // create array of sidebar project items' id
-      projectIdArray.push(document.querySelector(`#${project.title}`));
+      projectIdArray.push(document.querySelector(`#${project.key}`));
     });
   }
 }

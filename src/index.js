@@ -10,7 +10,7 @@ window.addEventListener(
   MainContainer.template(),
   Storage.setInitialArrays(),
   UI.loadUI(),
-  DialogBox.dialogBoxButtonListeners()
+  DialogBox.initialize()
 );
 
 // ----------------------------- NOTE CONTROL -------------------------

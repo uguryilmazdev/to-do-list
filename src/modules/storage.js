@@ -1,5 +1,3 @@
-import Project from './project';
-
 export default class Storage {
   static setInitialArrays() {
     // set note list within local storage
@@ -72,10 +70,12 @@ export default class Storage {
   // ----- PROJECT -----
   static addItemToProjectArray(obj) {
     const title = obj.title;
+    const key = obj.key;
 
     const projectArray = JSON.parse(localStorage.getItem('projectList'));
     projectArray.push({
       title: title,
+      key: key,
     });
 
     localStorage.setItem('projectList', JSON.stringify(projectArray));

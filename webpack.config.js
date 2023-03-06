@@ -5,7 +5,7 @@ module.exports = {
   mode: 'development',
   entry: {
     index: './src/index.js',
-    dialogBox: './src/modules/dialogBox.js',
+    dialogBox: './src/modules/DialogBox.js',
     mainContainer: './src/modules/mainContainer.js',
     note: './src/modules/note.js',
     todo: './src/modules/todo.js',

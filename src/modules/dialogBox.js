@@ -1,5 +1,4 @@
-// Open a dialog window that creates new project, task or note.
-
+import DialogBoxTemplate from './DialogBoxTemplate';
 import Note from './note';
 import UI from './ui';
 import Storage from './storage';
@@ -7,190 +6,11 @@ import Todo from './todo';
 import Project from './project';
 import { selectedProject } from './ui';
 
-class TemplateDialogBox {
-  // Create a new dialog box element template
-  // It has only title element.
-  static template() {
-    const inputArea = document.querySelector('.form-text-input-area');
-    const submitArea = document.querySelector('.form-submit-area');
-
-    // check if any elements that created before within input area
-    while (inputArea.lastElementChild) {
-      inputArea.removeChild(inputArea.lastElementChild);
-    }
-    // check if any elements that created before within submit area
-    while (submitArea.lastElementChild) {
-      submitArea.removeChild(submitArea.lastElementChild);
-    }
-
-    // -------------------- input area -----------------------
-    // create title and text area.
-    const dialogTitle = document.createElement('input');
-    const dialogText = document.createElement('textarea');
-
-    // attributes
-    const titleAttributes = {
-      type: 'text',
-      id: 'dialog-title',
-      name: 'dialog-title',
-      class: 'dialog-title',
-      placeholder: 'Title',
-      maxLength: '35',
-      autocomplete: 'off',
-    };
-
-    const textAttributes = {
-      id: 'dialog-text',
-      name: 'dialog-text',
-      class: 'dialog-text',
-      placeholder: 'Details',
-      autocomplete: 'off',
-    };
-
-    // set attributes
-    Object.keys(titleAttributes).forEach((attr) => {
-      dialogTitle.setAttribute(attr, titleAttributes[attr]);
-    });
-
-    Object.keys(textAttributes).forEach((attr) => {
-      dialogText.setAttribute(attr, textAttributes[attr]);
-    });
-
-    inputArea.appendChild(dialogTitle);
-    inputArea.appendChild(dialogText);
-
-    // ---------------------- submit area -------------------
-    const createBtn = document.createElement('button');
-
-    const createBtnAttributes = {
-      type: 'submit',
-      id: 'dialog-create-btn',
-      class: 'dialog-btn',
-      value: 'Create',
-    };
-
-    // set attributes
-    Object.keys(createBtnAttributes).forEach((attr) => {
-      createBtn.setAttribute(attr, createBtnAttributes[attr]);
-    });
-
-    submitArea.append(createBtn);
-
-    return [inputArea, submitArea];
-  }
-}
-
-export default class DialogBox extends TemplateDialogBox {
-  // note template
-  static setDialogAsNote() {
-    const [, submitArea] = super.template();
-
-    // change flex design
-    submitArea.style.justifyContent = 'flex-end';
-
-    // change create button's text
-    const createBtn = document.querySelector('#dialog-create-btn');
-    createBtn.innerHTML = 'CREATE NOTE';
-  }
-
-  // todo template
-  static setDialogAsTodo() {
-    const [, submitArea] = super.template();
-
-    // change flex design
-    submitArea.style.justifyContent = 'space-between';
-
-    // change create button's text
-    const createBtn = document.querySelector('#dialog-create-btn');
-    createBtn.innerHTML = 'CREATE TO DO';
-
-    // ------------------- priority buttons ------------------
-    // -------------------------------------------------------
-    // create container of priority buttons
-    const container = document.createElement('div');
-    container.classList.add('priority-buttons-container');
-
-    // create radio button container
-    const lowLabelContainer = document.createElement('label');
-    const mediumLabelContainer = document.createElement('label');
-    const highLabelContainer = document.createElement('label');
-    // create priority buttons
-    const lowInput = document.createElement('input');
-    const mediumInput = document.createElement('input');
-    const highInput = document.createElement('input');
-    // create text area
-    const lowText = document.createElement('div');
-    lowText.innerHTML = 'LOW';
-    const mediumText = document.createElement('div');
-    mediumText.innerHTML = 'MEDIUM';
-    const highText = document.createElement('div');
-    highText.innerHTML = 'HIGH';
-
-    const lowAttr = {
-      type: 'radio',
-      id: 'low-input-priority',
-      name: 'priority',
-      value: 'LOW',
-    };
-
-    const mediumAttr = {
-      type: 'radio',
-      id: 'medium-input-priority',
-      name: 'priority',
-      value: 'MEDIUM',
-    };
-
-    const highAttr = {
-      type: 'radio',
-      id: 'high-input-priority',
-      name: 'priority',
-      value: 'HIGH',
-    };
-
-    // LOW
-    Object.keys(lowAttr).forEach((attr) => {
-      lowInput.setAttribute(attr, lowAttr[attr]);
-    });
-
-    // MEDIUM
-    Object.keys(mediumAttr).forEach((attr) => {
-      mediumInput.setAttribute(attr, mediumAttr[attr]);
-    });
-
-    // HIGH
-    Object.keys(highAttr).forEach((attr) => {
-      highInput.setAttribute(attr, highAttr[attr]);
-    });
-
-    // ----- append children -----
-    lowLabelContainer.appendChild(lowInput);
-    lowLabelContainer.appendChild(lowText);
-    mediumLabelContainer.appendChild(mediumInput);
-    mediumLabelContainer.appendChild(mediumText);
-    highLabelContainer.appendChild(highInput);
-    highLabelContainer.appendChild(highText);
-
-    container.appendChild(lowLabelContainer);
-    container.appendChild(mediumLabelContainer);
-    container.appendChild(highLabelContainer);
-
-    submitArea.prepend(container);
-  }
-
-  // project template
-  static setDialogAsProject() {
-    const [, submitArea] = super.template();
-
-    // change flex design
-    submitArea.style.justifyContent = 'flex-end';
-
-    // change create button's text
-    const createBtn = document.querySelector('#dialog-create-btn');
-    createBtn.innerHTML = 'CREATE PROJECT';
-
-    // remove text area element.
-    // Projects need only title.
-    document.querySelector('.dialog-text').remove();
+export default class DialogBox extends DialogBoxTemplate {
+  static initialize() {
+    this.openDialogBox();
+    this.closeDialogBox();
+    this.createTask();
   }
 
   // reset button style
@@ -222,18 +42,25 @@ export default class DialogBox extends TemplateDialogBox {
     });
   }
 
-  // button click methods
-  static dialogBoxButtonListeners() {
+  static openDialogBox() {
     // open default dialog menu
     document.querySelector('#add-project').addEventListener('click', () => {
       document.querySelector('dialog').showModal();
       this.setDialogAsTodo();
     });
+  }
 
-    // check which event (task) clicked
-    let clickedTask = [];
+  static closeDialogBox() {
+    // close
+    document.querySelector('#exit-btn').addEventListener('click', () => {
+      document.querySelector('dialog').close();
+    });
+  }
 
-    // todo
+  static createTask() {
+    let clickedTask = '';
+
+    // change dialog box ui to todo
     document.querySelector('#todo-btn').addEventListener('click', () => {
       this.setDialogAsTodo();
       this.resetButtonStyle();
@@ -242,7 +69,7 @@ export default class DialogBox extends TemplateDialogBox {
       clickedTask = 'todo-btn';
     });
 
-    // note
+    // change dialog box ui to note
     document.querySelector('#note-btn').addEventListener('click', () => {
       this.setDialogAsNote();
       this.resetButtonStyle();
@@ -251,7 +78,7 @@ export default class DialogBox extends TemplateDialogBox {
       clickedTask = 'note-btn';
     });
 
-    // project
+    // change dialog box ui to project
     document.querySelector('#project-btn').addEventListener('click', () => {
       this.setDialogAsProject();
       this.resetButtonStyle();
@@ -260,14 +87,10 @@ export default class DialogBox extends TemplateDialogBox {
       clickedTask = 'project-btn';
     });
 
-    // close
-    document.querySelector('#exit-btn').addEventListener('click', () => {
-      document.querySelector('dialog').close();
-    });
-
     //create
     document.querySelector('form').addEventListener('submit', () => {
       // get form elements
+
       const elements = document.querySelector('form').elements;
       let obj = {};
 
@@ -277,6 +100,7 @@ export default class DialogBox extends TemplateDialogBox {
       }
 
       if (clickedTask === 'todo-btn') {
+        console.log(clickedTask);
         // check if todo belongs any project
         let project;
 
@@ -287,7 +111,7 @@ export default class DialogBox extends TemplateDialogBox {
         ) {
           project = 'home-btn';
         } else {
-          project = selectedProject.title;
+          project = selectedProject.id;
         }
 
         // create todo obj
@@ -321,7 +145,7 @@ export default class DialogBox extends TemplateDialogBox {
           const project = new Project(obj['dialog-title']);
           UI.createProject(project);
           Storage.addItemToProjectArray(project);
-          UI.sidebarButtonAction(document.querySelector(`#${project.title}`)); // project id
+          UI.sidebarButtonAction(document.querySelector(`#${project.id}`)); // project id
         }
       }
     });
