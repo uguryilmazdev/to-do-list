@@ -13,6 +13,10 @@ window.addEventListener(
   DialogBox.initialize()
 );
 
+window.addEventListener('storage', () => {
+  UI.loadUI();
+});
+
 // ----------------------------- NOTE CONTROL -------------------------
 window.addEventListener('click', (e) => {
   if (e.target.className.includes('note-delete-btn')) {

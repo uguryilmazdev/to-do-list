@@ -34,10 +34,12 @@ export default class Storage {
     const updatedArray = todoArray.concat(item);
 
     localStorage.setItem('todoList', JSON.stringify(updatedArray));
+    window.dispatchEvent(new Event('storage'));
   }
 
   static saveTodoArrayToStorage(data) {
     localStorage.setItem('todoList', JSON.stringify(data));
+    window.dispatchEvent(new Event('storage'));
   }
 
   static getTodoArrayFromStorage() {
@@ -57,10 +59,12 @@ export default class Storage {
     const updatedArray = noteArray.concat(item);
 
     localStorage.setItem('noteList', JSON.stringify(updatedArray));
+    window.dispatchEvent(new Event('storage'));
   }
 
   static saveNoteArrayToStorage(data) {
     localStorage.setItem('noteList', JSON.stringify(data));
+    window.dispatchEvent(new Event('storage'));
   }
 
   static getNoteArrayFromStorage() {
@@ -80,13 +84,26 @@ export default class Storage {
     const updatedArray = projectArray.concat(item);
 
     localStorage.setItem('projectList', JSON.stringify(updatedArray));
+    window.dispatchEvent(new Event('storage'));
   }
 
   static saveProjectArrayToStorage(data) {
     localStorage.setItem('projectList', JSON.stringify(data));
+    window.dispatchEvent(new Event('storage'));
   }
 
   static getProjectArrayFromStorage() {
     return JSON.parse(localStorage.getItem('projectList'));
+  }
+
+  static getProjectDOMElements() {
+    const projects = Storage.getProjectArrayFromStorage();
+    const projectElements = [];
+
+    projects.map((project) => {
+      const element = document.querySelector(`#${project.key}`);
+      projectElements.push(element);
+    });
+    return projectElements;
   }
 }

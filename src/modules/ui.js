@@ -1,289 +1,149 @@
 import MainContainer from './mainContainer.js';
 import Storage from './Storage';
+import Todo from './Todo.js';
+import Project from './Project.js';
+import Note from './Note.js';
 
-// sidebar menu buttons
-const sidebarButtonArray = [
-  document.querySelector('#home-btn'),
-  document.querySelector('#today-btn'),
-  document.querySelector('#week-btn'),
-  document.querySelector('#notes-btn'),
-];
-
-const projectIdArray = [];
-// this points the selected project on sidebar
 let selectedProject;
 export { selectedProject };
 
 export default class UI {
   static loadUI() {
-    this.sidebarButtonListeners();
-    this.loadProjects();
-    this.sidebarProjectsListeners();
-    this.setTodoCount();
+    const [sidebarItemArr] = this.loadSidebarItems();
+    this.handleSidebarItemOnClick(sidebarItemArr);
+    this.setTodoCount(sidebarItemArr);
   }
 
-  // sidebarButtonAction and sidebarButtonListener reset the main container
-  // with respect to clicked button
-  static sidebarButtonAction(e) {
-    MainContainer.clearContainer();
-    MainContainer.template();
+  // ----------- sidebar items ----------
+  // handle sidebar items
+  static handleSidebarItemOnClick(sidebarItemArr) {
+    sidebarItemArr.forEach((item) => {
+      item.addEventListener('click', () => {
+        // clear main container and put template into it
+        MainContainer.clearContainer();
+        MainContainer.template();
 
-    // check event target id
-    if (e === document.querySelector('#home-btn')) {
-      // refresh selected project
-      selectedProject = e;
-
-      document
-        .querySelector('main')
-        .firstChild.classList.add('main-container-todo');
-
-      // get todoArray
-      const todoArray = Storage.getTodoArrayFromStorage();
-
-      // create todos
-      for (let i = 0; i < todoArray.length; i++) {
-        this.createTodo(todoArray[i]);
-      }
-    } else if (e === document.querySelector('#today-btn')) {
-      // refresh selected project
-      selectedProject = e;
-    } else if (e === document.querySelector('#week-btn')) {
-      // refresh selected project
-      selectedProject = e;
-    } else if (e === document.querySelector('#notes-btn')) {
-      document
-        .querySelector('main')
-        .firstChild.classList.add('main-container-note');
-      const noteArray = Storage.getNoteArrayFromStorage();
-      // create note cards
-      for (let i = 0; i < noteArray.length; i++) {
-        this.createNoteCard(noteArray[i]);
-      }
-    } else if (projectIdArray.find((element) => element === e)) {
-      // add todo container to main
-      document
-        .querySelector('main')
-        .firstChild.classList.add('main-container-todo');
-
-      const index = projectIdArray.indexOf(e); // index of clicked project
-      const projectList = Storage.getProjectArrayFromStorage();
-      const todoList = Storage.getTodoArrayFromStorage();
-      selectedProject = e;
-      console.log(selectedProject);
-
-      // scan todoList for selected project's todos
-      for (let i = 0; i < todoList.length; i++) {
-        const projectName = todoList[i].project;
-
-        // create todo card
-        if (projectName === projectList[index].title) {
-          this.createTodo(todoList[i]);
+        // handle button click
+        if (item.id === 'home-btn') {
+          this.createHomePage(item);
+        } else if (item.id === 'today-btn') {
+          this.createTodayPage(item);
+        } else if (item.id === 'week-btn') {
+          this.createWeekPage(item);
+        } else if (item.id === 'notes-btn') {
+          this.createNotesPage();
+        } else {
+          this.createProjectPage(item);
         }
-      }
+      });
+    });
+  }
+
+  static loadSidebarItems() {
+    // navigation items -> home, today, week, notes
+    const navbarArr = [
+      document.querySelector('#home-btn'),
+      document.querySelector('#today-btn'),
+      document.querySelector('#week-btn'),
+      document.querySelector('#notes-btn'),
+    ];
+
+    // project items
+    // clear if project container has child
+    const container = document.querySelector('.projects');
+    while (container.lastElementChild) {
+      container.removeChild(container.lastElementChild);
     }
-  }
 
-  static sidebarButtonListeners() {
-    sidebarButtonArray.forEach((button) => {
-      button.addEventListener('click', () => {
-        this.sidebarButtonAction(button);
-      });
+    // project element's container
+    const projectArr = [];
+    const projectArray = Storage.getProjectArrayFromStorage();
+
+    projectArray.forEach((project) => {
+      // create sidebar project items
+      Project.createProjectItem(project);
     });
-  }
 
-  static sidebarProjectsListeners() {
-    projectIdArray.forEach((project) => {
-      project.addEventListener('click', () => {
-        this.sidebarButtonAction(project);
-      });
-      console.log(projectIdArray);
+    projectArray.map((project) => {
+      const element = document.querySelector(`#${project.key}`);
+      projectArr.push(element);
     });
+
+    const sidebarItemArr = navbarArr.concat(projectArr);
+
+    console.log(sidebarItemArr);
+    return [sidebarItemArr];
   }
 
-  // ----- NOTE -----
-  static createNoteCard(obj) {
-    // object properties
-    const title = obj.title;
-    const details = obj.details;
-    // ----- create elements ------
-    // main container
-    const noteContainer = document.createElement('div');
-    // header elements
-    const headerContainer = document.createElement('div');
-    const noteTitle = document.createElement('p');
-    const noteBtnContainer = document.createElement('div');
-    const detailsBtn = document.createElement('button');
-    const deleteBtn = document.createElement('button');
-    // body elements
-    const noteDetails = document.createElement('p');
-
-    // ----- add inner text  and text attributes-----
-    noteTitle.innerHTML = title;
-    noteDetails.innerHTML = details;
-
-    // ----- append children -----
-    // add header and body elements
-    noteContainer.appendChild(headerContainer);
-    noteContainer.appendChild(noteDetails);
-    // add header's children
-    headerContainer.appendChild(noteTitle);
-    headerContainer.appendChild(noteBtnContainer);
-    // add buttons
-    noteBtnContainer.appendChild(detailsBtn);
-    noteBtnContainer.appendChild(deleteBtn);
-    // button property
-    detailsBtn.setAttribute('type', 'button');
-    deleteBtn.setAttribute('type', 'button');
-
-    // ----- add classes -----
-    noteContainer.classList.add('note-container');
-    headerContainer.classList.add('note-header-container');
-    noteTitle.classList.add('note-title');
-    noteBtnContainer.classList.add('note-btn-container');
-    detailsBtn.classList.add('note-btn', 'note-details-btn');
-    deleteBtn.classList.add('note-btn', 'note-delete-btn');
-    noteDetails.classList.add('note-details');
-
-    // ----- add container to main container -----
-    // change main container class
-    document
-      .querySelector('main')
-      .firstChild.classList.add('main-container-note');
-    document.querySelector('.main-container-note').append(noteContainer);
-  }
-
-  // ----- TODO -----
-  static createTodo(obj) {
-    // object properties
-    const title = obj.title;
-    const details = obj.details;
-    const priority = obj.priority;
-    const project = obj.project;
-
-    // ----- create elements -----
-    // main container
-    const todoContainer = document.createElement('div');
-    // left and right side container
-    const leftContainer = document.createElement('div');
-    const rightContainer = document.createElement('div');
-    // left container children
-    const labelContainer = document.createElement('label');
-    const isCheck = document.createElement('input');
-    const todoTitle = document.createElement('p');
-    // right container children
-    const detailsBtn = document.createElement('button');
-    const dateText = document.createElement('p');
-    const changeTodoBtn = document.createElement('button');
-    const deleteTodoBtn = document.createElement('button');
-
-    // inner HTML
-    todoTitle.innerHTML = title;
-    detailsBtn.innerHTML = 'Details';
-    dateText.innerHTML = 'exampletext';
-
-    // ----- append children -----
-    // add left-right container
-    todoContainer.appendChild(leftContainer);
-    todoContainer.appendChild(rightContainer);
-    // add left container children
-    leftContainer.appendChild(labelContainer);
-    labelContainer.appendChild(isCheck);
-    labelContainer.appendChild(todoTitle);
-    // add right container children
-    rightContainer.appendChild(detailsBtn);
-    rightContainer.appendChild(dateText);
-    rightContainer.appendChild(changeTodoBtn);
-    rightContainer.appendChild(deleteTodoBtn);
-
-    // ----- button properties -----
-    [detailsBtn, changeTodoBtn, deleteTodoBtn].forEach((button) => {
-      button.setAttribute('type', 'button');
-    });
-    isCheck.setAttribute('type', 'checkbox');
-
-    // ----- add classes -----
-    todoContainer.classList.add('todo-container');
-    rightContainer.classList.add('todo-sub-container');
-    leftContainer.classList.add('todo-sub-container');
-    labelContainer.classList.add('todo-label-container');
-    isCheck.classList.add('isCheck');
-    todoTitle.classList.add('todo-title');
-    detailsBtn.classList.add('todo-details-btn', 'dialog-btn');
-    dateText.classList.add('date-text');
-    changeTodoBtn.classList.add('note-btn', 'change-todo-btn');
-    deleteTodoBtn.classList.add('note-btn', 'delete-todo-btn');
-
-    // ----- add container to main container -----
-    // change main container class
+  // ---------- pages ----------
+  static createHomePage(item) {
+    selectedProject = item;
     document
       .querySelector('main')
       .firstChild.classList.add('main-container-todo');
-    document.querySelector('.main-container-todo').append(todoContainer);
 
-    // todo count
-    this.setTodoCount();
+    // get todoArray
+    const todoArray = Storage.getTodoArrayFromStorage();
+    // create todos
+    todoArray.map((todo) => Todo.createTodo(todo));
   }
 
-  static setTodoCount() {
+  static createTodayPage(item) {
+    selectedProject = item;
+  }
+
+  static createWeekPage(item) {
+    selectedProject = item;
+  }
+
+  static createNotesPage() {
+    // set note container style to main
+    document
+      .querySelector('main')
+      .firstChild.classList.add('main-container-note');
+
+    const noteArray = Storage.getNoteArrayFromStorage();
+    // create note cards
+    noteArray.map((note) => Note.createNoteCard(note));
+  }
+
+  static createProjectPage(item) {
+    selectedProject = item;
+
+    // add todo container to main
+    document
+      .querySelector('main')
+      .firstChild.classList.add('main-container-todo');
+
     const todoList = Storage.getTodoArrayFromStorage();
-    const projectList = Storage.getProjectArrayFromStorage();
+
+    // scan todoList for selected project's todos
+    todoList.map((todo) => {
+      const projectName = todo.project;
+      if (projectName === item.id) {
+        Todo.createTodo(todo);
+      }
+    });
+  }
+
+  static setTodoCount(sidebarItemArr) {
+    const todoList = Storage.getTodoArrayFromStorage();
     const todoCount = todoList.length;
 
+    sidebarItemArr.map((item) => {
+      // pass notes button
+      if (item.id !== 'notes-btn') {
+        let todoNumber = 0;
+        const id = item.id;
+
+        todoList.map((todo) => {
+          if (todo.project === id) todoNumber++;
+        });
+
+        item.nextElementSibling.innerHTML = todoNumber;
+      }
+    });
     // home covers all todos.
     document.querySelector('#home-todo-count').innerHTML = todoCount;
-
-    // set project todo number
-    projectList.forEach((project) => {
-      const title = project.title;
-      const key = project.key;
-      let projectTodoNumber = 0;
-
-      for (let i = 0; i < todoCount; i++) {
-        if (todoList[i].project === title) {
-          projectTodoNumber++;
-        }
-      }
-      document.querySelector(`#${key}`).nextSibling.innerHTML =
-        projectTodoNumber;
-    });
-  }
-
-  // ----- PROJECT -----
-  static createProject(obj) {
-    // object property
-    const title = obj.title;
-    const key = obj.key;
-
-    // create elements
-    const listedItem = document.createElement('li');
-    const projectBtn = document.createElement('button');
-    const countText = document.createElement('div');
-
-    // add class
-    listedItem.classList.add('projects-item');
-    projectBtn.classList.add('project-name', 'nav-btn');
-    countText.classList.add('project-count', 'to-do-count');
-
-    // add project name to button
-    projectBtn.innerHTML = title;
-    projectBtn.setAttribute('type', 'button');
-    projectBtn.setAttribute('id', key);
-
-    // add children
-    listedItem.appendChild(projectBtn);
-    listedItem.appendChild(countText);
-
-    document.querySelector('.projects').appendChild(listedItem);
-  }
-
-  static loadProjects() {
-    const projectsArray = Storage.getProjectArrayFromStorage();
-
-    projectsArray.forEach((project) => {
-      // create sidebar project items
-      this.createProject(project);
-      // create array of sidebar project items' id
-      projectIdArray.push(document.querySelector(`#${project.key}`));
-    });
   }
 }

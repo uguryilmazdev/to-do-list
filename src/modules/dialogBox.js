@@ -1,10 +1,9 @@
 import DialogBoxTemplate from './DialogBoxTemplate';
 import Note from './Note';
-import UI from './UI';
 import Storage from './Storage';
 import Todo from './Todo';
 import Project from './Project';
-import { selectedProject } from './UI';
+import UI, { selectedProject } from './UI';
 
 export default class DialogBox extends DialogBoxTemplate {
   static initialize() {
@@ -122,16 +121,16 @@ export default class DialogBox extends DialogBoxTemplate {
           project
         );
 
-        UI.createTodo(todo);
+        Todo.createTodo(todo);
+
         Storage.addItemToTodoArray(todo);
-        UI.sidebarButtonAction(selectedProject);
+        //UI.handleSidebarClick(selectedProject);
       } else if (clickedTask === 'note-btn') {
         // create note obj
         const note = new Note(obj['dialog-title'], obj['dialog-text']);
 
-        UI.createNoteCard(note);
+        Note.createNoteCard(note);
         Storage.addItemToNoteArray(note);
-        UI.sidebarButtonAction(document.querySelector('#notes-btn'));
       } else if (clickedTask === 'project-btn') {
         const projectList = Storage.getProjectArrayFromStorage();
         // check if project name has already exist
@@ -143,9 +142,8 @@ export default class DialogBox extends DialogBoxTemplate {
           // create project obj
           console.log(obj['dialog-title']);
           const project = new Project(obj['dialog-title']);
-          UI.createProject(project);
+          Project.createProjectItem(project);
           Storage.addItemToProjectArray(project);
-          UI.sidebarButtonAction(document.querySelector(`#${project.id}`)); // project id
         }
       }
     });

@@ -9,6 +9,7 @@ export default class Todo {
     this._key = uniqid('todo-');
   }
 
+  // ----------- getter - setter ----------
   // title
   set title(title) {
     this._title = title;
@@ -44,5 +45,74 @@ export default class Todo {
   // key
   get key() {
     return this._key;
+  }
+
+  // ---------- class functions ----------
+  static createTodo(obj) {
+    // object properties
+    const title = obj.title;
+    const details = obj.details;
+    const priority = obj.priority;
+    const project = obj.project;
+
+    // ----- create elements -----
+    // main container
+    const todoContainer = document.createElement('div');
+    // left and right side container
+    const leftContainer = document.createElement('div');
+    const rightContainer = document.createElement('div');
+    // left container children
+    const labelContainer = document.createElement('label');
+    const isCheck = document.createElement('input');
+    const todoTitle = document.createElement('p');
+    // right container children
+    const detailsBtn = document.createElement('button');
+    const dateText = document.createElement('p');
+    const changeTodoBtn = document.createElement('button');
+    const deleteTodoBtn = document.createElement('button');
+
+    // inner HTML
+    todoTitle.innerHTML = title;
+    detailsBtn.innerHTML = 'Details';
+    dateText.innerHTML = 'exampletext';
+
+    // ----- append children -----
+    // add left-right container
+    todoContainer.appendChild(leftContainer);
+    todoContainer.appendChild(rightContainer);
+    // add left container children
+    leftContainer.appendChild(labelContainer);
+    labelContainer.appendChild(isCheck);
+    labelContainer.appendChild(todoTitle);
+    // add right container children
+    rightContainer.appendChild(detailsBtn);
+    rightContainer.appendChild(dateText);
+    rightContainer.appendChild(changeTodoBtn);
+    rightContainer.appendChild(deleteTodoBtn);
+
+    // ----- button properties -----
+    [detailsBtn, changeTodoBtn, deleteTodoBtn].map((button) => {
+      button.setAttribute('type', 'button');
+    });
+    isCheck.setAttribute('type', 'checkbox');
+
+    // ----- add classes -----
+    todoContainer.classList.add('todo-container');
+    rightContainer.classList.add('todo-sub-container');
+    leftContainer.classList.add('todo-sub-container');
+    labelContainer.classList.add('todo-label-container');
+    isCheck.classList.add('isCheck');
+    todoTitle.classList.add('todo-title');
+    detailsBtn.classList.add('todo-details-btn', 'dialog-btn');
+    dateText.classList.add('date-text');
+    changeTodoBtn.classList.add('note-btn', 'change-todo-btn');
+    deleteTodoBtn.classList.add('note-btn', 'delete-todo-btn');
+
+    // ----- add container to main container -----
+    // change main container class
+    document
+      .querySelector('main')
+      .firstChild.classList.add('main-container-todo');
+    document.querySelector('.main-container-todo').append(todoContainer);
   }
 }
