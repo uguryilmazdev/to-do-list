@@ -15,30 +15,6 @@ export default class UI {
   }
 
   // ----------- sidebar items ----------
-  // handle sidebar items
-  static handleSidebarItemOnClick(sidebarItemArr) {
-    sidebarItemArr.forEach((item) => {
-      item.addEventListener('click', () => {
-        // clear main container and put template into it
-        MainContainer.clearContainer();
-        MainContainer.template();
-
-        // handle button click
-        if (item.id === 'home-btn') {
-          this.createHomePage(item);
-        } else if (item.id === 'today-btn') {
-          this.createTodayPage(item);
-        } else if (item.id === 'week-btn') {
-          this.createWeekPage(item);
-        } else if (item.id === 'notes-btn') {
-          this.createNotesPage();
-        } else {
-          this.createProjectPage(item);
-        }
-      });
-    });
-  }
-
   static loadSidebarItems() {
     // navigation items -> home, today, week, notes
     const navbarArr = [
@@ -73,6 +49,29 @@ export default class UI {
 
     console.log(sidebarItemArr);
     return [sidebarItemArr];
+  }
+
+  static handleSidebarItemOnClick(sidebarItemArr) {
+    sidebarItemArr.forEach((item) => {
+      item.addEventListener('click', () => {
+        // clear main container and put template into it
+        MainContainer.clearContainer();
+        MainContainer.template();
+
+        // handle button click
+        if (item.id === 'home-btn') {
+          this.createHomePage(item);
+        } else if (item.id === 'today-btn') {
+          this.createTodayPage(item);
+        } else if (item.id === 'week-btn') {
+          this.createWeekPage(item);
+        } else if (item.id === 'notes-btn') {
+          this.createNotesPage();
+        } else {
+          this.createProjectPage(item);
+        }
+      });
+    });
   }
 
   // ---------- pages ----------
@@ -126,6 +125,7 @@ export default class UI {
     });
   }
 
+  // ----------- task numbers ----------
   static setTodoCount(sidebarItemArr) {
     const todoList = Storage.getTodoArrayFromStorage();
     const todoCount = todoList.length;

@@ -3,13 +3,13 @@ import Note from './Note';
 import Storage from './Storage';
 import Todo from './Todo';
 import Project from './Project';
-import UI, { selectedProject } from './UI';
+import { selectedProject } from './UI';
 
 export default class DialogBox extends DialogBoxTemplate {
   static initialize() {
     this.openDialogBox();
     this.closeDialogBox();
-    this.createTask();
+    this.handleDialogBoxOnClick();
   }
 
   // reset button style
@@ -56,7 +56,7 @@ export default class DialogBox extends DialogBoxTemplate {
     });
   }
 
-  static createTask() {
+  static handleDialogBoxOnClick() {
     let clickedTask = '';
 
     // change dialog box ui to todo
@@ -89,63 +89,66 @@ export default class DialogBox extends DialogBoxTemplate {
     //create
     document.querySelector('form').addEventListener('submit', () => {
       // get form elements
-
       const elements = document.querySelector('form').elements;
       let obj = {};
 
+      // get object properties
       for (let i = 0; i < elements.length; i++) {
         let item = elements.item(i);
         obj[item.name] = item.value;
       }
 
       if (clickedTask === 'todo-btn') {
-        console.log(clickedTask);
-        // check if todo belongs any project
-        let project;
-
-        if (
-          selectedProject === document.querySelector('#home-btn') ||
-          selectedProject === document.querySelector('#today-btn') ||
-          selectedProject === document.querySelector('#week-btn')
-        ) {
-          project = 'home-btn';
-        } else {
-          project = selectedProject.id;
-        }
-
-        // create todo obj
-        const todo = new Todo(
-          obj['dialog-title'],
-          obj['dialog-text'],
-          document.querySelector('input[name="priority"]:checked').value,
-          project
-        );
-
-        Todo.createTodo(todo);
-
-        Storage.addItemToTodoArray(todo);
-        //UI.handleSidebarClick(selectedProject);
+        this.submitTodo(obj);
       } else if (clickedTask === 'note-btn') {
-        // create note obj
-        const note = new Note(obj['dialog-title'], obj['dialog-text']);
-
-        Note.createNoteCard(note);
-        Storage.addItemToNoteArray(note);
+        this.submitNote(obj);
       } else if (clickedTask === 'project-btn') {
-        const projectList = Storage.getProjectArrayFromStorage();
-        // check if project name has already exist
-        if (
-          projectList.find((element) => element.title === obj['dialog-title'])
-        ) {
-          console.log('error');
-        } else {
-          // create project obj
-          console.log(obj['dialog-title']);
-          const project = new Project(obj['dialog-title']);
-          Project.createProjectItem(project);
-          Storage.addItemToProjectArray(project);
-        }
+        this.submitProject(obj);
       }
     });
+  }
+
+  static submitTodo(obj) {
+    // set the project that todo belongs to.
+    let project;
+
+    selectedProject.id === 'home-btn' ||
+    selectedProject.id === 'today-btn' ||
+    selectedProject.id === 'week-btn' ||
+    selectedProject.id === 'notes-btn'
+      ? (project = 'home-btn')
+      : (project = selectedProject.id);
+
+    // create todo object
+    const todo = new Todo(
+      obj['dialog-title'],
+      obj['dialog-text'],
+      document.querySelector('input[name="priority"]:checked').value,
+      project
+    );
+
+    Todo.createTodo(todo);
+    Storage.addItemToTodoArray(todo);
+  }
+
+  static submitNote(obj) {
+    // create note object
+    const note = new Note(obj['dialog-title'], obj['dialog-text']);
+
+    Note.createNoteCard(note);
+    Storage.addItemToNoteArray(note);
+  }
+
+  static submitProject(obj) {
+    const projectList = Storage.getProjectArrayFromStorage();
+    // check if project has already exist
+    if (projectList.find((element) => element.title === obj['dialog-title'])) {
+      alert('Project name has already exist');
+    } else {
+      // create project obj
+      const project = new Project(obj['dialog-title']);
+      Project.createProjectItem(project);
+      Storage.addItemToProjectArray(project);
+    }
   }
 }
