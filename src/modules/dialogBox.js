@@ -9,7 +9,7 @@ export default class DialogBox extends DialogBoxTemplate {
   static initialize() {
     this.openDialogBox();
     this.closeDialogBox();
-    this.handleDialogBoxOnClick();
+    this.handleDialogBoxTasksOnClick();
   }
 
   // reset button style
@@ -56,7 +56,7 @@ export default class DialogBox extends DialogBoxTemplate {
     });
   }
 
-  static handleDialogBoxOnClick() {
+  static handleDialogBoxTasksOnClick() {
     let clickedTask = '';
 
     // change dialog box ui to todo

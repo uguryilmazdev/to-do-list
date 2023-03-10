@@ -56,7 +56,7 @@ export default class UI {
       item.addEventListener('click', () => {
         // clear main container and put template into it
         MainContainer.clearContainer();
-        MainContainer.template();
+        MainContainer.createContainer();
 
         // handle button click
         if (item.id === 'home-btn') {

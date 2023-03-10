@@ -1,7 +1,7 @@
 const main = document.querySelector('main');
 
 export default class MainContainer {
-  static template() {
+  static createContainer() {
     // check if any container within main
     while (main.lastElementChild) {
       main.removeChild(main.lastElementChild);

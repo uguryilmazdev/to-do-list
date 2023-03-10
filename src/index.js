@@ -7,7 +7,7 @@ import DialogBox from './modules/DialogBox';
 // --------------------------------------------------------
 window.addEventListener(
   'DOMContentLoaded',
-  MainContainer.template(),
+  MainContainer.createContainer(),
   Storage.initializeLocalStorage(),
   UI.loadUI(),
   DialogBox.initialize()
