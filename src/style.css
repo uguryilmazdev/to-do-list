@@ -565,7 +565,7 @@ label [id='high-input-priority']:checked ~ div {
 .date-text {
 }
 
-.change-todo-btn {
+.edit-todo-btn {
   background-image: url('./asset/images/edit_FILL0_wght400_GRAD0_opsz48.svg');
 }
 

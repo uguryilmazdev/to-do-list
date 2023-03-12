@@ -1,4 +1,7 @@
 import uniqid from 'uniqid';
+import Storage from './Storage';
+import UI from './UI';
+import { openEditTodoDialog } from '../utilities/openEditTodoDialog';
 
 export default class Todo {
   constructor(title, details, priority, project) {
@@ -105,7 +108,7 @@ export default class Todo {
     todoTitle.classList.add('todo-title');
     detailsBtn.classList.add('todo-details-btn', 'dialog-btn');
     dateText.classList.add('date-text');
-    changeTodoBtn.classList.add('note-btn', 'change-todo-btn');
+    changeTodoBtn.classList.add('note-btn', 'edit-todo-btn');
     deleteTodoBtn.classList.add('note-btn', 'delete-todo-btn');
 
     // ----- add container to main container -----
@@ -114,5 +117,54 @@ export default class Todo {
       .querySelector('main')
       .firstChild.classList.add('main-container-todo');
     document.querySelector('.main-container-todo').append(todoContainer);
+  }
+
+  static handleTodoCartControl() {
+    this.handleDeleteTodoCard();
+    this.handleEditTodoCard();
+  }
+
+  static handleDeleteTodoCard() {
+    window.addEventListener('click', (e) => {
+      if (e.target.className.includes('delete-todo-btn')) {
+        //child is todo card
+        const child = e.target.parentElement.parentElement;
+        // parent is main-container
+        const parent = child.parentElement;
+
+        let index = Array.prototype.indexOf.call(parent.children, child);
+
+        const todoArray = Storage.getTodoArrayFromStorage();
+
+        todoArray.splice(index, 1);
+        Storage.saveTodoArrayToStorage(todoArray);
+
+        document
+          .querySelector('.main-container-todo')
+          .removeChild(
+            document.querySelector('.main-container-todo').children[index]
+          );
+
+        const [sidebarItemArr] = UI.loadSidebarItems();
+        // todo count
+        UI.setTodoCount(sidebarItemArr);
+      }
+    });
+  }
+
+  static handleEditTodoCard() {
+    window.addEventListener('click', (e) => {
+      if (e.target.className.includes('edit-todo-btn')) {
+        // child is note card
+        const child = e.target.parentElement.parentElement.parentElement;
+        // parent is main-container
+        const parent = child.parentElement;
+
+        // find todo index from todo array and open dialog to edit
+        let index = Array.prototype.indexOf.call(parent.children, child);
+        const dialog = openEditTodoDialog(index, 'TODO');
+        dialog.showModal();
+      }
+    });
   }
 }

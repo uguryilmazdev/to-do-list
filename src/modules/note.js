@@ -1,6 +1,6 @@
 import uniqid from 'uniqid';
 import Storage from './Storage';
-import { openEditDialog } from '../utilities/openEditDialog';
+import { openEditNoteDialog } from '../utilities/openEditNoteDialog';
 
 export default class Note {
   constructor(title, details) {
@@ -122,7 +122,7 @@ export default class Note {
 
         // find note index from note array and open dialog to edit
         let index = Array.prototype.indexOf.call(parent.children, child);
-        const dialog = openEditDialog(index, 'note');
+        const dialog = openEditNoteDialog(index, 'note');
         dialog.showModal();
       }
     });

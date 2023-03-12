@@ -1,12 +1,13 @@
 import MainContainer from '../modules/mainContainer';
 import Storage from '../modules/Storage';
 import UI from '../modules/UI';
+import addPriorityButtons from './addPriorityButtons';
 
-export function openEditDialog(index, taskType) {
-  // get the note to be edited
-  const noteArray = Storage.getNoteArrayFromStorage();
-  const noteTitle = noteArray[index].title;
-  const noteDetails = noteArray[index].details;
+export function openEditTodoDialog(index, taskType) {
+  // get the todo to be edited
+  const todoArray = Storage.getTodoArrayFromStorage();
+  const todoTitle = todoArray[index].title;
+  const todoDetails = todoArray[index].details;
 
   // main template
   const dialog = document.createElement('dialog');
@@ -21,14 +22,14 @@ export function openEditDialog(index, taskType) {
   const submitBtn = document.createElement('button');
 
   // attributes
-  dialog.id = 'edit-task-dialog';
+  dialog.id = 'edit-todo-dialog';
   form.method = 'dialog';
   headerText.innerHTML = `Edit your ${taskType}`;
   submitBtn.innerHTML = 'Edit';
   submitBtn.type = 'submit';
   // we need former title and details to show user
-  taskTitle.value = noteTitle;
-  taskDetails.value = noteDetails;
+  taskTitle.value = todoTitle;
+  taskDetails.value = todoDetails;
 
   // add classes
   dialog.classList.add('dialog');
@@ -55,6 +56,8 @@ export function openEditDialog(index, taskType) {
   inputArea.appendChild(taskTitle);
   inputArea.appendChild(taskDetails);
   submitArea.appendChild(submitBtn);
+  // add priority buttons to the structure
+  addPriorityButtons(submitArea);
 
   // ---------- handle edit and exit button click ----------
   // handle exit
@@ -67,18 +70,21 @@ export function openEditDialog(index, taskType) {
   // handle edit
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    // get note and change it's title and details
-    const note = noteArray[index];
-    note.title = taskTitle.value;
-    note.details = taskDetails.value;
+    // get todo and change it's title, details and priority
+    const todo = todoArray[index];
+    todo.title = taskTitle.value;
+    todo.details = taskDetails.value;
+    todo.priority = document.querySelector(
+      'input[name="priority"]:checked'
+    ).value;
     // save new array to local storage
-    Storage.saveNoteArrayToStorage(noteArray);
+    Storage.saveTodoArrayToStorage(todoArray);
     // close dialog then remove it from DOM
     dialog.close();
     dialog.remove();
     // reload notes page
     MainContainer.clearContainer();
-    UI.createNotesPage();
+    UI.createHomePage();
   });
 
   return dialog;
