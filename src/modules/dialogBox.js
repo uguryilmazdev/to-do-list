@@ -44,16 +44,18 @@ export default class DialogBox extends DialogBoxTemplate {
   static openDialogBox() {
     // open default dialog menu
     document.querySelector('#add-project').addEventListener('click', () => {
-      document.querySelector('dialog').showModal();
+      document.querySelector('#add-task-dialog').showModal();
       this.setDialogAsTodo();
     });
   }
 
   static closeDialogBox() {
     // close
-    document.querySelector('#exit-btn').addEventListener('click', () => {
-      document.querySelector('dialog').close();
-    });
+    document
+      .querySelector('#add-task-exit-btn')
+      .addEventListener('click', () => {
+        document.querySelector('dialog').close();
+      });
   }
 
   static handleDialogBoxTasksOnClick() {

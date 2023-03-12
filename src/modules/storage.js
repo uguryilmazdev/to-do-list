@@ -52,6 +52,7 @@ export default class Storage {
       {
         title: obj.title,
         details: obj.details,
+        key: obj.key,
       },
     ];
 

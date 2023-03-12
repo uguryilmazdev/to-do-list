@@ -1,4 +1,6 @@
 import uniqid from 'uniqid';
+import Storage from './Storage';
+import { openEditDialog } from '../utilities/openEditDialog';
 
 export default class Note {
   constructor(title, details) {
@@ -7,7 +9,7 @@ export default class Note {
     this._key = uniqid('note-');
   }
 
-  // getter - setter
+  // ---------- getter - setter -----------
   set title(title) {
     this._title = title;
   }
@@ -28,7 +30,7 @@ export default class Note {
     return this._key;
   }
 
-  // add note card to UI
+  // ---------- add note card to UI ----------
   static createNoteCard(obj) {
     // object properties
     const title = obj.title;
@@ -78,5 +80,51 @@ export default class Note {
       .querySelector('main')
       .firstChild.classList.add('main-container-note');
     document.querySelector('.main-container-note').append(noteContainer);
+  }
+
+  // ---------- note card listeners ----------
+  static handleNoteCardControl() {
+    this.handleDeleteNoteCard();
+    this.handleEditNoteCard();
+  }
+
+  static handleDeleteNoteCard() {
+    window.addEventListener('click', (e) => {
+      if (e.target.className.includes('note-delete-btn')) {
+        // child is note card
+        const child = e.target.parentElement.parentElement.parentElement;
+        // parent is main-container
+        const parent = child.parentElement;
+
+        let index = Array.prototype.indexOf.call(parent.children, child);
+
+        const noteArray = Storage.getNoteArrayFromStorage();
+
+        noteArray.splice(index, 1);
+        Storage.saveNoteArrayToStorage(noteArray);
+
+        document
+          .querySelector('.main-container-note')
+          .removeChild(
+            document.querySelector('.main-container-note').children[index]
+          );
+      }
+    });
+  }
+
+  static handleEditNoteCard() {
+    window.addEventListener('click', (e) => {
+      if (e.target.className.includes('note-details-btn')) {
+        // child is note card
+        const child = e.target.parentElement.parentElement.parentElement;
+        // parent is main-container
+        const parent = child.parentElement;
+
+        // find note index from note array and open dialog to edit
+        let index = Array.prototype.indexOf.call(parent.children, child);
+        const dialog = openEditDialog(index, 'note');
+        dialog.showModal();
+      }
+    });
   }
 }
