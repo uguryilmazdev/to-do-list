@@ -1,4 +1,4 @@
-import './style.css';
+import './styles/style.css';
 import MainContainer from './modules/mainContainer.js';
 import Storage from './modules/Storage';
 import UI from './modules/UI';
