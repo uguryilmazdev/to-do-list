@@ -1,7 +1,7 @@
 import uniqid from 'uniqid';
 import Storage from './Storage';
 import UI from './UI';
-import { openEditTodoDialog } from '../utilities/openEditTodoDialog';
+import { openEditDialogScreen } from '../utilities/openEditDialogScreen';
 
 export default class Todo {
   constructor(title, details, priority, project) {
@@ -133,9 +133,7 @@ export default class Todo {
         const parent = child.parentElement;
 
         let index = Array.prototype.indexOf.call(parent.children, child);
-
         const todoArray = Storage.getTodoArrayFromStorage();
-
         todoArray.splice(index, 1);
         Storage.saveTodoArrayToStorage(todoArray);
 
@@ -156,13 +154,13 @@ export default class Todo {
     window.addEventListener('click', (e) => {
       if (e.target.className.includes('edit-todo-btn')) {
         // child is note card
-        const child = e.target.parentElement.parentElement.parentElement;
+        const child = e.target.parentElement.parentElement;
         // parent is main-container
         const parent = child.parentElement;
 
         // find todo index from todo array and open dialog to edit
         let index = Array.prototype.indexOf.call(parent.children, child);
-        const dialog = openEditTodoDialog(index, 'TODO');
+        const dialog = openEditDialogScreen(index, 'todo');
         dialog.showModal();
       }
     });
