@@ -122,7 +122,6 @@ export default class Note {
 
         // find note index from note array and open dialog to edit
         let index = Array.prototype.indexOf.call(parent.children, child);
-        console.log(index);
         const dialog = openEditDialogScreen(index, 'note');
         dialog.showModal();
       }

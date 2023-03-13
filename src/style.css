@@ -253,6 +253,18 @@ dialog:not([open]) {
   color: var(--header-background-color);
 }
 
+.exit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  background-image: url('/src/asset/images/close_icon.svg');
+  background-repeat: none;
+  background-size: contain;
+}
+
 /* form container */
 .dialog > form {
   display: grid;
@@ -481,11 +493,11 @@ label [id='high-input-priority']:checked ~ div {
 }
 
 .note-details-btn {
-  background-image: url('./asset/images/edit_FILL0_wght400_GRAD0_opsz48.svg');
+  background-image: url('./asset/images/edit_icon.svg');
 }
 
 .note-delete-btn {
-  background-image: url('./asset/images/delete_FILL0_wght400_GRAD0_opsz48.svg');
+  background-image: url('./asset/images/delete_icon.svg');
 }
 
 .note-details {
@@ -566,9 +578,9 @@ label [id='high-input-priority']:checked ~ div {
 }
 
 .edit-todo-btn {
-  background-image: url('./asset/images/edit_FILL0_wght400_GRAD0_opsz48.svg');
+  background-image: url('./asset/images/edit_icon.svg');
 }
 
 .delete-todo-btn {
-  background-image: url('./asset/images/delete_FILL0_wght400_GRAD0_opsz48.svg');
+  background-image: url('./asset/images/delete_icon.svg');
 }
