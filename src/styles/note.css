@@ -2,9 +2,10 @@
 .note-container {
   display: inline-block;
   width: 100%;
-  background-color: var(--sidebar-background-color);
-  margin: 1rem auto;
+  margin-bottom: 2rem;
   border-radius: 5px;
+  background-color: var(--task-bg);
+  border: 2px solid var(--blue);
 }
 
 .note-header-container {
@@ -12,6 +13,7 @@
   grid-template-columns: 4fr 1fr;
   grid-template-rows: 1fr;
   max-width: 100%;
+  border-bottom: 1px solid var(--blue);
 }
 
 .note-title {
@@ -19,19 +21,23 @@
   align-items: flex-start;
   justify-content: flex-start;
   text-align: justify;
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
-  color: var(--header-background-color);
+  padding: 0.75rem;
   font-weight: 700;
   font-size: 1.3rem;
   word-break: break-all;
   max-width: 100%;
+  color: var(--dark-blue);
 }
 
 .note-btn-container {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  padding: 0.3rem;
+  padding: 0.75rem;
+}
+.note-btn-container > * {
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
 }
 
 .note-btn {
@@ -39,12 +45,13 @@
   height: 1.1rem;
   background-size: cover;
   border: none;
+  background-color: var(--task-bg);
 }
 
 .note-btn:hover {
   transition-duration: 200ms;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .note-btn:active {
@@ -63,9 +70,9 @@
 
 .note-details {
   height: fit-content;
-  padding: 1rem;
+  padding: 0.75rem;
   text-align: justify;
   overflow-y: auto;
-  color: var(--lm-text-color);
-  word-break: break-all;
+  word-break: normal;
+  color: var(--dark-blue);
 }

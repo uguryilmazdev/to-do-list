@@ -1,36 +1,25 @@
 :root {
-  /* dark mode colors */
-  --dm-header-background-color: #ff7373;
-  --dm-main-background-color: #fefcfe;
-  --dm-sidebar-background-color: #f3eff3;
-  --dm-alternative-color: #fadb44;
-  --dm-border-color: #e7dce7;
-
-  /* day mode colors */
-
-  /* default colors */
-  --header-background-color: var(--dm-header-background-color);
-  --main-background-color: var(--dm-main-background-color);
-  --sidebar-background-color: var(--dm-sidebar-background-color);
-  --alternative-color: var(--dm-alternative-color);
-  --border-color: var(--dm-border-color);
+  --dark-blue: #112d4e;
+  --blue: #3f72af;
+  --dark-purple: #424874;
+  --purple: #a6b1e1;
+  --light-purple: #dcd6f7;
+  --light-grey: #dbe2ef;
+  --white: #f9f7f7;
+  --cream: #f4eeff;
+  --task-bg: #cbd9e9;
+  --yellow: #f9ed69;
+  --orange: #f08a5d;
+  --red: #b83b5e;
+  --green: #95e1d3;
 
   /* font size */
   --font-size: calc(0.625rem + 0.5vw);
   font-size: var(--font-size);
 
-  /* colors */
-  --green: rgb(24, 241, 24);
-  --yellow: #fadb44;
-
-  /* priority buttons color*/
-  --priority-low: green;
-  --priority-medium: orange;
-  --priority-high: red;
-
   /* text color */
-  --dm-text-color: #fefcfe;
-  --lm-text-color: #2a3444;
+  --dm-text-color: #f9f7f7;
+  --lm-text-color: #112d4e;
   --text-color: var(--dm-text-color);
   color: var(--text-color);
 }
@@ -44,8 +33,6 @@ hmtl {
 /* ------------ body style --------------------*/
 body {
   display: grid;
-  grid-template-columns: 20vw 80vw;
-  grid-template-rows: 10vh 90vh;
   grid-template-areas:
     'header header'
     'sidebar main';

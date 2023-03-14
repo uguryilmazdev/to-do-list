@@ -1,9 +1,10 @@
 /* --------------- header style ----------------*/
 .header-content {
-  grid-area: header;
-  background-color: var(--header-background-color);
-  border-bottom: 0.05rem outset var(--border-color);
   position: fixed;
-  width: 100vw;
-  height: 7.5vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  grid-area: header;
+  background-color: var(--dark-blue);
 }

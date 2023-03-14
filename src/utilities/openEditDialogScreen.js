@@ -44,7 +44,7 @@ export function openEditDialogScreen(index, taskType) {
   submitArea.classList.add('form-submit-area');
   taskTitle.classList.add('dialog-text');
   taskDetails.classList.add('dialog-text');
-  submitBtn.classList.add('dialog-btn');
+  submitBtn.classList.add('dialog-btn', 'dialog-submit-btn');
 
   // ---------- append children ----------
   // add dialog to DOM

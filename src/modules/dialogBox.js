@@ -12,33 +12,18 @@ export default class DialogBox extends DialogBoxTemplate {
     this.handleDialogBoxTasksOnClick();
   }
 
-  // reset button style
-  static resetButtonStyle() {
+  static resetButtonStyle(button) {
     const btnArray = ['#todo-btn', '#note-btn', '#project-btn'];
 
+    // reset all dialog button style
     btnArray.forEach((btn) => {
-      document.querySelector(btn).style.backgroundColor = '#fefcfe';
-      document.querySelector(btn).style.color = '#2a3444';
+      document.querySelector(btn).style.backgroundColor = '#f9f7f7';
+      document.querySelector(btn).style.color = '#3f72af';
     });
-  }
 
-  static resetPriorityButtonStyle() {
-    const btnArray = [
-      '#low-input-priority',
-      '#medium-input-priority',
-      '#high-input-priority',
-    ];
-
-    btnArray.forEach((btn) => {
-      document.querySelector(btn).style.backgroundColor = '#fefcfe';
-      if (btn === btnArray[0]) {
-        document.querySelector(btn).style.color = 'green';
-      } else if (btn === btnArray[1]) {
-        document.querySelector(btn).style.color = 'orange';
-      } else if (btn === btnArray[2]) {
-        document.querySelector(btn).style.color = 'red';
-      }
-    });
+    // change selected button style
+    document.querySelector(`#${button}`).style.backgroundColor = '#3f72af';
+    document.querySelector(`#${button}`).style.color = '#f9f7f7';
   }
 
   static openDialogBox() {
@@ -62,29 +47,23 @@ export default class DialogBox extends DialogBoxTemplate {
     let clickedTask = '';
 
     // change dialog box ui to todo
-    document.querySelector('#todo-btn').addEventListener('click', () => {
+    document.querySelector('#todo-btn').addEventListener('click', (e) => {
       this.setDialogAsTodo();
-      this.resetButtonStyle();
-      document.querySelector('#todo-btn').style.backgroundColor = '#fadb44';
-      document.querySelector('#todo-btn').style.color = '#ff7373';
+      this.resetButtonStyle(e.target.id);
       clickedTask = 'todo-btn';
     });
 
     // change dialog box ui to note
-    document.querySelector('#note-btn').addEventListener('click', () => {
+    document.querySelector('#note-btn').addEventListener('click', (e) => {
       this.setDialogAsNote();
-      this.resetButtonStyle();
-      document.querySelector('#note-btn').style.backgroundColor = '#fadb44';
-      document.querySelector('#note-btn').style.color = '#ff7373';
+      this.resetButtonStyle(e.target.id);
       clickedTask = 'note-btn';
     });
 
     // change dialog box ui to project
-    document.querySelector('#project-btn').addEventListener('click', () => {
+    document.querySelector('#project-btn').addEventListener('click', (e) => {
       this.setDialogAsProject();
-      this.resetButtonStyle();
-      document.querySelector('#project-btn').style.backgroundColor = '#fadb44';
-      document.querySelector('#project-btn').style.color = '#ff7373';
+      this.resetButtonStyle(e.target.id);
       clickedTask = 'project-btn';
     });
 

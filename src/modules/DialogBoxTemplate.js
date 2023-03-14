@@ -59,7 +59,7 @@ export default class DialogBoxTemplate {
     const createBtnAttributes = {
       type: 'submit',
       id: 'dialog-create-btn',
-      class: 'dialog-btn',
+      class: 'dialog-btn dialog-submit-btn',
       value: 'Create',
     };
 
@@ -83,7 +83,7 @@ export default class DialogBoxTemplate {
 
     // change create button's text
     const createBtn = document.querySelector('#dialog-create-btn');
-    createBtn.innerHTML = 'CREATE TO DO';
+    createBtn.innerHTML = 'CREATE';
 
     addPriorityButtons(submitArea);
   }
@@ -97,7 +97,7 @@ export default class DialogBoxTemplate {
 
     // change create button's text
     const createBtn = document.querySelector('#dialog-create-btn');
-    createBtn.innerHTML = 'CREATE NOTE';
+    createBtn.innerHTML = 'CREATE';
   }
 
   // ---------- PROJECT template ----------
@@ -109,7 +109,7 @@ export default class DialogBoxTemplate {
 
     // change create button's text
     const createBtn = document.querySelector('#dialog-create-btn');
-    createBtn.innerHTML = 'CREATE PROJECT';
+    createBtn.innerHTML = 'CREATE';
 
     // remove text area element.
     // Projects need only title.
