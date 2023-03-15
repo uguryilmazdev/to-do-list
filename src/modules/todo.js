@@ -1,6 +1,7 @@
 import uniqid from 'uniqid';
 import Storage from './Storage';
 import UI from './UI';
+import { openDetailsDialogScreen } from '../utilities/openDetailsDialogScreen';
 import { openEditDialogScreen } from '../utilities/openEditDialogScreen';
 
 export default class Todo {
@@ -119,9 +120,42 @@ export default class Todo {
     document.querySelector('.main-container-todo').append(todoContainer);
   }
 
-  static handleTodoCartControl() {
-    this.handleDeleteTodoCard();
+  static handleTodoCartButtonsOnClick() {
+    this.handleShowDetailsTodoCard();
     this.handleEditTodoCard();
+    this.handleDeleteTodoCard();
+  }
+
+  static handleShowDetailsTodoCard() {
+    window.addEventListener('click', (e) => {
+      if (e.target.className.includes('todo-details-btn')) {
+        // child is note card
+        const child = e.target.parentElement.parentElement;
+        // parent is main-container
+        const parent = child.parentElement;
+
+        // find todo index from todo array and open dialog to edit
+        let index = Array.prototype.indexOf.call(parent.children, child);
+        const dialog = openDetailsDialogScreen(index);
+        dialog.showModal();
+      }
+    });
+  }
+
+  static handleEditTodoCard() {
+    window.addEventListener('click', (e) => {
+      if (e.target.className.includes('edit-todo-btn')) {
+        // child is note card
+        const child = e.target.parentElement.parentElement;
+        // parent is main-container
+        const parent = child.parentElement;
+
+        // find todo index from todo array and open dialog to edit
+        let index = Array.prototype.indexOf.call(parent.children, child);
+        const dialog = openEditDialogScreen(index, 'todo');
+        dialog.showModal();
+      }
+    });
   }
 
   static handleDeleteTodoCard() {
@@ -146,22 +180,6 @@ export default class Todo {
         const [sidebarItemArr] = UI.loadSidebarItems();
         // todo count
         UI.setTodoCount(sidebarItemArr);
-      }
-    });
-  }
-
-  static handleEditTodoCard() {
-    window.addEventListener('click', (e) => {
-      if (e.target.className.includes('edit-todo-btn')) {
-        // child is note card
-        const child = e.target.parentElement.parentElement;
-        // parent is main-container
-        const parent = child.parentElement;
-
-        // find todo index from todo array and open dialog to edit
-        let index = Array.prototype.indexOf.call(parent.children, child);
-        const dialog = openEditDialogScreen(index, 'todo');
-        dialog.showModal();
       }
     });
   }

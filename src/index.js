@@ -13,7 +13,7 @@ window.addEventListener(
   Storage.initializeLocalStorage(),
   UI.loadUI(),
   DialogBox.initialize(),
-  Todo.handleTodoCartControl(),
+  Todo.handleTodoCartButtonsOnClick(),
   Note.handleNoteCardControl()
 );
 
