@@ -55,12 +55,12 @@ export default class DialogBoxTemplate {
 
     // ---------------------- submit area -------------------
     const createBtn = document.createElement('button');
+    createBtn.innerHTML = 'Create';
 
     const createBtnAttributes = {
       type: 'submit',
       id: 'dialog-create-btn',
       class: 'dialog-btn dialog-submit-btn',
-      value: 'Create',
     };
 
     // set attributes
@@ -68,7 +68,7 @@ export default class DialogBoxTemplate {
       createBtn.setAttribute(attr, createBtnAttributes[attr]);
     });
 
-    submitArea.append(createBtn);
+    submitArea.appendChild(createBtn);
 
     return [inputArea, submitArea];
   }
@@ -81,9 +81,11 @@ export default class DialogBoxTemplate {
     // change flex design
     submitArea.style.justifyContent = 'space-between';
 
-    // change create button's text
-    const createBtn = document.querySelector('#dialog-create-btn');
-    createBtn.innerHTML = 'CREATE';
+    // add date input
+    const date = document.createElement('input');
+    date.type = 'date';
+    date.name = 'dueTo';
+    submitArea.prepend(date);
 
     addPriorityButtons(submitArea);
   }
@@ -94,10 +96,6 @@ export default class DialogBoxTemplate {
 
     // change flex design
     submitArea.style.justifyContent = 'flex-end';
-
-    // change create button's text
-    const createBtn = document.querySelector('#dialog-create-btn');
-    createBtn.innerHTML = 'CREATE';
   }
 
   // ---------- PROJECT template ----------
@@ -106,10 +104,6 @@ export default class DialogBoxTemplate {
 
     // change flex design
     submitArea.style.justifyContent = 'flex-end';
-
-    // change create button's text
-    const createBtn = document.querySelector('#dialog-create-btn');
-    createBtn.innerHTML = 'CREATE';
 
     // remove text area element.
     // Projects need only title.

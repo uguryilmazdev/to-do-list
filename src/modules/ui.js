@@ -46,8 +46,6 @@ export default class UI {
     });
 
     const sidebarItemArr = navbarArr.concat(projectArr);
-
-    console.log(sidebarItemArr);
     return [sidebarItemArr];
   }
 

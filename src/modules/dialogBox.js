@@ -78,7 +78,6 @@ export default class DialogBox extends DialogBoxTemplate {
         let item = elements.item(i);
         obj[item.name] = item.value;
       }
-
       if (clickedTask === 'todo-btn') {
         this.submitTodo(obj);
       } else if (clickedTask === 'note-btn') {
@@ -104,6 +103,7 @@ export default class DialogBox extends DialogBoxTemplate {
     const todo = new Todo(
       obj['dialog-title'],
       obj['dialog-text'],
+      obj['dueTo'],
       document.querySelector('input[name="priority"]:checked').value,
       project
     );

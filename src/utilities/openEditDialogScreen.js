@@ -63,6 +63,11 @@ export function openEditDialogScreen(id, taskType) {
   submitArea.appendChild(submitBtn);
 
   if (taskType === 'todo') {
+    // add date input
+    const date = document.createElement('input');
+    date.type = 'date';
+    date.name = 'dueTo';
+    submitArea.prepend(date);
     // add priority buttons to the structure
     addPriorityButtons(submitArea);
   }
@@ -83,6 +88,7 @@ export function openEditDialogScreen(id, taskType) {
     task.details = taskDetails.value;
     // if task is todo, user might change it's priority
     if (taskType === 'todo') {
+      task.dueTo = document.querySelector('input[name="dueTo"]').value;
       task.priority = document.querySelector(
         'input[name="priority"]:checked'
       ).value;

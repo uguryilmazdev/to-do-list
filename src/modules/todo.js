@@ -5,9 +5,10 @@ import { openDetailsDialogScreen } from '../utilities/openDetailsDialogScreen';
 import { openEditDialogScreen } from '../utilities/openEditDialogScreen';
 
 export default class Todo {
-  constructor(title, details, priority, project) {
+  constructor(title, details, dueTo, priority, project) {
     this._title = title;
     this._details = details;
+    this._dueTo = dueTo;
     this._priority = priority;
     this._project = project;
     this._key = uniqid('todo-');
@@ -30,6 +31,15 @@ export default class Todo {
 
   get details() {
     return this._details;
+  }
+
+  // due to
+  set dueTo(dueTo) {
+    this._dueTo = dueTo;
+  }
+
+  get dueTo() {
+    return this._dueTo;
   }
 
   // priority
@@ -56,6 +66,7 @@ export default class Todo {
     // object properties
     const title = obj.title;
     const details = obj.details;
+    const dueTo = obj.dueTo;
     const priority = obj.priority;
     const project = obj.project;
     const key = obj.key;
@@ -80,7 +91,7 @@ export default class Todo {
     // inner HTML
     todoTitle.innerHTML = title;
     detailsBtn.innerHTML = 'Details';
-    dateText.innerHTML = 'exampletext';
+    dateText.innerHTML = dueTo;
 
     // ----- append children -----
     // add left-right container
