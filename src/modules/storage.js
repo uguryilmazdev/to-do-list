@@ -27,6 +27,7 @@ export default class Storage {
         details: obj.details,
         priority: obj.priority,
         project: obj.project,
+        key: obj.key,
       },
     ];
 

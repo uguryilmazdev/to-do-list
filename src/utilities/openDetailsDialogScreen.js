@@ -1,11 +1,17 @@
 import Storage from '../modules/Storage';
 
-export function openDetailsDialogScreen(index) {
+export function openDetailsDialogScreen(id) {
   // ---------- get selected todo ----------
   const array = Storage.getTodoArrayFromStorage();
+  let title = '';
+  let details = '';
   // get title and details of todo
-  const title = array[index].title;
-  const details = array[index].details;
+  array.map((todo) => {
+    if (todo.key === id) {
+      title = todo.title;
+      details = todo.details;
+    }
+  });
 
   // ---------- main elements ----------
   const dialog = document.createElement('dialog');

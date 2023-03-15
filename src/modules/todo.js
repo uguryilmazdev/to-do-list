@@ -58,10 +58,12 @@ export default class Todo {
     const details = obj.details;
     const priority = obj.priority;
     const project = obj.project;
+    const key = obj.key;
 
     // ----- create elements -----
     // main container
     const todoContainer = document.createElement('div');
+    todoContainer.setAttribute('id', key);
     // left and right side container
     const leftContainer = document.createElement('div');
     const rightContainer = document.createElement('div');
@@ -129,14 +131,10 @@ export default class Todo {
   static handleShowDetailsTodoCard() {
     window.addEventListener('click', (e) => {
       if (e.target.className.includes('todo-details-btn')) {
-        // child is note card
+        // child is note card, and we need note card's id
         const child = e.target.parentElement.parentElement;
-        // parent is main-container
-        const parent = child.parentElement;
-
-        // find todo index from todo array and open dialog to edit
-        let index = Array.prototype.indexOf.call(parent.children, child);
-        const dialog = openDetailsDialogScreen(index);
+        // create dialog using id
+        const dialog = openDetailsDialogScreen(child.id);
         dialog.showModal();
       }
     });
@@ -145,14 +143,10 @@ export default class Todo {
   static handleEditTodoCard() {
     window.addEventListener('click', (e) => {
       if (e.target.className.includes('edit-todo-btn')) {
-        // child is note card
+        // child is note card, and we need note card's id
         const child = e.target.parentElement.parentElement;
-        // parent is main-container
-        const parent = child.parentElement;
-
-        // find todo index from todo array and open dialog to edit
-        let index = Array.prototype.indexOf.call(parent.children, child);
-        const dialog = openEditDialogScreen(index, 'todo');
+        // create dialog using id
+        const dialog = openEditDialogScreen(child.id, 'todo');
         dialog.showModal();
       }
     });

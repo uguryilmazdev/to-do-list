@@ -3,15 +3,16 @@ import Storage from '../modules/Storage';
 import UI from '../modules/UI';
 import addPriorityButtons from './addPriorityButtons';
 
-export function openEditDialogScreen(index, taskType) {
+export function openEditDialogScreen(id, taskType) {
   // get todos or notes based on taskType
   let array = [];
   if (taskType === 'note') array = Storage.getNoteArrayFromStorage();
   if (taskType === 'todo') array = Storage.getTodoArrayFromStorage();
 
-  // get title and details attributes of task
-  const title = array[index].title;
-  const details = array[index].details;
+  // get title and details of task
+  const task = array.find((task) => task.key === id);
+  const title = task.title;
+  const details = task.details;
 
   // main template
   const dialog = document.createElement('dialog');
@@ -78,7 +79,6 @@ export function openEditDialogScreen(index, taskType) {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     // get task and change it's title and details
-    const task = array[index];
     task.title = taskTitle.value;
     task.details = taskDetails.value;
     // if task is todo, user might change it's priority
