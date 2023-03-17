@@ -26,6 +26,7 @@ export default function addPriorityButtons(submitArea) {
     id: 'low-input-priority',
     name: 'priority',
     value: 'LOW',
+    checked: 'true',
   };
 
   const mediumAttr = {

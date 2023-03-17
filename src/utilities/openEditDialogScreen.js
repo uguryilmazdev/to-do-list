@@ -43,7 +43,7 @@ export function openEditDialogScreen(id, taskType) {
   exitBtn.classList.add('exit-btn');
   inputArea.classList.add('form-text-input-area');
   submitArea.classList.add('form-submit-area');
-  taskTitle.classList.add('dialog-text', 'dialog-text-title');
+  taskTitle.classList.add('dialog-title');
   taskDetails.classList.add('dialog-text');
   submitBtn.classList.add('dialog-btn', 'dialog-submit-btn');
 

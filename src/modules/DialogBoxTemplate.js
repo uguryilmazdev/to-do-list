@@ -31,6 +31,7 @@ export default class DialogBoxTemplate {
       placeholder: 'Title',
       maxLength: '35',
       autocomplete: 'off',
+      required: 'required',
     };
 
     const textAttributes = {
@@ -39,6 +40,7 @@ export default class DialogBoxTemplate {
       class: 'dialog-text',
       placeholder: 'Details',
       autocomplete: 'off',
+      required: 'required',
     };
 
     // set attributes
@@ -83,10 +85,12 @@ export default class DialogBoxTemplate {
 
     // add date input
     const date = document.createElement('input');
+    date.required = 'required';
     date.type = 'date';
     date.name = 'dueTo';
     submitArea.prepend(date);
 
+    // priority buttons
     addPriorityButtons(submitArea);
   }
 
