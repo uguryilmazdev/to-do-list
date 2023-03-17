@@ -58,7 +58,7 @@ export default class UI {
 
         // handle button click
         if (item.id === 'home-btn') {
-          this.createHomePage();
+          this.createHomePage(item);
         } else if (item.id === 'today-btn') {
           this.createTodayPage(item);
         } else if (item.id === 'week-btn') {
@@ -73,7 +73,9 @@ export default class UI {
   }
 
   // ---------- pages ----------
-  static createHomePage() {
+  static createHomePage(item) {
+    selectedProject = item;
+
     document
       .querySelector('main')
       .firstChild.classList.add('main-container-todo');
@@ -86,6 +88,15 @@ export default class UI {
 
   static createTodayPage(item) {
     selectedProject = item;
+
+    document
+      .querySelector('main')
+      .firstChild.classList.add('main-container-todo');
+
+    // get today todo's array
+    const [arr] = this.getTodayTodo();
+    // create todos
+    arr.map((todo) => Todo.createTodo(todo));
   }
 
   static createWeekPage(item) {
@@ -104,6 +115,7 @@ export default class UI {
   }
 
   static createProjectPage(item) {
+    selectedProject = item;
     // add todo container to main
     document
       .querySelector('main')
@@ -154,5 +166,28 @@ export default class UI {
     });
     // home covers all todos.
     document.querySelector('#home-todo-count').innerHTML = todoCount;
+    // today todos
+    const [, count] = this.getTodayTodo();
+    document.querySelector('#today-todo-count').innerHTML = count;
+  }
+
+  // today and week todo
+  static getTodayTodo() {
+    // date
+    const date = new Date().toISOString().split('T')[0];
+
+    // get todoArray
+    const todoArray = Storage.getTodoArrayFromStorage();
+    // filter today's todo
+    const arr = [];
+    let count = 0;
+    todoArray.map((todo) => {
+      if (todo.dueTo === date) {
+        arr.push(todo);
+        count++;
+      }
+    });
+
+    return [arr, count];
   }
 }

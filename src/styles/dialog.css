@@ -7,7 +7,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   /* size */
-  min-width: 50%;
+  min-width: calc(var(--font-size) * 40);
   /*  min-height: 40%; */
   /* border */
   border-radius: 5px;
@@ -89,7 +89,7 @@ dialog:not([open]) {
 }
 
 .dialog-text {
-  height: 10rem;
+  height: calc(var(--font-size) * 10);
   font-family: inherit;
   font-size: inherit;
   resize: none;
