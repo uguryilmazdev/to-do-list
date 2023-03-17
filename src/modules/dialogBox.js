@@ -3,6 +3,7 @@ import Note from './Note';
 import Storage from './Storage';
 import Todo from './Todo';
 import Project from './Project';
+import UI from './UI';
 import { selectedProject } from './UI';
 
 export default class DialogBox extends DialogBoxTemplate {
@@ -110,6 +111,10 @@ export default class DialogBox extends DialogBoxTemplate {
 
     Todo.createTodo(todo);
     Storage.addItemToTodoArray(todo);
+    // reload page
+    project === 'home-btn'
+      ? UI.createHomePage(project)
+      : UI.createProjectPage(project);
   }
 
   static submitNote(obj) {
@@ -118,6 +123,8 @@ export default class DialogBox extends DialogBoxTemplate {
 
     Note.createNoteCard(note);
     Storage.addItemToNoteArray(note);
+    //reload page
+    UI.createNotesPage();
   }
 
   static submitProject(obj) {

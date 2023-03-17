@@ -76,6 +76,8 @@ export default class UI {
   static createHomePage(item) {
     selectedProject = item;
 
+    MainContainer.clearContainer();
+    MainContainer.createContainer();
     document
       .querySelector('main')
       .firstChild.classList.add('main-container-todo');
@@ -89,6 +91,8 @@ export default class UI {
   static createTodayPage(item) {
     selectedProject = item;
 
+    MainContainer.clearContainer();
+    MainContainer.createContainer();
     document
       .querySelector('main')
       .firstChild.classList.add('main-container-todo');
@@ -102,6 +106,8 @@ export default class UI {
   static createWeekPage(item) {
     selectedProject = item;
 
+    MainContainer.clearContainer();
+    MainContainer.createContainer();
     document
       .querySelector('main')
       .firstChild.classList.add('main-container-todo');
@@ -113,6 +119,8 @@ export default class UI {
   }
 
   static createNotesPage() {
+    MainContainer.clearContainer();
+    MainContainer.createContainer();
     // set note container style to main
     document
       .querySelector('main')
@@ -126,6 +134,8 @@ export default class UI {
   static createProjectPage(item) {
     selectedProject = item;
     // add todo container to main
+    MainContainer.clearContainer();
+    MainContainer.createContainer();
     document
       .querySelector('main')
       .firstChild.classList.add('main-container-todo');

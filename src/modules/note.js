@@ -35,9 +35,11 @@ export default class Note {
     // object properties
     const title = obj.title;
     const details = obj.details;
+    const id = obj.key;
     // ----- create elements ------
     // main container
     const noteContainer = document.createElement('div');
+    noteContainer.id = id;
     // header elements
     const headerContainer = document.createElement('div');
     const noteTitle = document.createElement('p');
@@ -117,12 +119,7 @@ export default class Note {
       if (e.target.className.includes('note-details-btn')) {
         // child is note card
         const child = e.target.parentElement.parentElement.parentElement;
-        // parent is main-container
-        const parent = child.parentElement;
-
-        // find note index from note array and open dialog to edit
-        let index = Array.prototype.indexOf.call(parent.children, child);
-        const dialog = openEditDialogScreen(index, 'note');
+        const dialog = openEditDialogScreen(child.id, 'note');
         dialog.showModal();
       }
     });
