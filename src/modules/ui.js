@@ -101,6 +101,15 @@ export default class UI {
 
   static createWeekPage(item) {
     selectedProject = item;
+
+    document
+      .querySelector('main')
+      .firstChild.classList.add('main-container-todo');
+
+    // get week todo's array
+    const [arr] = this.getWeekTodo();
+    // create todos
+    arr.map((todo) => Todo.createTodo(todo));
   }
 
   static createNotesPage() {
@@ -167,8 +176,11 @@ export default class UI {
     // home covers all todos.
     document.querySelector('#home-todo-count').innerHTML = todoCount;
     // today todos
-    const [, count] = this.getTodayTodo();
-    document.querySelector('#today-todo-count').innerHTML = count;
+    const [, todayCount] = this.getTodayTodo();
+    document.querySelector('#today-todo-count').innerHTML = todayCount;
+    // week todos
+    const [, weekCount] = this.getWeekTodo();
+    document.querySelector('#week-todo-count').innerHTML = weekCount;
   }
 
   // today and week todo
@@ -183,6 +195,30 @@ export default class UI {
     let count = 0;
     todoArray.map((todo) => {
       if (todo.dueTo === date) {
+        arr.push(todo);
+        count++;
+      }
+    });
+
+    return [arr, count];
+  }
+
+  static getWeekTodo() {
+    // get current date
+    const date = new Date().toISOString().split('T')[0];
+    // get one week later
+    const now = Date.now();
+    const oneWeek = 7 * 24 * 60 * 60 * 1000;
+    const oneWeekFromNow = now + oneWeek;
+    const oneWeekLater = new Date(oneWeekFromNow).toISOString().split('T')[0];
+
+    // get todoArray
+    const todoArray = Storage.getTodoArrayFromStorage();
+    // filter week's todo
+    const arr = [];
+    let count = 0;
+    todoArray.map((todo) => {
+      if (todo.dueTo >= date && todo.dueTo <= oneWeekLater) {
         arr.push(todo);
         count++;
       }
