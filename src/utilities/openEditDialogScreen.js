@@ -63,13 +63,20 @@ export function openEditDialogScreen(id, taskType) {
   submitArea.appendChild(submitBtn);
 
   if (taskType === 'todo') {
-    // add date input
+    // ----- add date input -----
     const date = document.createElement('input');
     date.type = 'date';
     date.name = 'dueTo';
+    // set current dueTo
+    date.value = task.dueTo;
     submitArea.prepend(date);
-    // add priority buttons to the structure
+
+    // ----- add priority buttons -----
     addPriorityButtons(submitArea);
+    // set todo's current priority clicked
+    const priority = task.priority;
+    const priorityBtn = document.querySelector(`input[value=${priority}]`);
+    priorityBtn.click();
   }
 
   // ---------- handle edit and exit button click ----------
@@ -101,6 +108,7 @@ export function openEditDialogScreen(id, taskType) {
     // close dialog then remove it from DOM
     dialog.close();
     dialog.remove();
+
     // reload page
     MainContainer.clearContainer();
     if (taskType === 'todo') UI.createHomePage();
