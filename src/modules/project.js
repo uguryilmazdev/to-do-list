@@ -1,4 +1,8 @@
 import uniqid from 'uniqid';
+import Storage from './Storage';
+import UI from './UI';
+import MainContainer from './mainContainer';
+import '../styles/project.css';
 
 export default class Project {
   constructor(title) {
@@ -45,5 +49,45 @@ export default class Project {
     listedItem.appendChild(countText);
 
     document.querySelector('.projects').appendChild(listedItem);
+  }
+
+  static handleDeleteProject(id) {
+    // create main elements
+    const container = document.querySelector('.container-delete-project');
+    const text = document.createElement('div');
+    const button = document.createElement('button');
+
+    // add class
+    text.classList.add('text-delete-project');
+    button.classList.add('button-delete-project');
+
+    // attributes
+    text.innerHTML = 'There is nothing to do!';
+    button.type = 'button';
+    button.innerHTML = 'DELETE PROJECT';
+
+    // append child
+    container.appendChild(text);
+    container.appendChild(button);
+    document.querySelector('main').appendChild(container);
+
+    // handle delete project
+    button.addEventListener('click', () => {
+      // get project array
+      const array = Storage.getProjectArrayFromStorage();
+      // find project and delete it
+      for (let i = 0; i < array.length; i++) {
+        if (array[i].key === id) {
+          array.splice(i, 1);
+        }
+      }
+      // save project array to local storage
+      Storage.saveProjectArrayToStorage(array);
+
+      // clear main container and reload home page
+      MainContainer.clearContainer();
+      MainContainer.createContainer();
+      UI.createHomePage();
+    });
   }
 }

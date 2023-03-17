@@ -58,7 +58,7 @@ export default class UI {
 
         // handle button click
         if (item.id === 'home-btn') {
-          this.createHomePage(item);
+          this.createHomePage();
         } else if (item.id === 'today-btn') {
           this.createTodayPage(item);
         } else if (item.id === 'week-btn') {
@@ -73,8 +73,7 @@ export default class UI {
   }
 
   // ---------- pages ----------
-  static createHomePage(item) {
-    selectedProject = item;
+  static createHomePage() {
     document
       .querySelector('main')
       .firstChild.classList.add('main-container-todo');
@@ -105,8 +104,6 @@ export default class UI {
   }
 
   static createProjectPage(item) {
-    selectedProject = item;
-
     // add todo container to main
     document
       .querySelector('main')
@@ -121,6 +118,20 @@ export default class UI {
         Todo.createTodo(todo);
       }
     });
+
+    // if project has no todo, user can delete the project
+    if (!document.querySelector('.main-container-todo').firstChild) {
+      // reset main container
+      MainContainer.clearContainer();
+      MainContainer.createContainer();
+      // add delete project container to main
+      document
+        .querySelector('main')
+        .firstChild.classList.add('container-delete-project');
+
+      // handle delete project
+      Project.handleDeleteProject(item.id);
+    }
   }
 
   // ----------- task numbers ----------
