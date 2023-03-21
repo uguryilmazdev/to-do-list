@@ -7,15 +7,15 @@ import {
   signOut,
 } from 'firebase/auth';
 
-import { getFirebaseConfig } from '../firebase/firebase-config';
+import { getFirebaseConfig } from './firebase-config';
 
 // ------------ google auth container elements ------------
-const userPicElement = document.getElementById('user-pic');
-const userNameElement = document.getElementById('user-name');
-const signInButtonElement = document.getElementById('sign-in');
-const signOutButtonElement = document.getElementById('sign-out');
+const userPicElement = document.querySelector('#user-pic');
+const userNameElement = document.querySelector('#user-name');
+const signInButtonElement = document.querySelector('#sign-in');
+const signOutButtonElement = document.querySelector('#sign-out');
 
-export function handleAuthWithGoogle() {
+function handleAuthWithGoogle() {
   document.querySelector('#sign-in').addEventListener('click', () => signIn());
   document
     .querySelector('#sign-out')
@@ -23,13 +23,11 @@ export function handleAuthWithGoogle() {
 }
 
 async function signIn() {
-  // Sign in Firebase using popup auth and Google as the identity provider.
   var provider = new GoogleAuthProvider();
   await signInWithPopup(getAuth(), provider);
 }
 
 function signOutUser() {
-  // Sign out of Firebase.
   signOut(getAuth());
 }
 
@@ -39,11 +37,17 @@ function initFirebaseAuth() {
 }
 
 function getProfilePicUrl() {
-  return getAuth().currentUser.photoURL || '../images/profile_placegholder.png';
+  return getAuth().currentUser.photoURL || '../images/profile_placeholder.png';
 }
 
 function getUserName() {
   return getAuth().currentUser.displayName;
+}
+
+function getUserID() {
+  if (isUserSignedIn) {
+    return getAuth().currentUser.uid;
+  }
 }
 
 // Returns true if a user is signed-in.
@@ -71,9 +75,6 @@ function authStateObserver(user) {
 
     // Hide sign-in button.
     signInButtonElement.setAttribute('hidden', 'true');
-
-    // We save the Firebase Messaging Device token and enable notifications.
-    /*  saveMessagingDeviceToken(); */
   } else {
     // User is signed out!
     // Hide user's profile and sign-out button.
@@ -93,9 +94,10 @@ function addSizeToGoogleProfilePic(url) {
   return url;
 }
 
-// -------------------------------------------
-// initialize Firebase
+// initialize firebase
 const firebaseAppConfig = getFirebaseConfig();
-initializeApp(firebaseAppConfig);
+const app = initializeApp(firebaseAppConfig);
 // initialize Firebase auth
 initFirebaseAuth();
+
+export { handleAuthWithGoogle, getUserID, app };

@@ -5,6 +5,11 @@ import Todo from './Todo';
 import Project from './Project';
 import UI from './UI';
 import { selectedProject } from './UI';
+import {
+  addTodoToFirestore,
+  addNoteToFirestore,
+  addProjectToFirestore,
+} from '../firebase/handleFireStore';
 
 export default class DialogBox extends DialogBoxTemplate {
   static initialize() {
@@ -111,6 +116,17 @@ export default class DialogBox extends DialogBoxTemplate {
 
     Todo.createTodo(todo);
     Storage.addItemToTodoArray(todo);
+    const item = {
+      title: todo.title,
+      details: todo.details,
+      dueTo: todo.dueTo,
+      priority: todo.priority,
+      project: todo.project,
+      key: todo.key,
+    };
+
+    // firestore
+    addTodoToFirestore(item);
     // reload page
     project === 'home-btn'
       ? UI.createHomePage(project)
@@ -123,6 +139,13 @@ export default class DialogBox extends DialogBoxTemplate {
 
     Note.createNoteCard(note);
     Storage.addItemToNoteArray(note);
+    const item = {
+      title: note.title,
+      details: note.details,
+      key: note.key,
+    };
+    // firestore
+    addNoteToFirestore(item);
     //reload page
     UI.createNotesPage();
   }
@@ -137,6 +160,14 @@ export default class DialogBox extends DialogBoxTemplate {
       const project = new Project(obj['dialog-title']);
       Project.createProjectItem(project);
       Storage.addItemToProjectArray(project);
+
+      const item = {
+        title: project.title,
+        key: project.key,
+      };
+
+      // firestore
+      addProjectToFirestore(item);
     }
   }
 }

@@ -1,12 +1,14 @@
 import uniqid from 'uniqid';
 import Storage from './Storage';
 import { openEditDialogScreen } from '../utilities/openEditDialogScreen';
+import { deleteNoteFromFirestore } from '../firebase/handleFireStore';
 
 export default class Note {
   constructor(title, details) {
     this._title = title;
     this._details = details;
-    this._key = uniqid('note-');
+    const time = new Date().getTime();
+    this._key = uniqid('note-', `${time}`);
   }
 
   // ---------- getter - setter -----------
@@ -104,6 +106,7 @@ export default class Note {
 
         noteArray.splice(index, 1);
         Storage.saveNoteArrayToStorage(noteArray);
+        deleteNoteFromFirestore(child.id);
 
         document
           .querySelector('.main-container-note')

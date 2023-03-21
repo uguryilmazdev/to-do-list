@@ -3,11 +3,13 @@ import Storage from './Storage';
 import UI from './UI';
 import MainContainer from './mainContainer';
 import '../styles/project.css';
+import { deleteProjectFromFirestore } from '../firebase/handleFireStore';
 
 export default class Project {
   constructor(title) {
     this._title = title;
-    this._key = uniqid('project-');
+    const time = new Date().getTime();
+    this._key = uniqid('project-', `${time}`);
   }
 
   // getter - setter
@@ -79,6 +81,8 @@ export default class Project {
       for (let i = 0; i < array.length; i++) {
         if (array[i].key === id) {
           array.splice(i, 1);
+          // firestore
+          deleteProjectFromFirestore(id);
         }
       }
       // save project array to local storage

@@ -3,6 +3,7 @@ import Storage from './Storage';
 import UI from './UI';
 import { openDetailsDialogScreen } from '../utilities/openDetailsDialogScreen';
 import { openEditDialogScreen } from '../utilities/openEditDialogScreen';
+import { deleteTodoFromFirestore } from '../firebase/handleFireStore';
 
 export default class Todo {
   constructor(title, details, dueTo, priority, project) {
@@ -11,7 +12,8 @@ export default class Todo {
     this._dueTo = dueTo;
     this._priority = priority;
     this._project = project;
-    this._key = uniqid('todo-');
+    const time = new Date().getTime();
+    this._key = uniqid('todo-', `${time}`);
   }
 
   // ----------- getter - setter ----------
@@ -175,6 +177,8 @@ export default class Todo {
         const todoArray = Storage.getTodoArrayFromStorage();
         todoArray.splice(index, 1);
         Storage.saveTodoArrayToStorage(todoArray);
+        // firestore
+        deleteTodoFromFirestore(child.id);
 
         document
           .querySelector('.main-container-todo')

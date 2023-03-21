@@ -2,6 +2,10 @@ import MainContainer from '../modules/mainContainer';
 import Storage from '../modules/Storage';
 import UI from '../modules/UI';
 import addPriorityButtons from './addPriorityButtons';
+import {
+  updateNoteFirestore,
+  updateTodoFirestore,
+} from '../firebase/handleFireStore';
 
 export function openEditDialogScreen(id, taskType) {
   // get todos or notes based on taskType
@@ -102,8 +106,16 @@ export function openEditDialogScreen(id, taskType) {
     }
 
     // save new array to local storage
-    if (taskType === 'todo') Storage.saveTodoArrayToStorage(array);
-    if (taskType === 'note') Storage.saveNoteArrayToStorage(array);
+    if (taskType === 'todo') {
+      Storage.saveTodoArrayToStorage(array);
+      // firestore
+      updateTodoFirestore(task);
+    }
+    if (taskType === 'note') {
+      Storage.saveNoteArrayToStorage(array);
+      // firestore
+      updateNoteFirestore(task);
+    }
 
     // close dialog then remove it from DOM
     dialog.close();
