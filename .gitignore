@@ -92,3 +92,5 @@ Thumbs.db
 
 # firebase
 firebase-config.js
+handleAuthWithGoogle.js
+handleFireStore.js
