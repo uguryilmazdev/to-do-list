@@ -3,7 +3,9 @@ import Storage from './Storage';
 import UI from './UI';
 import { openDetailsDialogScreen } from '../utilities/openDetailsDialogScreen';
 import { openEditDialogScreen } from '../utilities/openEditDialogScreen';
+import { isUserSignedIn } from '../firebase/handleAuthWithGoogle';
 import { deleteTodoFromFirestore } from '../firebase/handleFireStore';
+import Project from './Project';
 
 export default class Todo {
   constructor(title, details, dueTo, priority, project) {
@@ -142,12 +144,12 @@ export default class Todo {
   }
 
   static handleShowDetailsTodoCard() {
-    window.addEventListener('click', (e) => {
+    window.addEventListener('click', async (e) => {
       if (e.target.className.includes('todo-details-btn')) {
         // child is note card, and we need note card's id
         const child = e.target.parentElement.parentElement;
         // create dialog using id
-        const dialog = openDetailsDialogScreen(child.id);
+        const dialog = await openDetailsDialogScreen(child.id);
         dialog.showModal();
       }
     });
@@ -159,34 +161,49 @@ export default class Todo {
         // child is note card, and we need note card's id
         const child = e.target.parentElement.parentElement;
         // create dialog using id
-        const dialog = openEditDialogScreen(child.id, 'todo');
-        dialog.showModal();
+        openEditDialogScreen(child.id, 'todo').then((dialog) => {
+          dialog.showModal();
+        });
       }
     });
   }
 
   static handleDeleteTodoCard() {
-    window.addEventListener('click', (e) => {
+    window.addEventListener('click', async (e) => {
+      let projectNameOfTodo = null;
+
       if (e.target.className.includes('delete-todo-btn')) {
         //child is todo card
         const child = e.target.parentElement.parentElement;
         // parent is main-container
         const parent = child.parentElement;
 
-        let index = Array.prototype.indexOf.call(parent.children, child);
-        const todoArray = Storage.getTodoArrayFromStorage();
-        todoArray.splice(index, 1);
-        Storage.saveTodoArrayToStorage(todoArray);
-        // firestore
-        deleteTodoFromFirestore(child.id);
+        if (isUserSignedIn()) {
+          // decrease project's todo count
+          await Project.decreaseTodoCountOfProjectInFirebase(child.id);
+          // delete todo from firestore
+          deleteTodoFromFirestore(child.id);
+        } else {
+          let index = Array.prototype.indexOf.call(parent.children, child);
+          const todoArray = Storage.getTodoArrayFromStorage();
+          projectNameOfTodo = todoArray[index].project;
+          todoArray.splice(index, 1);
+          Storage.saveTodoArrayToStorage(todoArray);
+          // decrease project's todo count
+          Project.decreaseTodoCountOfProjectInLocalStorage(projectNameOfTodo);
+        }
 
         document
           .querySelector('.main-container-todo')
-          .removeChild(
-            document.querySelector('.main-container-todo').children[index]
-          );
+          .removeChild(document.querySelector(`#${child.id}`));
 
-        const [sidebarItemArr] = UI.loadSidebarItems();
+        if (projectNameOfTodo !== 'todoHasNoProject') {
+          UI.handleDeleteProjectPage(projectNameOfTodo);
+        } else {
+          UI.createHomePage();
+        }
+
+        const sidebarItemArr = await UI.loadSidebarItems();
         // todo count
         UI.setTodoCount(sidebarItemArr);
       }

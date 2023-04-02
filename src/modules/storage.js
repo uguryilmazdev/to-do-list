@@ -1,22 +1,29 @@
+import UI from './UI';
+
 export default class Storage {
   static initializeLocalStorage() {
-    // set note list within local storage
+    // set note list
     if (!localStorage.noteList) {
       const noteArray = [];
       localStorage.setItem('noteList', JSON.stringify(noteArray));
     }
 
-    // set todo list within local storage
+    // set todo list
     if (!localStorage.todoList) {
       const todoArray = [];
       localStorage.setItem('todoList', JSON.stringify(todoArray));
     }
 
-    // set project list within local storage
+    // set project list
     if (!localStorage.projectList) {
       const projectArray = [];
       localStorage.setItem('projectList', JSON.stringify(projectArray));
     }
+
+    // listen storage for any change
+    window.addEventListener('storage', async () => {
+      await UI.loadUI();
+    });
   }
 
   // ----- TODO -----
@@ -79,6 +86,7 @@ export default class Storage {
     const item = [
       {
         title: obj.title,
+        todoCount: obj.todoCount,
         key: obj.key,
       },
     ];

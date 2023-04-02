@@ -3,19 +3,25 @@ import Storage from './Storage';
 import Todo from './Todo.js';
 import Project from './Project.js';
 import Note from './Note.js';
+import { isUserSignedIn } from '../firebase/handleAuthWithGoogle.js';
+import {
+  getAllNotesFromFireStore,
+  getAllProjectsFromFirestore,
+  getAllTodosFromFirestore,
+} from '../firebase/handleFireStore';
 
 let selectedProject;
 export { selectedProject };
 
 export default class UI {
-  static loadUI() {
-    const [sidebarItemArr] = this.loadSidebarItems();
+  static async loadUI() {
+    const sidebarItemArr = await this.loadSidebarItems();
+    this.setTodoCount();
     this.handleSidebarItemOnClick(sidebarItemArr);
-    this.setTodoCount(sidebarItemArr);
   }
 
   // ----------- sidebar items ----------
-  static loadSidebarItems() {
+  static async loadSidebarItems() {
     // navigation items -> home, today, week, notes
     const navbarArr = [
       document.querySelector('#home-btn'),
@@ -33,7 +39,13 @@ export default class UI {
 
     // project element's container
     const projectArr = [];
-    const projectArray = Storage.getProjectArrayFromStorage();
+    let projectArray = [];
+
+    if (isUserSignedIn()) {
+      projectArray = await getAllProjectsFromFirestore();
+    } else {
+      projectArray = Storage.getProjectArrayFromStorage();
+    }
 
     projectArray.forEach((project) => {
       // create sidebar project items
@@ -46,7 +58,8 @@ export default class UI {
     });
 
     const sidebarItemArr = navbarArr.concat(projectArr);
-    return [sidebarItemArr];
+    console.log(sidebarItemArr);
+    return sidebarItemArr;
   }
 
   static handleSidebarItemOnClick(sidebarItemArr) {
@@ -55,42 +68,41 @@ export default class UI {
         // clear main container and put template into it
         MainContainer.clearContainer();
         MainContainer.createContainer();
-
+        selectedProject = item;
         // handle button click
         if (item.id === 'home-btn') {
-          this.createHomePage(item);
+          this.createHomePage();
         } else if (item.id === 'today-btn') {
-          this.createTodayPage(item);
+          this.createTodayPage();
         } else if (item.id === 'week-btn') {
-          this.createWeekPage(item);
+          this.createWeekPage();
         } else if (item.id === 'notes-btn') {
           this.createNotesPage();
         } else {
-          this.createProjectPage(item);
+          this.createProjectPage(item.id);
         }
       });
     });
   }
 
   // ---------- pages ----------
-  static createHomePage(item) {
-    selectedProject = item;
-
+  static async createHomePage() {
     MainContainer.clearContainer();
     MainContainer.createContainer();
     document
       .querySelector('main')
       .firstChild.classList.add('main-container-todo');
 
-    // get todoArray
-    const todoArray = Storage.getTodoArrayFromStorage();
-    // create todos
+    let todoArray = null;
+
+    isUserSignedIn()
+      ? (todoArray = await getAllTodosFromFirestore())
+      : (todoArray = Storage.getTodoArrayFromStorage());
+
     todoArray.map((todo) => Todo.createTodo(todo));
   }
 
-  static createTodayPage(item) {
-    selectedProject = item;
-
+  static async createTodayPage() {
     MainContainer.clearContainer();
     MainContainer.createContainer();
     document
@@ -98,14 +110,11 @@ export default class UI {
       .firstChild.classList.add('main-container-todo');
 
     // get today todo's array
-    const [arr] = this.getTodayTodo();
-    // create todos
+    const [arr, count] = await this.getTodayTodo();
     arr.map((todo) => Todo.createTodo(todo));
   }
 
-  static createWeekPage(item) {
-    selectedProject = item;
-
+  static async createWeekPage() {
     MainContainer.clearContainer();
     MainContainer.createContainer();
     document
@@ -113,7 +122,7 @@ export default class UI {
       .firstChild.classList.add('main-container-todo');
 
     // get week todo's array
-    const [arr] = this.getWeekTodo();
+    const [arr, count] = await this.getWeekTodo();
     // create todos
     arr.map((todo) => Todo.createTodo(todo));
   }
@@ -121,35 +130,42 @@ export default class UI {
   static createNotesPage() {
     MainContainer.clearContainer();
     MainContainer.createContainer();
-    // set note container style to main
     document
       .querySelector('main')
       .firstChild.classList.add('main-container-note');
 
-    const noteArray = Storage.getNoteArrayFromStorage();
-    // create note cards
-    noteArray.map((note) => Note.createNoteCard(note));
+    if (isUserSignedIn()) {
+      getAllNotesFromFireStore();
+    } else {
+      const noteArray = Storage.getNoteArrayFromStorage();
+      // create note cards
+      noteArray.map((note) => Note.createNoteCard(note));
+    }
   }
 
-  static createProjectPage(item) {
-    selectedProject = item;
+  static async createProjectPage(id) {
     // add todo container to main
     MainContainer.clearContainer();
     MainContainer.createContainer();
     document
       .querySelector('main')
       .firstChild.classList.add('main-container-todo');
-
-    const todoList = Storage.getTodoArrayFromStorage();
+    let todoList = null;
+    isUserSignedIn()
+      ? (todoList = await getAllTodosFromFirestore())
+      : (todoList = Storage.getTodoArrayFromStorage());
 
     // scan todoList for selected project's todos
     todoList.map((todo) => {
       const projectName = todo.project;
-      if (projectName === item.id) {
+      if (projectName === id) {
         Todo.createTodo(todo);
       }
     });
+    this.handleDeleteProjectPage(id);
+  }
 
+  static handleDeleteProjectPage(id) {
     // if project has no todo, user can delete the project
     if (!document.querySelector('.main-container-todo').firstChild) {
       // reset main container
@@ -161,59 +177,66 @@ export default class UI {
         .firstChild.classList.add('container-delete-project');
 
       // handle delete project
-      Project.handleDeleteProject(item.id);
+      Project.handleDeleteProject(id);
     }
   }
 
   // ----------- task numbers ----------
-  static setTodoCount(sidebarItemArr) {
-    const todoList = Storage.getTodoArrayFromStorage();
-    const todoCount = todoList.length;
-
-    sidebarItemArr.map((item) => {
-      // pass notes button
-      if (item.id !== 'notes-btn') {
-        let todoNumber = 0;
-        const id = item.id;
-
-        todoList.map((todo) => {
-          if (todo.project === id) todoNumber++;
-        });
-
-        item.nextElementSibling.innerHTML = todoNumber;
-      }
+  static async setTodoCount() {
+    // set project's todo count
+    let projectList = null;
+    isUserSignedIn()
+      ? (projectList = await getAllProjectsFromFirestore())
+      : (projectList = Storage.getProjectArrayFromStorage());
+    projectList.map((item) => {
+      const element = document.querySelector(`#${item.key}`);
+      element.nextElementSibling.innerHTML = item.todoCount;
     });
-    // home covers all todos.
-    document.querySelector('#home-todo-count').innerHTML = todoCount;
-    // today todos
-    const [, todayCount] = this.getTodayTodo();
-    document.querySelector('#today-todo-count').innerHTML = todayCount;
-    // week todos
-    const [, weekCount] = this.getWeekTodo();
-    document.querySelector('#week-todo-count').innerHTML = weekCount;
+
+    // set home, today and week todos
+    const [, todayTodoCount, allTodoCount] = await this.getTodayTodo();
+    const [, weekTodoCount] = await this.getWeekTodo();
+
+    // set today and week todo count
+    const homeElement = document.querySelector('#home-btn');
+    homeElement.nextElementSibling.innerHTML = allTodoCount;
+    const todayElement = document.querySelector('#today-btn');
+    todayElement.nextElementSibling.innerHTML = todayTodoCount;
+    const weekElement = document.querySelector('#week-btn');
+    weekElement.nextElementSibling.innerHTML = weekTodoCount;
   }
 
   // today and week todo
-  static getTodayTodo() {
-    // date
-    const date = new Date().toISOString().split('T')[0];
+  static async getTodayTodo() {
+    let todoArray = null;
+    // get all todos
+    isUserSignedIn()
+      ? (todoArray = await getAllTodosFromFirestore())
+      : (todoArray = Storage.getTodoArrayFromStorage());
 
-    // get todoArray
-    const todoArray = Storage.getTodoArrayFromStorage();
-    // filter today's todo
-    const arr = [];
-    let count = 0;
+    // All todos count. Home button covers all todos
+    const allTodoCount = todoArray.length;
+
+    // get today date
+    const todayDate = new Date().toISOString().split('T')[0];
+    let arr = [];
+    let todayCount = 0;
     todoArray.map((todo) => {
-      if (todo.dueTo === date) {
+      if (todo.dueTo === todayDate) {
         arr.push(todo);
-        count++;
+        todayCount++;
       }
     });
-
-    return [arr, count];
+    return [arr, todayCount, allTodoCount];
   }
 
-  static getWeekTodo() {
+  static async getWeekTodo() {
+    let todoArray = null;
+    // get all todos
+    isUserSignedIn()
+      ? (todoArray = await getAllTodosFromFirestore())
+      : (todoArray = Storage.getTodoArrayFromStorage());
+
     // get current date
     const date = new Date().toISOString().split('T')[0];
     // get one week later
@@ -222,10 +245,8 @@ export default class UI {
     const oneWeekFromNow = now + oneWeek;
     const oneWeekLater = new Date(oneWeekFromNow).toISOString().split('T')[0];
 
-    // get todoArray
-    const todoArray = Storage.getTodoArrayFromStorage();
     // filter week's todo
-    const arr = [];
+    let arr = [];
     let count = 0;
     todoArray.map((todo) => {
       if (todo.dueTo >= date && todo.dueTo <= oneWeekLater) {

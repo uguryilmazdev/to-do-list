@@ -1,6 +1,7 @@
 import uniqid from 'uniqid';
 import Storage from './Storage';
 import { openEditDialogScreen } from '../utilities/openEditDialogScreen';
+import { isUserSignedIn } from '../firebase/handleAuthWithGoogle';
 import { deleteNoteFromFirestore } from '../firebase/handleFireStore';
 
 export default class Note {
@@ -100,19 +101,19 @@ export default class Note {
         // parent is main-container
         const parent = child.parentElement;
 
-        let index = Array.prototype.indexOf.call(parent.children, child);
-
-        const noteArray = Storage.getNoteArrayFromStorage();
-
-        noteArray.splice(index, 1);
-        Storage.saveNoteArrayToStorage(noteArray);
-        deleteNoteFromFirestore(child.id);
+        if (isUserSignedIn()) {
+          // delete note from firestore
+          deleteNoteFromFirestore(child.id);
+        } else {
+          let index = Array.prototype.indexOf.call(parent.children, child);
+          const noteArray = Storage.getNoteArrayFromStorage();
+          noteArray.splice(index, 1);
+          Storage.saveNoteArrayToStorage(noteArray);
+        }
 
         document
           .querySelector('.main-container-note')
-          .removeChild(
-            document.querySelector('.main-container-note').children[index]
-          );
+          .removeChild(document.querySelector(`#${child.id}`));
       }
     });
   }
@@ -121,9 +122,12 @@ export default class Note {
     window.addEventListener('click', (e) => {
       if (e.target.className.includes('note-details-btn')) {
         // child is note card
+
         const child = e.target.parentElement.parentElement.parentElement;
-        const dialog = openEditDialogScreen(child.id, 'note');
-        dialog.showModal();
+
+        openEditDialogScreen(child.id, 'note').then((dialog) => {
+          dialog.showModal();
+        });
       }
     });
   }

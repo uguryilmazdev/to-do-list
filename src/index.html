@@ -8,57 +8,63 @@
   </head>
 
   <body>
-    <!-- Header Section -->
-    <header id="header-content" class="header-content">
-      <div>hello</div>
-      <div id="user-container">
-        <div hidden id="user-pic"></div>
-        <div hidden id="user-name"></div>
-        <button hidden id="sign-out" class="dialog-btn">Sign-out</button>
-        <button id="sign-in" class="dialog-btn">Sign-in with Google</button>
-      </div>
-    </header>
-    <!-- Aside Section -->
-    <nav id="navbar-content" class="navbar-content">
-      <ul id="navbar" class="navbar">
-        <!-- Home btn-->
-        <li class="nav-item">
-          <button type="button" id="home-btn" class="main-nav-btn nav-btn">
-            Home
+    <div id="content" style="display: none">
+      <!-- Header Section -->
+      <header id="header-content" class="header-content">
+        <div>hello</div>
+        <div id="user-container">
+          <div hidden id="user-pic"></div>
+          <div hidden id="user-name"></div>
+          <button hidden id="header-sign-out" class="dialog-btn">
+            Sign-out
           </button>
-          <div class="to-do-count" id="home-todo-count"></div>
-        </li>
-        <!-- Today btn -->
-        <li class="nav-item">
-          <button type="button" id="today-btn" class="main-nav-btn nav-btn">
-            Today
+          <button id="header-sign-in" class="dialog-btn">
+            Sign-in with Google
           </button>
-          <div class="to-do-count" id="today-todo-count"></div>
-        </li>
-        <!-- Week btn -->
-        <li class="nav-item">
-          <button type="button" id="week-btn" class="main-nav-btn nav-btn">
-            Week
-          </button>
-          <div class="to-do-count" id="week-todo-count"></div>
-        </li>
-        <!-- Notes btn -->
-        <li class="nav-item">
-          <button type="button" id="notes-btn" class="main-nav-btn nav-btn">
-            Notes
-          </button>
-        </li>
-        <!-- Projects section -->
-        <ul class="nav-item-projects-container">
-          <div class="nav-item-projects-header">Projects</div>
-          <ul class="projects"></ul>
+        </div>
+      </header>
+      <!-- Aside Section -->
+      <nav id="navbar-content" class="navbar-content">
+        <ul id="navbar" class="navbar">
+          <!-- Home btn-->
+          <li class="nav-item">
+            <button type="button" id="home-btn" class="main-nav-btn nav-btn">
+              Home
+            </button>
+            <div class="to-do-count" id="home-todo-count"></div>
+          </li>
+          <!-- Today btn -->
+          <li class="nav-item">
+            <button type="button" id="today-btn" class="main-nav-btn nav-btn">
+              Today
+            </button>
+            <div class="to-do-count" id="today-todo-count"></div>
+          </li>
+          <!-- Week btn -->
+          <li class="nav-item">
+            <button type="button" id="week-btn" class="main-nav-btn nav-btn">
+              Week
+            </button>
+            <div class="to-do-count" id="week-todo-count"></div>
+          </li>
+          <!-- Notes btn -->
+          <li class="nav-item">
+            <button type="button" id="notes-btn" class="main-nav-btn nav-btn">
+              Notes
+            </button>
+          </li>
+          <!-- Projects section -->
+          <ul class="nav-item-projects-container">
+            <div class="nav-item-projects-header">Projects</div>
+            <ul class="projects"></ul>
+          </ul>
         </ul>
-      </ul>
-      <button type="button" id="add-project" class="add-btn">
-        <img src="../src/asset/images/add_task_icon.svg" alt="add task" />
-      </button>
-    </nav>
-    <main id="main-content" class="main-content"></main>
+        <button type="button" id="add-project" class="add-btn">
+          <img src="../src/asset/images/add_task_icon.svg" alt="add task" />
+        </button>
+      </nav>
+      <main id="main-content" class="main-content"></main>
+    </div>
     <!-- dialog screen -->
     <dialog class="dialog" id="add-task-dialog">
       <div class="dialog-header">
@@ -75,5 +81,17 @@
         <div class="form-submit-area"></div>
       </form>
     </dialog>
+    <!-- user signin screen -->
+    <div class="dialog" id="signin-container" style="display: flex">
+      <h1 id="signin-container-header">Welcome Back!</h1>
+      <div id="signin-container-button-container">
+        <button type="button" id="googleAuthBtn" class="dialog-btn">
+          Sign-in with Google
+        </button>
+        <button type="button" id="noAuthBtn" class="dialog-btn">
+          Try Demo
+        </button>
+      </div>
+    </div>
   </body>
 </html>

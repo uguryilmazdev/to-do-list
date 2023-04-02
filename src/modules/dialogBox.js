@@ -5,6 +5,7 @@ import Todo from './Todo';
 import Project from './Project';
 import UI from './UI';
 import { selectedProject } from './UI';
+import { isUserSignedIn } from '../firebase/handleAuthWithGoogle';
 import {
   addTodoToFirestore,
   addNoteToFirestore,
@@ -94,15 +95,16 @@ export default class DialogBox extends DialogBoxTemplate {
     });
   }
 
-  static submitTodo(obj) {
+  static async submitTodo(obj) {
     // set the project that todo belongs to.
     let project;
 
+    typeof selectedProject === 'undefined' ||
     selectedProject.id === 'home-btn' ||
     selectedProject.id === 'today-btn' ||
     selectedProject.id === 'week-btn' ||
     selectedProject.id === 'notes-btn'
-      ? (project = 'home-btn')
+      ? (project = 'todoHasNoProject')
       : (project = selectedProject.id);
 
     // create todo object
@@ -115,18 +117,32 @@ export default class DialogBox extends DialogBoxTemplate {
     );
 
     Todo.createTodo(todo);
-    Storage.addItemToTodoArray(todo);
-    const item = {
-      title: todo.title,
-      details: todo.details,
-      dueTo: todo.dueTo,
-      priority: todo.priority,
-      project: todo.project,
-      key: todo.key,
-    };
 
-    // firestore
-    addTodoToFirestore(item);
+    if (isUserSignedIn()) {
+      const item = {
+        title: todo.title,
+        details: todo.details,
+        dueTo: todo.dueTo,
+        priority: todo.priority,
+        project: todo.project,
+        key: todo.key,
+      };
+
+      // add todo to firestore
+      addTodoToFirestore(item);
+      // increase related project's todo count
+      await Project.increaseTodoCountOfProjectInFirebase(project);
+      // update project's todo count
+      await UI.setTodoCount();
+    } else {
+      // add todo to local storage
+      Storage.addItemToTodoArray(todo);
+      // increase related project's todo count
+      Project.increaseTodoCountOfProjectInLocalStorage(project);
+      // update project's todo count
+      await UI.setTodoCount();
+    }
+
     // reload page
     project === 'home-btn'
       ? UI.createHomePage(project)
@@ -138,36 +154,46 @@ export default class DialogBox extends DialogBoxTemplate {
     const note = new Note(obj['dialog-title'], obj['dialog-text']);
 
     Note.createNoteCard(note);
-    Storage.addItemToNoteArray(note);
-    const item = {
-      title: note.title,
-      details: note.details,
-      key: note.key,
-    };
-    // firestore
-    addNoteToFirestore(item);
+
+    if (isUserSignedIn()) {
+      const item = {
+        title: note.title,
+        details: note.details,
+        key: note.key,
+      };
+      // add note to firestore
+      addNoteToFirestore(item);
+    } else {
+      // add note to local storage
+      Storage.addItemToNoteArray(note);
+    }
+
     //reload page
     UI.createNotesPage();
   }
 
-  static submitProject(obj) {
-    const projectList = Storage.getProjectArrayFromStorage();
-    // check if project has already exist
-    if (projectList.find((element) => element.title === obj['dialog-title'])) {
-      alert('Project name has already exist');
-    } else {
-      // create project obj
-      const project = new Project(obj['dialog-title']);
-      Project.createProjectItem(project);
-      Storage.addItemToProjectArray(project);
+  static async submitProject(obj) {
+    // create project obj
+    const project = new Project(obj['dialog-title']);
+    Project.createProjectItem(project);
 
+    if (isUserSignedIn()) {
       const item = {
         title: project.title,
+        todoCount: project.todoCount,
         key: project.key,
       };
-
-      // firestore
+      // add project to firestore
       addProjectToFirestore(item);
+      // update todo count
+      await UI.setTodoCount();
+    } else {
+      // add project to local storage
+      Storage.addItemToProjectArray(project);
+      // update todo count
+      await UI.setTodoCount();
     }
+    // load project page
+    await UI.createProjectPage(project.key);
   }
 }

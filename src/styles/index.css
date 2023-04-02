@@ -72,3 +72,38 @@ body {
   top: -1px;
   margin-right: 5px;
 }
+
+/* auth dialog */
+#signin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 4rem 3rem;
+  background-color: var(--light-grey);
+}
+
+#signin-container > * {
+  margin: 2rem;
+}
+
+#signin-container-header {
+  font-size: calc(var(--font-size) * 3.5);
+  padding: 1rem;
+  color: var(--dark-blue);
+}
+
+#signin-container-button-container {
+  display: flex;
+  align-items: center;
+}
+
+#signin-container-button-container > * {
+  width: 12rem;
+  height: 3rem;
+  padding: 0.5rem;
+  margin: 2rem;
+  font-size: calc(var(--font-size) * 1.1);
+  background-color: var(--dark-blue);
+  color: var(--white);
+}

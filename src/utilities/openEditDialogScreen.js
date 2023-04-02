@@ -4,21 +4,52 @@ import UI from '../modules/UI';
 import addPriorityButtons from './addPriorityButtons';
 import {
   updateNoteFirestore,
+  getNoteFromFirestore,
   updateTodoFirestore,
+  getTodoFromFirestore,
 } from '../firebase/handleFireStore';
+import { isUserSignedIn } from '../firebase/handleAuthWithGoogle';
 
-export function openEditDialogScreen(id, taskType) {
-  // get todos or notes based on taskType
-  let array = [];
-  if (taskType === 'note') array = Storage.getNoteArrayFromStorage();
-  if (taskType === 'todo') array = Storage.getTodoArrayFromStorage();
+export async function openEditDialogScreen(id, taskType) {
+  // get todo or note based on taskType
+  let task = null;
+  let title = null;
+  let details = null;
+  let array = null;
 
-  // get title and details of task
-  const task = array.find((task) => task.key === id);
-  const title = task.title;
-  const details = task.details;
+  // ----- note task -----
+  if (taskType === 'note') {
+    if (isUserSignedIn()) {
+      task = await getNoteFromFirestore(id);
+      // get title and details of task
+      title = task.title;
+      details = task.details;
+    } else {
+      array = Storage.getNoteArrayFromStorage();
+      // get title and details of task
+      task = array.find((task) => task.key === id);
+      title = task.title;
+      details = task.details;
+    }
+  }
 
-  // main template
+  // ----- todo task -----
+  if (taskType === 'todo') {
+    if (isUserSignedIn()) {
+      task = await getTodoFromFirestore(id);
+      // get title and details of task
+      title = task.title;
+      details = task.details;
+    } else {
+      array = Storage.getTodoArrayFromStorage();
+      // get title and details of task
+      task = array.find((task) => task.key === id);
+      title = task.title;
+      details = task.details;
+    }
+  }
+
+  // ---------- create dialog elements ----------
   const dialog = document.createElement('dialog');
   const header = document.createElement('div');
   const headerText = document.createElement('h4');
@@ -51,7 +82,7 @@ export function openEditDialogScreen(id, taskType) {
   taskDetails.classList.add('dialog-text');
   submitBtn.classList.add('dialog-btn', 'dialog-submit-btn');
 
-  // ---------- append children ----------
+  // ----- append children -----
   // add dialog to DOM
   const main = document.querySelector('main');
   main.parentNode.insertBefore(dialog, main.nextSibling);
@@ -66,6 +97,7 @@ export function openEditDialogScreen(id, taskType) {
   inputArea.appendChild(taskDetails);
   submitArea.appendChild(submitBtn);
 
+  // if task is todo, add priority buttons and date
   if (taskType === 'todo') {
     // ----- add date input -----
     const date = document.createElement('input');
@@ -105,16 +137,21 @@ export function openEditDialogScreen(id, taskType) {
       ).value;
     }
 
-    // save new array to local storage
+    // save edited task to local storage or firestore
     if (taskType === 'todo') {
-      Storage.saveTodoArrayToStorage(array);
-      // firestore
-      updateTodoFirestore(task);
+      if (isUserSignedIn()) {
+        updateTodoFirestore(task);
+      } else {
+        Storage.saveTodoArrayToStorage(array);
+      }
     }
+
     if (taskType === 'note') {
-      Storage.saveNoteArrayToStorage(array);
-      // firestore
-      updateNoteFirestore(task);
+      if (isUserSignedIn()) {
+        updateNoteFirestore(task);
+      } else {
+        Storage.saveNoteArrayToStorage(array);
+      }
     }
 
     // close dialog then remove it from DOM

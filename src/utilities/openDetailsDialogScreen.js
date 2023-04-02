@@ -1,28 +1,49 @@
+import { isUserSignedIn } from '../firebase/handleAuthWithGoogle';
+import {
+  getProjectFromFirestore,
+  getTodoFromFirestore,
+} from '../firebase/handleFireStore';
 import Storage from '../modules/Storage';
 
-export function openDetailsDialogScreen(id) {
+export async function openDetailsDialogScreen(id) {
+  let title = null;
+  let details = null;
+  let projectID = null;
+
   // ---------- get selected todo ----------
-  const array = Storage.getTodoArrayFromStorage();
-  let title = '';
-  let details = '';
-  let projectID = '';
-  // get title and details of todo
-  array.map((todo) => {
-    if (todo.key === id) {
-      title = todo.title;
-      details = todo.details;
-      projectID = todo.project; //
-    }
-  });
+  if (isUserSignedIn()) {
+    const todo = await getTodoFromFirestore(id);
+    // get title, details, and project
+    title = todo.title;
+    details = todo.details;
+    projectID = todo.project;
+  } else {
+    const array = Storage.getTodoArrayFromStorage();
+    // get title, details, and project
+    array.map((todo) => {
+      if (todo.key === id) {
+        title = todo.title;
+        details = todo.details;
+        projectID = todo.project; //
+      }
+    });
+  }
 
   // get project name of todo
-  const projects = Storage.getProjectArrayFromStorage();
   let projectName = '';
-  projects.map((project) => {
-    if (project.key === projectID) {
+  if (isUserSignedIn()) {
+    if (projectID !== 'todoHasNoProject') {
+      const project = await getProjectFromFirestore(projectID);
       projectName = project.title;
     }
-  });
+  } else {
+    const projects = Storage.getProjectArrayFromStorage();
+    projects.map((project) => {
+      if (project.key === projectID) {
+        projectName = project.title;
+      }
+    });
+  }
 
   // ---------- main elements ----------
   const dialog = document.createElement('dialog');
