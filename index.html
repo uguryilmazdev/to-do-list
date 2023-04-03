@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List</title>
+  <script defer src="runtime.bundle.js"></script><script defer src="index.bundle.js"></script><script defer src="dialogBox.bundle.js"></script><script defer src="mainContainer.bundle.js"></script><script defer src="note.bundle.js"></script><script defer src="todo.bundle.js"></script><script defer src="storage.bundle.js"></script><script defer src="ui.bundle.js"></script></head>
+
+  <body>
+    <div id="content" style="display: none">
+      <!-- Header Section -->
+      <header id="header-content" class="header-content">
+        <div class="app-title-container">
+          <button class="sidebar-toggle-button">
+            <img src="7aa4e6d87f45e1b83d4b.svg" />
+          </button>
+          <div id="app-name">To-do App!</div>
+        </div>
+        <div id="user-container">
+          <div hidden id="user-name"></div>
+          <button hidden id="header-sign-out" class="dialog-btn">
+            Sign-out
+          </button>
+          <button id="header-sign-in" class="dialog-btn">
+            Sign-in with Google
+          </button>
+        </div>
+      </header>
+      <!-- Aside Section -->
+      <nav id="navbar-content" class="navbar-content">
+        <ul id="navbar" class="navbar">
+          <!-- Home btn-->
+          <li class="nav-item">
+            <button type="button" id="home-btn" class="main-nav-btn nav-btn">
+              Home
+            </button>
+            <div class="to-do-count" id="home-todo-count"></div>
+          </li>
+          <!-- Today btn -->
+          <li class="nav-item">
+            <button type="button" id="today-btn" class="main-nav-btn nav-btn">
+              Today
+            </button>
+            <div class="to-do-count" id="today-todo-count"></div>
+          </li>
+          <!-- Week btn -->
+          <li class="nav-item">
+            <button type="button" id="week-btn" class="main-nav-btn nav-btn">
+              Week
+            </button>
+            <div class="to-do-count" id="week-todo-count"></div>
+          </li>
+          <!-- Notes btn -->
+          <li class="nav-item">
+            <button type="button" id="notes-btn" class="main-nav-btn nav-btn">
+              Notes
+            </button>
+          </li>
+          <!-- Projects section -->
+          <ul class="nav-item-projects-container">
+            <div class="nav-item-projects-header">Projects</div>
+            <ul class="projects"></ul>
+          </ul>
+        </ul>
+        <button type="button" id="add-project" class="add-btn">
+          <img src="300325819f796d3d28e3.svg" alt="add task" />
+        </button>
+      </nav>
+      <main id="main-content" class="main-content"></main>
+    </div>
+    <!-- dialog screen -->
+    <dialog class="dialog" id="add-task-dialog">
+      <div class="dialog-header">
+        <h4 class="dialog-header-text">Create a new</h4>
+        <button type="button" class="dialog-btn" id="todo-btn">To Do</button>
+        <button type="button" class="dialog-btn" id="note-btn">Note</button>
+        <button type="button" class="dialog-btn" id="project-btn">
+          Project
+        </button>
+        <button type="button" id="add-task-exit-btn" class="exit-btn"></button>
+      </div>
+      <form method="dialog">
+        <div class="form-text-input-area"></div>
+        <div class="form-submit-area"></div>
+      </form>
+    </dialog>
+    <!-- user signin screen -->
+    <div class="dialog" id="signin-container" style="display: flex">
+      <h1 id="signin-container-header">Welcome Back!</h1>
+      <div id="signin-container-button-container">
+        <button type="button" id="googleAuthBtn" class="dialog-btn">
+          Sign-in with Google
+        </button>
+        <button type="button" id="noAuthBtn" class="dialog-btn">
+          Try Demo
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
