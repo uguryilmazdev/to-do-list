@@ -89,8 +89,3 @@ lerna-debug.log
 # System Files
 .DS_Store
 Thumbs.db
-
-# firebase
-firebase-config.js
-handleAuthWithGoogle.js
-handleFireStore.js
