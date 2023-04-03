@@ -7,11 +7,22 @@
   top: 50%;
   transform: translate(-50%, -50%);
   /* size */
-  min-width: calc(var(--font-size) * 40);
-  /*  min-height: 40%; */
+  min-width: 60%;
   /* border */
   border-radius: 5px;
   border: none;
+}
+
+@media (width <= 768px) {
+  .dialog {
+    min-width: 90%;
+  }
+}
+
+@media (width <= 425px) {
+  .dialog {
+    min-width: 95%;
+  }
 }
 
 .details-dialog-body {
@@ -40,13 +51,25 @@ dialog:not([open]) {
 }
 
 .dialog-btn {
-  width: 5rem;
+  font-size: 1rem;
+  width: 6rem;
   height: 1.5rem;
-  border-radius: 5px;
+  border-radius: 10px;
   border: none;
   color: var(--blue);
   background-color: var(--white);
   cursor: pointer;
+}
+
+@media (width <= 425px) {
+  .dialog-header-text {
+    font-size: 0.75rem;
+  }
+
+  .dialog-btn {
+    font-size: 0.65rem;
+    width: 3.5rem;
+  }
 }
 
 .exit-btn {
@@ -89,7 +112,7 @@ dialog:not([open]) {
 }
 
 .dialog-text {
-  height: calc(var(--font-size) * 10);
+  height: 12rem;
   font-family: inherit;
   font-size: inherit;
   resize: none;
@@ -105,9 +128,15 @@ dialog:not([open]) {
   padding: 1rem;
 }
 
-/* .form-submit-area:only-child {
-  justify-content: flex-end;
-} */
+@media (width <= 425px) {
+  .form-submit-area {
+    flex-direction: column;
+  }
+
+  .form-submit-area > * {
+    margin: 0.5rem auto;
+  }
+}
 
 .priority-buttons-container {
   display: flex;
@@ -191,6 +220,16 @@ label [id='high-input-priority']:checked ~ div {
   width: 8rem;
 }
 
+/* date */
+.form-submit-area > [name='dueTo'] {
+  font-size: 1rem;
+  width: 8rem;
+  height: 1.5rem;
+}
+
+input[type='date']::-webkit-calendar-picker-popup {
+  background-color: red;
+}
 /* */
 .dialog-title:focus,
 .dialog-text:focus {
@@ -199,4 +238,10 @@ label [id='high-input-priority']:checked ~ div {
 
 .dialog::backdrop {
   backdrop-filter: blur(3px);
+}
+
+@media (width <= 425px) {
+  label {
+    width: 4.5rem;
+  }
 }

@@ -5,7 +5,7 @@
   margin-bottom: 2rem;
   border-radius: 5px;
   background-color: var(--task-bg);
-  border: 2px solid var(--blue);
+  border: 0.15rem solid var(--blue);
 }
 
 .note-header-container {
@@ -13,7 +13,7 @@
   grid-template-columns: 4fr 1fr;
   grid-template-rows: 1fr;
   max-width: 100%;
-  border-bottom: 1px solid var(--blue);
+  border-bottom: 0.15rem solid var(--blue);
 }
 
 .note-title {

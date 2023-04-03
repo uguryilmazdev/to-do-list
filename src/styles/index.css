@@ -14,14 +14,25 @@
   --green: #95e1d3;
 
   /* font size */
-  --font-size: calc(0.625rem + 0.5vw);
-  font-size: var(--font-size);
+  font-size: 1vmax;
 
   /* text color */
   --dm-text-color: #f9f7f7;
   --lm-text-color: #112d4e;
   --text-color: var(--dm-text-color);
   color: var(--text-color);
+}
+
+@media (width <= 1024px) {
+  :root {
+    font-size: 1.3vmax;
+  }
+}
+
+@media (width <= 768px) {
+  :root {
+    font-size: 1.6vmax;
+  }
 }
 
 *,
@@ -88,7 +99,7 @@ body {
 }
 
 #signin-container-header {
-  font-size: calc(var(--font-size) * 3.5);
+  font-size: 4rem;
   padding: 1rem;
   color: var(--dark-blue);
 }
@@ -99,11 +110,79 @@ body {
 }
 
 #signin-container-button-container > * {
-  width: 12rem;
-  height: 3rem;
-  padding: 0.5rem;
+  width: 18rem;
+  height: fit-content;
+  padding: 1rem;
   margin: 2rem;
-  font-size: calc(var(--font-size) * 1.1);
+  font-size: 1.5rem;
   background-color: var(--dark-blue);
   color: var(--white);
+}
+
+@media (width <= 768px) {
+  #signin-container {
+    padding: 2rem 1rem;
+  }
+
+  #signin-container > * {
+    margin: 1rem;
+  }
+
+  #signin-container-button-container {
+    flex-direction: column;
+  }
+
+  #signin-container-button-container > * {
+    width: 15rem;
+    height: fit-content;
+    padding: 1rem;
+    margin: 2rem;
+    font-size: 1.3rem;
+  }
+}
+
+@media (width <= 500px) {
+  #signin-container-header {
+    font-size: 3rem;
+    padding: 1rem;
+  }
+
+  #signin-container {
+    padding: 1rem 0.75rem;
+  }
+
+  #signin-container > * {
+    margin: 1rem;
+  }
+
+  #signin-container-button-container > * {
+    width: 12rem;
+    height: fit-content;
+    padding: 1rem;
+    margin: 1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (width <= 375px) {
+  #signin-container-header {
+    font-size: 2.25rem;
+    padding: 0.75rem;
+  }
+
+  #signin-container {
+    padding: 0.75rem 0.5rem;
+  }
+
+  #signin-container > * {
+    margin: 0.5rem;
+  }
+
+  #signin-container-button-container > * {
+    width: 9rem;
+    height: fit-content;
+    padding: 1rem;
+    margin: 1rem;
+    font-size: 0.75rem;
+  }
 }

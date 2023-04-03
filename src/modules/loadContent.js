@@ -13,10 +13,19 @@ export async function loadContent() {
   MainContainer.createContainer(),
     MainContainer.clearContainer(),
     Storage.initializeLocalStorage(),
-    /* await UI.loadUI(), */
+    toggleSidebar(),
     DialogBox.initialize(),
     Todo.handleTodoCartButtonsOnClick(),
     Note.handleNoteCardControl(),
     handleAuthPageItemsOnClick(),
     handleHeaderAuthItemsOnClick();
+}
+
+function toggleSidebar() {
+  document
+    .querySelector('.sidebar-toggle-button')
+    .addEventListener('click', () => {
+      const sidebar = document.querySelector('.navbar-content');
+      sidebar.classList.toggle('active');
+    });
 }

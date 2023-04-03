@@ -11,6 +11,18 @@
   background-color: var(--white);
 }
 
+@media (width <= 425px) {
+  .main-content {
+    top: 8rem;
+  }
+}
+
+@media (width <= 768px) {
+  .main-content {
+    left: 0;
+  }
+}
+
 /* ----- MAIN CONTAINER ----- */
 .main-container-todo {
   height: fit-content;
@@ -25,6 +37,19 @@
   column-count: 3;
   column-gap: 2.5rem;
   padding: 2rem 4rem;
+}
+
+@media (width <= 768px) {
+  .main-container-note {
+    column-count: 2;
+  }
+}
+
+@media (width <= 600px) {
+  .main-container-note {
+    column-count: 1;
+    padding: 2rem;
+  }
 }
 
 /* scrollbar style */
