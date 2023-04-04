@@ -32,6 +32,7 @@ export default class Storage {
       {
         title: obj.title,
         details: obj.details,
+        isComplete: obj.isComplete,
         dueTo: obj.dueTo,
         priority: obj.priority,
         project: obj.project,

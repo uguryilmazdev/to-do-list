@@ -122,6 +122,7 @@ export default class DialogBox extends DialogBoxTemplate {
       const item = {
         title: todo.title,
         details: todo.details,
+        isComplete: todo.isComplete,
         dueTo: todo.dueTo,
         priority: todo.priority,
         project: todo.project,

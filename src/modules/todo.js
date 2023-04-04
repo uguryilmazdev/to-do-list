@@ -4,13 +4,18 @@ import UI from './UI';
 import { openDetailsDialogScreen } from '../utilities/openDetailsDialogScreen';
 import { openEditDialogScreen } from '../utilities/openEditDialogScreen';
 import { isUserSignedIn } from '../firebase/handleAuthWithGoogle';
-import { deleteTodoFromFirestore } from '../firebase/handleFireStore';
+import {
+  addTodoToFirestore,
+  deleteTodoFromFirestore,
+  getTodoFromFirestore,
+} from '../firebase/handleFireStore';
 import Project from './Project';
 
 export default class Todo {
   constructor(title, details, dueTo, priority, project) {
     this._title = title;
     this._details = details;
+    this._isComplete = false;
     this._dueTo = dueTo;
     this._priority = priority;
     this._project = project;
@@ -35,6 +40,11 @@ export default class Todo {
 
   get details() {
     return this._details;
+  }
+
+  // isComplete
+  get isComplete() {
+    return this._isComplete;
   }
 
   // due to
@@ -70,6 +80,7 @@ export default class Todo {
     // object properties
     const title = obj.title;
     const details = obj.details;
+    const isComplete = obj.isComplete;
     const dueTo = obj.dueTo;
     const priority = obj.priority;
     const project = obj.project;
@@ -93,6 +104,7 @@ export default class Todo {
     const deleteTodoBtn = document.createElement('button');
 
     // inner HTML
+    isCheck.checked = isComplete;
     todoTitle.innerHTML = title;
     detailsBtn.innerHTML = 'Details';
     dateText.innerHTML = dueTo;
@@ -119,6 +131,7 @@ export default class Todo {
 
     // ----- add classes -----
     todoContainer.classList.add('todo-container');
+    if (isComplete) todoContainer.classList.toggle('is-todo-complete');
     rightContainer.classList.add('todo-sub-container');
     leftContainer.classList.add('todo-sub-container');
     labelContainer.classList.add('todo-label-container');
@@ -141,6 +154,33 @@ export default class Todo {
     this.handleShowDetailsTodoCard();
     this.handleEditTodoCard();
     this.handleDeleteTodoCard();
+    this.handleIsCompleteTodoCard();
+  }
+
+  static handleIsCompleteTodoCard() {
+    window.addEventListener('click', async (e) => {
+      if (e.target.className.includes('isCheck')) {
+        // container is card
+        const container = e.target.parentElement.parentElement.parentElement;
+
+        if (isUserSignedIn()) {
+          const todo = await getTodoFromFirestore(container.id);
+          todo.isComplete = !todo.isComplete;
+          addTodoToFirestore(todo);
+        } else {
+          const arr = Storage.getTodoArrayFromStorage();
+          arr.map((todo) => {
+            if (todo.key === container.id) {
+              todo.isComplete = !todo.isComplete;
+            }
+          });
+          Storage.saveTodoArrayToStorage(arr);
+        }
+
+        // add or remove container check style
+        container.classList.toggle('is-todo-complete', e.target.checked);
+      }
+    });
   }
 
   static handleShowDetailsTodoCard() {
@@ -158,7 +198,7 @@ export default class Todo {
   static handleEditTodoCard() {
     window.addEventListener('click', (e) => {
       if (e.target.className.includes('edit-todo-btn')) {
-        // child is note card, and we need note card's id
+        // child is card, and we need card's id
         const child = e.target.parentElement.parentElement;
         // create dialog using id
         openEditDialogScreen(child.id, 'todo').then((dialog) => {

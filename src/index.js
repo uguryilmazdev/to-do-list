@@ -7,3 +7,5 @@ window.addEventListener('DOMContentLoaded', () => {
   initFirebaseAuth();
   loadContent();
 });
+
+// storedan isComplete kontrollü gelsin ve container üzeri çizgi
