@@ -22,22 +22,28 @@
 
 .sidebar-toggle-button {
   display: none;
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 10000;
+}
+
+.sidebar-toggle-button > img {
+  display: flex;
+  background-color: var(--blue);
 }
 
 #app-name {
   font-size: 2rem;
   margin-left: 2rem;
+  color: var(--white);
 }
 
 @media (width <= 425px) {
   .app-title-container {
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: 60%;
-  }
-
-  #app-name {
-    font-size: 1.5rem;
   }
 
   .header-content {

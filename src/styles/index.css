@@ -15,12 +15,6 @@
 
   /* font size */
   font-size: 1vmax;
-
-  /* text color */
-  --dm-text-color: #f9f7f7;
-  --lm-text-color: #112d4e;
-  --text-color: var(--dm-text-color);
-  color: var(--text-color);
 }
 
 @media (width <= 1024px) {
