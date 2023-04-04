@@ -86,7 +86,9 @@ export default class DialogBox extends DialogBoxTemplate {
         obj[item.name] = item.value;
       }
       if (clickedTask === 'todo-btn') {
+        document.getElementById('loading').style.display = 'flex';
         this.submitTodo(obj);
+        document.getElementById('loading').style.display = 'none';
       } else if (clickedTask === 'note-btn') {
         this.submitNote(obj);
       } else if (clickedTask === 'project-btn') {

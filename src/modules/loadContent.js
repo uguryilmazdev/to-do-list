@@ -10,6 +10,7 @@ import {
 } from './handleUserAuth';
 
 export async function loadContent() {
+  document.getElementById('loading').style.display = 'flex';
   MainContainer.createContainer(),
     MainContainer.clearContainer(),
     Storage.initializeLocalStorage(),
@@ -19,6 +20,7 @@ export async function loadContent() {
     Note.handleNoteCardControl(),
     handleAuthPageItemsOnClick(),
     handleHeaderAuthItemsOnClick();
+  document.getElementById('loading').style.display = 'none';
 }
 
 function toggleSidebar() {

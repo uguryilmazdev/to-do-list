@@ -49,7 +49,7 @@ body {
     'sidebar main';
 }
 
-/* aut style */
+/* ----- aut style ----- */
 #user-container {
   position: absolute;
   display: flex;
@@ -84,7 +84,7 @@ body {
   margin-right: 5px;
 }
 
-/* auth dialog */
+/* ------ auth dialog ------ */
 #signin-container {
   display: flex;
   flex-direction: column;
@@ -184,5 +184,26 @@ body {
     padding: 1rem;
     margin: 1rem;
     font-size: 0.75rem;
+  }
+}
+
+/* ----- loading screen ----- */
+#loading {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--white);
+  font-size: 2rem;
+  border: 4px solid var(--light-grey);
+  border-left-color: var(--dark-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
