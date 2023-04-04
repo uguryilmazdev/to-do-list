@@ -132,6 +132,11 @@ export default class Todo {
     // ----- add classes -----
     todoContainer.classList.add('todo-container');
     if (isComplete) todoContainer.classList.toggle('is-todo-complete');
+    if (priority === 'LOW') todoContainer.classList.add('low-priority-border');
+    if (priority === 'MEDIUM')
+      todoContainer.classList.add('medium-priority-border');
+    if (priority === 'HIGH')
+      todoContainer.classList.add('high-priority-border');
     rightContainer.classList.add('todo-sub-container');
     leftContainer.classList.add('todo-sub-container');
     labelContainer.classList.add('todo-label-container');

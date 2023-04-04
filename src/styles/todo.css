@@ -30,9 +30,22 @@
   }
 }
 
+/* if todo is checked*/
 .is-todo-complete {
   text-decoration: line-through;
   opacity: 0.5;
+}
+
+.low-priority-border {
+  border: 2px solid var(--yellow);
+}
+
+.medium-priority-border {
+  border: 2px solid var(--orange);
+}
+
+.high-priority-border {
+  border: 2px solid var(--red);
 }
 
 .todo-sub-container {
