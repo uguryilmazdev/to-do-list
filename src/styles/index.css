@@ -94,7 +94,7 @@ body {
 
 #signin-container-header {
   font-size: 4rem;
-  padding: 1rem;
+  padding: 1rem 0.5rem;
   color: var(--dark-blue);
 }
 
