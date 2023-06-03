@@ -19,7 +19,7 @@ TodoGenius is a simple to-do application built using HTML, CSS, and vanilla JS
 
 ### TRY DEMO
 
-<a href="https://askalamentor.github.io/to-do-list/">Live demo</a>
+<a href="https://uguryilmazdev.github.io/to-do-list/">Live demo</a>
 
 ### SCREENSHOTS
 
